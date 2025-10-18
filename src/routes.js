@@ -16,6 +16,8 @@ Coded by www.creative-tim.com
 // @mui material components
 import Icon from "@mui/material/Icon";
 
+// Home page
+import HomePage from "pages/Home";
 // Login page
 import LoginPage from "pages/Login";
 // Register page
@@ -24,6 +26,12 @@ import RegisterPage from "pages/Register";
 import ResetPasswordPage from "pages/ResetPassword";
 
 const routes = [
+  {
+    name: "home",
+    icon: <Icon>home</Icon>,
+    route: "/home",
+    component: <HomePage />,
+  },
   {
     name: "login",
     icon: <Icon>login</Icon>,

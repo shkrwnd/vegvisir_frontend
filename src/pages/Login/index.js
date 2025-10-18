@@ -22,13 +22,13 @@ import { Link } from "react-router-dom";
 import Switch from "@mui/material/Switch";
 
 // Material Kit 2 PRO React components
-import MKBox from "components/MKBox";
-import MKTypography from "components/MKTypography";
-import MKInput from "components/MKInput";
-import MKButton from "components/MKButton";
+import MKBox from "components/base/MKBox";
+import MKTypography from "components/base/MKTypography";
+import MKInput from "components/base/MKInput";
+import MKButton from "components/base/MKButton";
 
 // Authentication layout components
-import IllustrationLayout from "pages/Login/components/IllustrationLayout";
+import IllustrationLayout from "layouts/authentication/IllustrationLayout";
 
 // Image
 import bgImage from "assets/images/illustrations/illustration-signin.jpg";
