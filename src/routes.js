@@ -20,6 +20,8 @@ import Icon from "@mui/material/Icon";
 import LoginPage from "pages/Login";
 // Register page
 import RegisterPage from "pages/Register";
+// Reset Password page
+import ResetPasswordPage from "pages/ResetPassword";
 
 const routes = [
   {
@@ -33,6 +35,12 @@ const routes = [
     icon: <Icon>person_add</Icon>,
     route: "/register",
     component: <RegisterPage />,
+  },
+  {
+    name: "reset-password",
+    icon: <Icon>lock_reset</Icon>,
+    route: "/reset-password",
+    component: <ResetPasswordPage />,
   },
 ];
 

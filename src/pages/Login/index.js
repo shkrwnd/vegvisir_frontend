@@ -68,6 +68,18 @@ function Login() {
             sign in
           </MKButton>
         </MKBox>
+        <MKBox mt={2} textAlign="center">
+          <MKTypography
+            component={Link}
+            to="/reset-password"
+            variant="button"
+            color="info"
+            fontWeight="medium"
+            textGradient
+          >
+            Forgot password?
+          </MKTypography>
+        </MKBox>
         <MKBox mt={3} textAlign="center">
           <MKTypography variant="button" color="text">
             Don&apos;t have an account?{" "}
