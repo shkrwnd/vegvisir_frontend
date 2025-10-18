@@ -18,6 +18,8 @@ import Icon from "@mui/material/Icon";
 
 // Login page
 import LoginPage from "pages/Login";
+// Register page
+import RegisterPage from "pages/Register";
 
 const routes = [
   {
@@ -25,6 +27,12 @@ const routes = [
     icon: <Icon>login</Icon>,
     route: "/login",
     component: <LoginPage />,
+  },
+  {
+    name: "register",
+    icon: <Icon>person_add</Icon>,
+    route: "/register",
+    component: <RegisterPage />,
   },
 ];
 

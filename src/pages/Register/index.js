@@ -28,58 +28,74 @@ import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 
 // Authentication layout components
-import IllustrationLayout from "pages/Login/components/IllustrationLayout";
+import IllustrationLayout from "pages/Register/components/IllustrationLayout";
 
 // Image
-import bgImage from "assets/images/illustrations/illustration-signin.jpg";
+import bgImage from "assets/images/illustrations/illustration-signup.jpg";
 
-function Login() {
-  const [rememberMe, setRememberMe] = useState(false);
+function Register() {
+  const [agreeTerms, setAgreeTerms] = useState(false);
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const handleSetAgreeTerms = () => setAgreeTerms(!agreeTerms);
 
   return (
     <IllustrationLayout
-      title="Sign In"
-      description="Enter your email and password to sign in"
+      title="Sign Up"
+      description="Enter your details to create your account"
       illustration={bgImage}
     >
       <MKBox component="form" role="form">
+        <MKBox mb={2}>
+          <MKInput type="text" label="Name" fullWidth />
+        </MKBox>
         <MKBox mb={2}>
           <MKInput type="email" label="Email" fullWidth />
         </MKBox>
         <MKBox mb={2}>
           <MKInput type="password" label="Password" fullWidth />
         </MKBox>
+        <MKBox mb={2}>
+          <MKInput type="password" label="Confirm Password" fullWidth />
+        </MKBox>
         <MKBox display="flex" alignItems="center" ml={-1}>
-          <Switch checked={rememberMe} onChange={handleSetRememberMe} />
+          <Switch checked={agreeTerms} onChange={handleSetAgreeTerms} />
           <MKTypography
             variant="button"
             fontWeight="regular"
             color="text"
-            onClick={handleSetRememberMe}
+            onClick={handleSetAgreeTerms}
             sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
           >
-            &nbsp;&nbsp;Remember me
+            &nbsp;&nbsp;I agree the{" "}
+            <MKTypography
+              component="a"
+              href="#"
+              variant="button"
+              fontWeight="bold"
+              color="info"
+              textGradient
+            >
+              Terms and Conditions
+            </MKTypography>
           </MKTypography>
         </MKBox>
         <MKBox mt={4} mb={1}>
           <MKButton variant="gradient" color="info" size="large" fullWidth>
-            sign in
+            sign up
           </MKButton>
         </MKBox>
         <MKBox mt={3} textAlign="center">
           <MKTypography variant="button" color="text">
-            Don&apos;t have an account?{" "}
+            Already have an account?{" "}
             <MKTypography
               component={Link}
-              to="/register"
+              to="/login"
               variant="button"
               color="info"
               fontWeight="medium"
               textGradient
             >
-              Sign up
+              Sign in
             </MKTypography>
           </MKTypography>
         </MKBox>
@@ -88,4 +104,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
