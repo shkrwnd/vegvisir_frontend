@@ -14,18 +14,21 @@ Coded by www.creative-tim.com
 */
 
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
 // @mui material components
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
 // Material Kit 2 PRO React components
 import MKBox from "components/base/MKBox";
 
 // Material Kit 2 PRO React example components
 import CenteredFooter from "components/custom/CenteredFooter";
+import Breadcrumbs from "components/custom/Breadcrumbs";
 
 // Custom components
 import Sidebar from "layouts/dashboard/Sidebar";
@@ -33,9 +36,45 @@ import Navbar from "layouts/dashboard/Navbar";
 
 function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const location = useLocation();
 
   const handleSidebarToggle = () => {
     setSidebarOpen(!sidebarOpen);
+  };
+
+  // Breadcrumb route mapping
+  const getBreadcrumbRoutes = () => {
+    const pathSegments = location.pathname.split("/").filter((segment) => segment !== "");
+
+    if (pathSegments.length === 0) {
+      return [{ label: "Home" }];
+    }
+
+    const routes = [];
+    let currentPath = "";
+
+    pathSegments.forEach((segment, index) => {
+      currentPath += `/${segment}`;
+      const isLast = index === pathSegments.length - 1;
+
+      // Map route segments to readable labels
+      const labelMap = {
+        home: "Home",
+        dashboard: "Dashboard",
+        analytics: "Analytics",
+        users: "Users",
+        settings: "Settings",
+      };
+
+      const label = labelMap[segment] || segment.charAt(0).toUpperCase() + segment.slice(1);
+
+      routes.push({
+        label,
+        route: isLast ? null : currentPath,
+      });
+    });
+
+    return routes;
   };
 
   return (
@@ -65,7 +104,12 @@ function DashboardLayout({ children }) {
             backgroundColor: ({ palette: { grey } }) => grey[50],
           }}
         >
-          {children}
+          <Container>
+            <MKBox width={{ xs: "100%", md: "50%", lg: "25%" }} mb={3}>
+              <Breadcrumbs routes={getBreadcrumbRoutes()} />
+            </MKBox>
+            {children}
+          </Container>
         </Box>
 
         <MKBox
