@@ -147,6 +147,7 @@ function DashboardLayout({ children }) {
         <Box
           sx={{
             mt: 8, // Reduced margin for better spacing
+            pt: 3,
             position: "relative",
             zIndex: 1,
           }}
