@@ -44,29 +44,3 @@ export const dashboardRoutes = [
     route: "/settings",
   },
 ];
-
-// Legacy routes (kept for compatibility)
-const routes = [
-  {
-    name: "home",
-    icon: <Icon>home</Icon>,
-    route: "/home",
-  },
-  {
-    name: "login",
-    icon: <Icon>login</Icon>,
-    route: "/login",
-  },
-  {
-    name: "register",
-    icon: <Icon>person_add</Icon>,
-    route: "/register",
-  },
-  {
-    name: "reset-password",
-    icon: <Icon>lock_reset</Icon>,
-    route: "/reset-password",
-  },
-];
-
-export default routes;

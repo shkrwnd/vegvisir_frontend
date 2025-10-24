@@ -47,40 +47,18 @@ import MKTypography from "components/base/MKTypography";
 // react-router-dom components
 import { Link, useLocation } from "react-router-dom";
 
+// Route configuration
+import { dashboardRoutes } from "routes";
+
 const drawerWidth = 240;
 
-const menuItems = [
-  {
-    text: "Home",
-    icon: <HomeIcon />,
-    route: "/home",
-    badge: null,
-  },
-  {
-    text: "Dashboard",
-    icon: <DashboardIcon />,
-    route: "/dashboard",
-    badge: null,
-  },
-  {
-    text: "Analytics",
-    icon: <AnalyticsIcon />,
-    route: "/analytics",
-    badge: "New",
-  },
-  {
-    text: "Users",
-    icon: <PeopleIcon />,
-    route: "/users",
-    badge: null,
-  },
-  {
-    text: "Settings",
-    icon: <SettingsIcon />,
-    route: "/settings",
-    badge: null,
-  },
-];
+// Convert dashboardRoutes to menuItems format
+const menuItems = dashboardRoutes.map((route, index) => ({
+  text: route.name,
+  icon: route.icon,
+  route: route.route,
+  badge: index === 2 ? "New" : null, // Analytics gets "New" badge
+}));
 
 function Sidebar({ open, onClose }) {
   const location = useLocation();
