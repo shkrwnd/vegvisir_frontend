@@ -53,4 +53,9 @@ export const dashboardRoutes = [
     icon: <Icon>notifications</Icon>,
     route: "/notifications",
   },
+  {
+    name: "ChatBot",
+    icon: <Icon>smart_toy</Icon>,
+    route: "/chatbot",
+  },
 ];

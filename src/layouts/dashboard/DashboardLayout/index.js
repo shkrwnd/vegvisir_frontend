@@ -66,6 +66,7 @@ function DashboardLayout({ children }) {
         settings: "Settings",
         "data-tables": "Data Tables",
         notifications: "Notifications",
+        chatbot: "ChatBot",
       };
 
       const label = labelMap[segment] || segment.charAt(0).toUpperCase() + segment.slice(1);

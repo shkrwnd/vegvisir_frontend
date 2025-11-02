@@ -27,6 +27,7 @@ export const ROUTES = {
   ANALYTICS: "/analytics",
   DATA_TABLES: "/data-tables",
   NOTIFICATIONS: "/notifications",
+  CHATBOT: "/chatbot",
   SETTINGS: "/settings",
 };
 

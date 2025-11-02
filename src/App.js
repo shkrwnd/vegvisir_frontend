@@ -43,6 +43,7 @@ import UsersPage from "pages/Users";
 import SettingsPage from "pages/Settings";
 import DataTablesPage from "pages/DataTables";
 import NotificationsPage from "pages/Notifications";
+import ChatBotPage from "pages/ChatBot";
 
 // Images
 import signinImage from "assets/images/illustrations/illustration-signin.jpg";
@@ -114,6 +115,7 @@ export default function App() {
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/data-tables" element={<DataTablesPage />} />
                   <Route path="/notifications" element={<NotificationsPage />} />
+                  <Route path="/chatbot" element={<ChatBotPage />} />
                   <Route path="/" element={<Navigate to="/home" />} />
                 </Routes>
               </DashboardLayout>
