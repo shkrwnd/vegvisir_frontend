@@ -256,11 +256,17 @@ function DataTables() {
           <Grid item xs={12} md={4}>
             <TextField
               fullWidth
+              size="medium"
               placeholder="Search by name, email, or department..."
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
                 setPage(0);
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  height: "56px",
+                },
               }}
               InputProps={{
                 startAdornment: (
@@ -286,7 +292,15 @@ function DataTables() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={2}>
-            <FormControl fullWidth>
+            <FormControl
+              fullWidth
+              size="medium"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  height: "56px",
+                },
+              }}
+            >
               <InputLabel>Status</InputLabel>
               <Select
                 value={statusFilter}
@@ -304,7 +318,15 @@ function DataTables() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={2}>
-            <FormControl fullWidth>
+            <FormControl
+              fullWidth
+              size="medium"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  height: "56px",
+                },
+              }}
+            >
               <InputLabel>Role</InputLabel>
               <Select
                 value={roleFilter}
@@ -324,7 +346,15 @@ function DataTables() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={2}>
-            <FormControl fullWidth>
+            <FormControl
+              fullWidth
+              size="medium"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  height: "56px",
+                },
+              }}
+            >
               <InputLabel>Department</InputLabel>
               <Select
                 value={departmentFilter}
@@ -344,7 +374,17 @@ function DataTables() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={2}>
-            <MKButton variant="outlined" color="info" size="large" fullWidth onClick={clearFilters}>
+            <MKButton
+              variant="outlined"
+              color="info"
+              fullWidth
+              onClick={clearFilters}
+              sx={{
+                textTransform: "uppercase",
+                height: "56px",
+                minHeight: "56px",
+              }}
+            >
               Clear Filters
             </MKButton>
           </Grid>
@@ -422,6 +462,8 @@ function DataTables() {
         <TableContainer>
           <Table
             sx={{
+              tableLayout: "fixed",
+              width: "100%",
               "& .MuiTableCell-root": {
                 padding: "12px 16px",
                 verticalAlign: "middle",
