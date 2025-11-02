@@ -25,6 +25,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 // Material Kit 2 PRO React themes
 import theme from "assets/theme";
 
+// Core
+import { AuthProvider } from "core/context";
+
 // Layouts
 import DashboardLayout from "layouts/dashboard/DashboardLayout";
 import IllustrationLayout from "layouts/authentication/IllustrationLayout";
@@ -58,64 +61,66 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Routes>
-        {/* Authentication routes with IllustrationLayout */}
-        <Route
-          path="/login"
-          element={
-            <IllustrationLayout
-              title="Sign In"
-              description="Enter your email and password to sign in"
-              illustration={signinImage}
-            >
-              <LoginPage />
-            </IllustrationLayout>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <IllustrationLayout
-              title="Sign Up"
-              description="Enter your details to create your account"
-              illustration={signupImage}
-            >
-              <RegisterPage />
-            </IllustrationLayout>
-          }
-        />
-        <Route
-          path="/reset-password"
-          element={
-            <IllustrationLayout
-              title="Reset Password"
-              description="You will receive an e-mail in maximum 60 seconds"
-              illustration={resetImage}
-            >
-              <ResetPasswordPage />
-            </IllustrationLayout>
-          }
-        />
+      <AuthProvider>
+        <Routes>
+          {/* Authentication routes with IllustrationLayout */}
+          <Route
+            path="/login"
+            element={
+              <IllustrationLayout
+                title="Sign In"
+                description="Enter your email and password to sign in"
+                illustration={signinImage}
+              >
+                <LoginPage />
+              </IllustrationLayout>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <IllustrationLayout
+                title="Sign Up"
+                description="Enter your details to create your account"
+                illustration={signupImage}
+              >
+                <RegisterPage />
+              </IllustrationLayout>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <IllustrationLayout
+                title="Reset Password"
+                description="You will receive an e-mail in maximum 60 seconds"
+                illustration={resetImage}
+              >
+                <ResetPasswordPage />
+              </IllustrationLayout>
+            }
+          />
 
-        {/* Dashboard routes with DashboardLayout */}
-        <Route
-          path="/*"
-          element={
-            <DashboardLayout>
-              <Routes>
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/analytics" element={<AnalyticsPage />} />
-                <Route path="/users" element={<UsersPage />} />
-                <Route path="/settings" element={<SettingsPage />} />
-                <Route path="/data-tables" element={<DataTablesPage />} />
-                <Route path="/notifications" element={<NotificationsPage />} />
-                <Route path="/" element={<Navigate to="/home" />} />
-              </Routes>
-            </DashboardLayout>
-          }
-        />
-      </Routes>
+          {/* Dashboard routes with DashboardLayout */}
+          <Route
+            path="/*"
+            element={
+              <DashboardLayout>
+                <Routes>
+                  <Route path="/home" element={<HomePage />} />
+                  <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="/analytics" element={<AnalyticsPage />} />
+                  <Route path="/users" element={<UsersPage />} />
+                  <Route path="/settings" element={<SettingsPage />} />
+                  <Route path="/data-tables" element={<DataTablesPage />} />
+                  <Route path="/notifications" element={<NotificationsPage />} />
+                  <Route path="/" element={<Navigate to="/home" />} />
+                </Routes>
+              </DashboardLayout>
+            }
+          />
+        </Routes>
+      </AuthProvider>
     </ThemeProvider>
   );
 }
