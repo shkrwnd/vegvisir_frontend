@@ -142,9 +142,10 @@ function ChatBot() {
           height: "100vh",
           display: "flex",
           flexDirection: "column",
-          width: "100%",
+          width: "calc(100% - 300px)", // Adjust width for left panel
           margin: 0,
           padding: 0,
+          marginLeft: "300px", // Account for left panel
         },
       }
     : {
