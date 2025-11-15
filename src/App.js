@@ -53,6 +53,7 @@ import SettingsPage from "pages/Settings";
 import DataTablesPage from "pages/DataTables";
 import NotificationsPage from "pages/Notifications";
 import ChatBotPage from "pages/ChatBot";
+import BudgetsPage from "pages/Budgets";
 
 // Images
 import signinImage from "assets/images/illustrations/illustration-signin.jpg";
@@ -145,6 +146,7 @@ export default function App() {
                       <Route path="/data-tables" element={<DataTablesPage />} />
                       <Route path="/notifications" element={<NotificationsPage />} />
                       <Route path="/chatbot" element={<ChatBotPage />} />
+                      <Route path="/budgets" element={<BudgetsPage />} />
                       <Route path="/" element={<Navigate to={ROUTES.HOME} replace />} />
                       <Route path="*" element={<Navigate to={ROUTES.HOME} replace />} />
                     </Routes>
