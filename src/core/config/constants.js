@@ -33,6 +33,7 @@ export const ROUTES = {
   SETTINGS: "/settings",
   BUDGETS: "/budgets",
   CARDS: "/cards",
+  WALLET: "/wallet",
 };
 
 export const PAGINATION = {

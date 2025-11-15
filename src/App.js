@@ -147,8 +147,8 @@ export default function App() {
                       <Route path="/data-tables" element={<DataTablesPage />} />
                       <Route path="/notifications" element={<NotificationsPage />} />
                       <Route path="/chatbot" element={<ChatBotPage />} />
-                      <Route path="/budgets" element={<BudgetsPage />} />
-                      <Route path="/cards" element={<CardsPage />} />
+                    <Route path="/budgets" element={<BudgetsPage />} />
+                    <Route path="/cards" element={<CardsPage />} />
                       <Route path="/" element={<Navigate to={ROUTES.HOME} replace />} />
                       <Route path="*" element={<Navigate to={ROUTES.HOME} replace />} />
                     </Routes>
