@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
@@ -53,12 +54,15 @@ import MKTypography from "components/base/MKTypography";
 
 // Core config
 import { STORAGE_KEYS, ROUTES } from "core/config";
+import { useAuth } from "core/context";
 
 const drawerWidth = 240;
 
 function Navbar({ sidebarOpen, onSidebarToggle }) {
   const [settingsAnchorEl, setSettingsAnchorEl] = useState(null);
   const settingsOpen = Boolean(settingsAnchorEl);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   // Search functionality state
   const [searchQuery, setSearchQuery] = useState("");
@@ -110,6 +114,19 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
 
   const handleSettingsClose = () => {
     setSettingsAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    // Close the settings menu
+    handleSettingsClose();
+
+    // Call logout from auth context (clears localStorage and user state)
+    logout();
+
+    // Navigate to login page
+    navigate(ROUTES.LOGIN, { replace: true });
+
+    console.log("User logged out successfully");
   };
 
   // Search logic
@@ -565,7 +582,7 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
               </MenuItem>
 
               <MenuItem
-                onClick={handleSettingsClose}
+                onClick={handleLogout}
                 sx={{
                   color: ({ palette: { error } }) => error.main,
                   "&:hover": {
