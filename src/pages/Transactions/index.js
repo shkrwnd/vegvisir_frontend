@@ -167,15 +167,24 @@ function Transactions() {
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return date.toLocaleString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    if (!dateString) return "N/A";
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        console.warn("Invalid date:", dateString);
+        return "N/A";
+      }
+      return date.toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch (error) {
+      console.error("Error formatting date:", dateString, error);
+      return "N/A";
+    }
   };
 
   const getCategoryColor = (category) => {
@@ -345,6 +354,7 @@ function Transactions() {
           mx: 3,
           borderRadius: 3,
           boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+          border: "1px solid rgba(0,0,0,0.05)",
           overflow: "hidden",
         }}
       >
@@ -357,7 +367,8 @@ function Transactions() {
             <TableContainer>
               <Table
                 sx={{
-                  tableLayout: "auto",
+                  tableLayout: "fixed",
+                  width: "100%",
                   "& .MuiTableCell-root": {
                     padding: "12px 16px",
                     verticalAlign: "middle",
@@ -372,11 +383,23 @@ function Transactions() {
                   "& .MuiTableCell-body": {
                     padding: "12px 16px",
                   },
+                  "& .MuiTableSortLabel-root": {
+                    "& .MuiTableSortLabel-icon": {
+                      transition: "opacity 0.2s",
+                    },
+                  },
                 }}
               >
+                <colgroup>
+                  <col style={{ width: "180px" }} />
+                  <col style={{ width: "auto" }} />
+                  <col style={{ width: "120px" }} />
+                  <col style={{ width: "120px" }} />
+                  <col style={{ width: "150px" }} />
+                </colgroup>
                 <TableHead>
                   <TableRow>
-                    <TableCell sx={{ width: "15%" }}>
+                    <TableCell>
                       <TableSortLabel
                         active={orderBy === "transaction_date"}
                         direction={orderBy === "transaction_date" ? order : "asc"}
@@ -387,7 +410,7 @@ function Transactions() {
                         </MKTypography>
                       </TableSortLabel>
                     </TableCell>
-                    <TableCell sx={{ width: "35%" }}>
+                    <TableCell>
                       <TableSortLabel
                         active={orderBy === "description"}
                         direction={orderBy === "description" ? order : "asc"}
@@ -398,7 +421,7 @@ function Transactions() {
                         </MKTypography>
                       </TableSortLabel>
                     </TableCell>
-                    <TableCell align="center" sx={{ width: "15%" }}>
+                    <TableCell align="center">
                       <TableSortLabel
                         active={orderBy === "category"}
                         direction={orderBy === "category" ? order : "asc"}
@@ -409,7 +432,7 @@ function Transactions() {
                         </MKTypography>
                       </TableSortLabel>
                     </TableCell>
-                    <TableCell align="right" sx={{ width: "15%" }}>
+                    <TableCell align="right">
                       <TableSortLabel
                         active={orderBy === "amount"}
                         direction={orderBy === "amount" ? order : "asc"}
@@ -420,8 +443,13 @@ function Transactions() {
                         </MKTypography>
                       </TableSortLabel>
                     </TableCell>
-                    <TableCell align="center" sx={{ width: "20%" }}>
-                      <MKTypography variant="caption" fontWeight="bold" color="secondary">
+                    <TableCell align="center">
+                      <MKTypography
+                        variant="caption"
+                        fontWeight="bold"
+                        color="secondary"
+                        sx={{ whiteSpace: "nowrap" }}
+                      >
                         PAYMENT METHOD
                       </MKTypography>
                     </TableCell>
@@ -439,38 +467,48 @@ function Transactions() {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    paginatedData.map((transaction) => (
-                      <TableRow key={transaction.id} hover>
-                        <TableCell>{formatDate(transaction.transaction_date)}</TableCell>
-                        <TableCell>
-                          <MKTypography variant="body2" fontWeight="medium">
-                            {transaction.description || "N/A"}
-                          </MKTypography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Chip
-                            label={
-                              transaction.category?.charAt(0).toUpperCase() +
-                                transaction.category?.slice(1) || "Other"
-                            }
-                            size="small"
-                            color={getCategoryColor(transaction.category)}
-                            sx={{ fontWeight: 500 }}
-                          />
-                        </TableCell>
-                        <TableCell align="right">
-                          <MKTypography variant="body2" fontWeight="bold" color="error">
-                            {formatCurrency(transaction.amount)}
-                          </MKTypography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <MKTypography variant="body2" color="text.secondary">
-                            {transaction.payment_method?.charAt(0).toUpperCase() +
-                              transaction.payment_method?.slice(1) || "N/A"}
-                          </MKTypography>
-                        </TableCell>
-                      </TableRow>
-                    ))
+                    paginatedData.map((transaction) => {
+                      // Debug: Log transaction data
+                      if (process.env.NODE_ENV === "development") {
+                        console.log("Transaction data:", transaction);
+                      }
+                      return (
+                        <TableRow key={transaction.id} hover>
+                          <TableCell>
+                            <MKTypography variant="body2" color="text">
+                              {formatDate(transaction.transaction_date || transaction.created_at)}
+                            </MKTypography>
+                          </TableCell>
+                          <TableCell>
+                            <MKTypography variant="body2" fontWeight="medium">
+                              {transaction.description || "N/A"}
+                            </MKTypography>
+                          </TableCell>
+                          <TableCell align="center">
+                            <Chip
+                              label={
+                                transaction.category?.charAt(0).toUpperCase() +
+                                  transaction.category?.slice(1) || "Other"
+                              }
+                              size="small"
+                              color={getCategoryColor(transaction.category)}
+                              sx={{ fontWeight: 500 }}
+                            />
+                          </TableCell>
+                          <TableCell align="right">
+                            <MKTypography variant="body2" fontWeight="bold" color="error">
+                              {formatCurrency(transaction.amount)}
+                            </MKTypography>
+                          </TableCell>
+                          <TableCell align="center">
+                            <MKTypography variant="body2" color="text.secondary">
+                              {transaction.payment_method?.charAt(0).toUpperCase() +
+                                transaction.payment_method?.slice(1) || "N/A"}
+                            </MKTypography>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
                   )}
                 </TableBody>
               </Table>
