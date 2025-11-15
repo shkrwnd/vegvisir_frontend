@@ -72,6 +72,11 @@ export const dashboardRoutes = [
     route: ROUTES.CARDS,
   },
   {
+    name: "Transactions",
+    icon: <Icon>receipt_long</Icon>,
+    route: ROUTES.TRANSACTIONS,
+  },
+  {
     name: "Order",
     icon: <Icon>shopping_cart</Icon>,
     route: ROUTES.ORDER,

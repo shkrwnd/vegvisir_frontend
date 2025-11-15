@@ -55,6 +55,7 @@ import NotificationsPage from "pages/Notifications";
 import ChatBotPage from "pages/ChatBot";
 import BudgetsPage from "pages/Budgets";
 import CardsPage from "pages/Cards";
+import TransactionsPage from "pages/Transactions";
 import OrderPage from "pages/Order";
 import VendorDetailPage from "pages/VendorDetail";
 
@@ -151,6 +152,7 @@ export default function App() {
                       <Route path="/chatbot" element={<ChatBotPage />} />
                       <Route path="/budgets" element={<BudgetsPage />} />
                       <Route path="/cards" element={<CardsPage />} />
+                      <Route path="/transactions" element={<TransactionsPage />} />
                       <Route path="/order" element={<OrderPage />} />
                       <Route path="/order/vendor/:id" element={<VendorDetailPage />} />
                       <Route path="/" element={<Navigate to={ROUTES.HOME} replace />} />
