@@ -28,11 +28,14 @@ export const useRegister = () => {
       // Update auth context
       setAuthUser(user, token);
 
-      // Redirect to dashboard
-      navigate(ROUTES.DASHBOARD);
+      // Redirect to home
+      navigate(ROUTES.HOME);
     } catch (err) {
       const errorMessage =
         err.response?.data?.message || err.message || "Registration failed. Please try again.";
+      console.error("Registration error:", err);
+      console.error("Registration error message:", errorMessage);
+      console.error("Registration error response:", err.response?.data);
       setError(errorMessage);
       throw err;
     } finally {

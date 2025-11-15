@@ -124,15 +124,16 @@ export default function App() {
               element={
                 <DashboardLayout>
                   <Routes>
-                    <Route path={ROUTES.HOME} element={<HomePage />} />
-                    <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
-                    <Route path={ROUTES.ANALYTICS} element={<AnalyticsPage />} />
-                    <Route path={ROUTES.USERS} element={<UsersPage />} />
-                    <Route path={ROUTES.SETTINGS} element={<SettingsPage />} />
-                    <Route path={ROUTES.DATA_TABLES} element={<DataTablesPage />} />
-                    <Route path={ROUTES.NOTIFICATIONS} element={<NotificationsPage />} />
-                    <Route path={ROUTES.CHATBOT} element={<ChatBotPage />} />
-                    <Route path="/" element={<Navigate to={ROUTES.HOME} />} />
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/dashboard" element={<DashboardPage />} />
+                    <Route path="/analytics" element={<AnalyticsPage />} />
+                    <Route path="/users" element={<UsersPage />} />
+                    <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/data-tables" element={<DataTablesPage />} />
+                    <Route path="/notifications" element={<NotificationsPage />} />
+                    <Route path="/chatbot" element={<ChatBotPage />} />
+                    <Route path="/" element={<Navigate to={ROUTES.HOME} replace />} />
+                    <Route path="*" element={<Navigate to={ROUTES.HOME} replace />} />
                   </Routes>
                 </DashboardLayout>
               }

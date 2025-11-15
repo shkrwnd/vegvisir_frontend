@@ -97,15 +97,18 @@ function Login() {
 
     try {
       await login(formData);
-      showSnackbar("success", "check_circle", "Login Successful", "Welcome back!");
+      // Success - navigation will happen automatically, no need to show snackbar
+      // as the user will be redirected to home page
     } catch (err) {
-      // Error is already set in the hook, show snackbar
-      showSnackbar(
-        "error",
-        "error",
-        "Login Failed",
-        loginError || "An error occurred. Please try again."
-      );
+      // Error occurred - show error snackbar and stay on login page
+      const errorMessage =
+        loginError ||
+        err.response?.data?.message ||
+        err.message ||
+        "An error occurred. Please try again.";
+      console.error("Login form error:", err);
+      console.error("Login form error message:", errorMessage);
+      showSnackbar("error", "error", "Login Failed", errorMessage);
     }
   };
 
@@ -163,7 +166,7 @@ function Login() {
         <MKBox mt={2} textAlign="center">
           <MKTypography
             component={Link}
-            to="/reset-password"
+            to={ROUTES.RESET_PASSWORD}
             variant="button"
             color="info"
             fontWeight="medium"

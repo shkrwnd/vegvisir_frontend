@@ -28,11 +28,28 @@ export const useLogin = () => {
       // Update auth context
       setAuthUser(user, token);
 
-      // Redirect to dashboard
-      navigate(ROUTES.DASHBOARD);
+      // Log successful login for debugging
+      console.log("Login successful, navigating to:", ROUTES.HOME);
+      console.log("User data:", user);
+
+      // Use setTimeout to ensure state updates complete before navigation
+      // This prevents race conditions during route transition
+      setTimeout(() => {
+        try {
+          console.log("Attempting navigation to:", ROUTES.HOME);
+          navigate(ROUTES.HOME, { replace: true });
+        } catch (navError) {
+          console.error("Navigation error:", navError);
+          // Fallback: use window.location if navigate fails
+          window.location.href = ROUTES.HOME;
+        }
+      }, 0);
     } catch (err) {
       const errorMessage =
         err.response?.data?.message || err.message || "Login failed. Please try again.";
+      console.error("Login error:", err);
+      console.error("Login error message:", errorMessage);
+      console.error("Login error response:", err.response?.data);
       setError(errorMessage);
       throw err;
     } finally {

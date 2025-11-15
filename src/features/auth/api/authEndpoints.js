@@ -15,74 +15,99 @@ export const authAPI = {
    * @returns {Promise} { user, token }
    */
   login: async (credentials) => {
-    // TODO: Replace with actual API call when backend is ready
-    // return apiClient.post("/auth/login", credentials);
+    try {
+      // Login endpoint uses application/x-www-form-urlencoded format
+      const formData = new URLSearchParams();
+      formData.append("username", credentials.email);
+      formData.append("password", credentials.password);
 
-    // Mock API response for now
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simulate API delay
-        if (credentials.email && credentials.password) {
-          resolve({
-            data: {
-              user: {
-                id: "1",
-                name: credentials.email.split("@")[0],
-                email: credentials.email,
-                role: "user",
-              },
-              token: "mock-jwt-token-" + Date.now(),
+      const response = await apiClient.post("/api/v1/auth/login", formData, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+
+      const { access_token } = response.data;
+
+      // Store token temporarily to fetch user info
+      localStorage.setItem(STORAGE_KEYS.TOKEN, access_token);
+
+      // Fetch current user info after login
+      try {
+        const userResponse = await apiClient.get("/api/v1/auth/me");
+        const user = userResponse.data;
+
+        return {
+          data: {
+            user,
+            token: access_token,
+          },
+        };
+      } catch (error) {
+        // If fetching user info fails, still return the token
+        // but log the error for debugging
+        console.error("Failed to fetch user info after login:", error);
+        console.error("User info error response:", error.response?.data);
+
+        // Return a minimal user object with the email from credentials
+        return {
+          data: {
+            user: {
+              email: credentials.email,
             },
-          });
-        } else {
-          reject({
-            response: {
-              data: {
-                message: "Email and password are required",
-              },
-            },
-          });
-        }
-      }, 1000);
-    });
+            token: access_token,
+          },
+        };
+      }
+    } catch (error) {
+      console.error("Login API error:", error);
+      console.error("Login API error response:", error.response?.data);
+      throw error;
+    }
   },
 
   /**
    * Register new user
-   * @param {Object} userData - { name, email, password }
+   * @param {Object} userData - { email, password, full_name, student_id, major, class_year }
    * @returns {Promise} { user, token }
    */
   register: async (userData) => {
-    // TODO: Replace with actual API call when backend is ready
-    // return apiClient.post("/auth/register", userData);
-
-    // Mock API response for now
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simulate API delay
-        if (userData.email && userData.password && userData.name) {
-          resolve({
-            data: {
-              user: {
-                id: Date.now().toString(),
-                name: userData.name,
-                email: userData.email,
-                role: "user",
-              },
-              token: "mock-jwt-token-" + Date.now(),
-            },
-          });
-        } else {
-          reject({
-            response: {
-              data: {
-                message: "Name, email, and password are required",
-              },
-            },
-          });
-        }
-      }, 1000);
+    // Register the user
+    await apiClient.post("/api/v1/auth/register", {
+      email: userData.email,
+      password: userData.password,
+      full_name: userData.full_name || userData.name,
+      student_id: userData.student_id,
+      major: userData.major,
+      class_year: userData.class_year,
     });
+
+    // After successful registration, login to get the token
+    const loginFormData = new URLSearchParams();
+    loginFormData.append("username", userData.email);
+    loginFormData.append("password", userData.password);
+
+    const loginResponse = await apiClient.post("/api/v1/auth/login", loginFormData, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+
+    const { access_token } = loginResponse.data;
+
+    // Store token temporarily to fetch user info
+    localStorage.setItem(STORAGE_KEYS.TOKEN, access_token);
+
+    // Fetch current user info
+    const userResponse = await apiClient.get("/api/v1/auth/me");
+    const user = userResponse.data;
+
+    return {
+      data: {
+        user,
+        token: access_token,
+      },
+    };
   },
 
   /**
@@ -90,10 +115,8 @@ export const authAPI = {
    * @returns {Promise}
    */
   logout: async () => {
-    // TODO: Replace with actual API call when backend is ready
-    // return apiClient.post("/auth/logout");
-
-    // Mock API response for now
+    // If backend has a logout endpoint, call it here
+    // For now, just return success
     return Promise.resolve({ data: { success: true } });
   },
 
@@ -102,12 +125,10 @@ export const authAPI = {
    * @returns {Promise} { token }
    */
   refreshToken: async () => {
-    // TODO: Replace with actual API call when backend is ready
-    // return apiClient.post("/auth/refresh");
-
+    // TODO: Implement if backend supports token refresh
     return Promise.resolve({
       data: {
-        token: "mock-refreshed-token-" + Date.now(),
+        token: localStorage.getItem(STORAGE_KEYS.TOKEN),
       },
     });
   },
@@ -117,22 +138,34 @@ export const authAPI = {
    * @returns {Promise} { user }
    */
   getCurrentUser: async () => {
-    // TODO: Replace with actual API call when backend is ready
-    // return apiClient.get("/auth/me");
+    const response = await apiClient.get("/api/v1/auth/me");
+    return {
+      data: response.data,
+    };
+  },
 
-    const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
-    if (token) {
-      return Promise.resolve({
-        data: {
-          user: {
-            id: "1",
-            name: "John Doe",
-            email: "user@example.com",
-            role: "user",
-          },
-        },
-      });
-    }
-    return Promise.reject({ response: { status: 401 } });
+  /**
+   * Forgot password - Request password reset token
+   * @param {Object} data - { email }
+   * @returns {Promise} { token } (in development)
+   */
+  forgotPassword: async (data) => {
+    const response = await apiClient.post("/api/v1/auth/forgot-password", {
+      email: data.email,
+    });
+    return response;
+  },
+
+  /**
+   * Reset password - Reset password using token
+   * @param {Object} data - { token, new_password }
+   * @returns {Promise} { success }
+   */
+  resetPassword: async (data) => {
+    const response = await apiClient.post("/api/v1/auth/reset-password", {
+      token: data.token,
+      new_password: data.new_password,
+    });
+    return response;
   },
 };

@@ -24,6 +24,23 @@ apiClient.interceptors.request.use(
     const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      // Log token addition for debugging (only for non-auth endpoints to avoid spam)
+      if (!config.url?.includes("/auth/login") && !config.url?.includes("/auth/register")) {
+        console.log("API Request with token:", {
+          url: config.url,
+          method: config.method,
+          hasToken: !!token,
+          tokenLength: token?.length,
+        });
+      }
+    } else {
+      // Log when token is missing for protected endpoints
+      if (!config.url?.includes("/auth/login") && !config.url?.includes("/auth/register")) {
+        console.warn("API Request without token:", {
+          url: config.url,
+          method: config.method,
+        });
+      }
     }
     return config;
   },
@@ -38,10 +55,54 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
+    // Log all API errors to console for debugging
+    console.error("API Error:", {
+      url: error.config?.url,
+      method: error.config?.method,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      data: error.response?.data,
+      message: error.message,
+    });
+
     if (error.response?.status === 401) {
-      // Handle unauthorized - clear token and redirect to login
-      localStorage.removeItem(STORAGE_KEYS.TOKEN);
-      window.location.href = ROUTES.LOGIN;
+      // Don't redirect if we're already on login/register/reset-password pages
+      const currentPath = window.location.pathname;
+      const isAuthRoute =
+        currentPath === ROUTES.LOGIN ||
+        currentPath === ROUTES.REGISTER ||
+        currentPath === ROUTES.RESET_PASSWORD;
+
+      // Don't redirect if already on an auth route (prevents redirect loops)
+      if (!isAuthRoute) {
+        // Check if this is a login/register endpoint - don't redirect for those
+        const isAuthEndpoint =
+          error.config?.url?.includes("/auth/login") ||
+          error.config?.url?.includes("/auth/register") ||
+          error.config?.url?.includes("/auth/forgot-password") ||
+          error.config?.url?.includes("/auth/reset-password");
+
+        if (!isAuthEndpoint) {
+          console.error("Unauthorized access (401) - clearing token and redirecting to login");
+          console.error("Failed API call:", {
+            url: error.config?.url,
+            method: error.config?.method,
+            path: currentPath,
+          });
+          console.error("Token exists:", !!localStorage.getItem(STORAGE_KEYS.TOKEN));
+
+          localStorage.removeItem(STORAGE_KEYS.TOKEN);
+          localStorage.removeItem(STORAGE_KEYS.USER);
+
+          // Use window.location.href for full page reload to clear any state
+          // This ensures a clean redirect without React Router state issues
+          window.location.href = ROUTES.LOGIN;
+        } else {
+          console.warn("401 on auth endpoint, not redirecting:", error.config?.url);
+        }
+      } else {
+        console.warn("401 error on auth route, not redirecting to prevent loop");
+      }
     }
     return Promise.reject(error);
   }

@@ -46,6 +46,9 @@ function Register() {
     email: "",
     password: "",
     confirmPassword: "",
+    studentId: "",
+    major: "",
+    classYear: "",
   });
   const [errors, setErrors] = useState({});
   const [agreeTerms, setAgreeTerms] = useState(false);
@@ -59,9 +62,9 @@ function Register() {
     const newErrors = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
+      newErrors.name = "Full name is required";
     } else if (formData.name.trim().length < 2) {
-      newErrors.name = "Name must be at least 2 characters";
+      newErrors.name = "Full name must be at least 2 characters";
     }
 
     if (!formData.email.trim()) {
@@ -80,6 +83,18 @@ function Register() {
       newErrors.confirmPassword = "Please confirm your password";
     } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    if (!formData.studentId.trim()) {
+      newErrors.studentId = "Student ID is required";
+    }
+
+    if (!formData.major.trim()) {
+      newErrors.major = "Major is required";
+    }
+
+    if (!formData.classYear.trim()) {
+      newErrors.classYear = "Class year is required";
     }
 
     if (!agreeTerms) {
@@ -115,9 +130,12 @@ function Register() {
 
     try {
       await register({
-        name: formData.name.trim(),
+        full_name: formData.name.trim(),
         email: formData.email.trim(),
         password: formData.password,
+        student_id: formData.studentId.trim(),
+        major: formData.major.trim(),
+        class_year: formData.classYear.trim(),
       });
       showSnackbar(
         "success",
@@ -142,7 +160,7 @@ function Register() {
         <MKBox mb={2}>
           <MKInput
             type="text"
-            label="Name"
+            label="Full Name"
             name="name"
             value={formData.name}
             onChange={handleChange}
@@ -184,6 +202,42 @@ function Register() {
             onChange={handleChange}
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword}
+            fullWidth
+          />
+        </MKBox>
+        <MKBox mb={2}>
+          <MKInput
+            type="text"
+            label="Student ID"
+            name="studentId"
+            value={formData.studentId}
+            onChange={handleChange}
+            error={!!errors.studentId}
+            helperText={errors.studentId}
+            fullWidth
+          />
+        </MKBox>
+        <MKBox mb={2}>
+          <MKInput
+            type="text"
+            label="Major"
+            name="major"
+            value={formData.major}
+            onChange={handleChange}
+            error={!!errors.major}
+            helperText={errors.major}
+            fullWidth
+          />
+        </MKBox>
+        <MKBox mb={2}>
+          <MKInput
+            type="text"
+            label="Class Year"
+            name="classYear"
+            value={formData.classYear}
+            onChange={handleChange}
+            error={!!errors.classYear}
+            helperText={errors.classYear}
             fullWidth
           />
         </MKBox>

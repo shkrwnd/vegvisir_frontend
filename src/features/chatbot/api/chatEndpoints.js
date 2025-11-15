@@ -79,33 +79,4 @@ export const chatAPI = {
       };
     }
   },
-
-  /**
-   * Get memories from the API
-   * @returns {Promise} Array of memory objects
-   */
-  getMemories: async () => {
-    try {
-      const response = await apiClient.get("/api/v1/memory", {
-        headers: {
-          accept: "application/json",
-        },
-      });
-      return {
-        data: response.data,
-      };
-    } catch (error) {
-      throw {
-        response: {
-          data: {
-            message:
-              error.response?.data?.detail ||
-              error.response?.data?.message ||
-              error.message ||
-              "Failed to fetch memories.",
-          },
-        },
-      };
-    }
-  },
 };
