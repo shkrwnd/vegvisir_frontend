@@ -61,6 +61,9 @@ import { useCards } from "features/cards";
 // Shared hooks
 import { useSnackbar } from "shared/hooks";
 
+// Core
+import { useAuth } from "core/context";
+
 // Material Kit 2 PRO React examples
 
 // Custom components
@@ -77,6 +80,7 @@ function Home() {
   } = useWallet();
   const { cards, loading: cardsLoading } = useCards();
   const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
+  const { user } = useAuth();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [formData, setFormData] = useState({
@@ -165,7 +169,13 @@ function Home() {
   return (
     <Container maxWidth={false} sx={{ px: 0 }}>
       {/* Wallet Card Section */}
-      <RutgersWalletCardFinal />
+      <MKBox mb={6} sx={{ px: 3 }}>
+        <RutgersWalletCardFinal
+          userName={user?.full_name || user?.email || "User"}
+          balance={formatCurrency(balance)}
+          expiryDate={null} // Will be calculated as 2 years from now
+        />
+      </MKBox>
 
       {/* Quick Stats */}
       <Grid container spacing={3} mb={6} sx={{ px: 3 }}>

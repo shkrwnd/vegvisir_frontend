@@ -1,13 +1,22 @@
 import React, { useState, useRef } from "react";
+import PropTypes from "prop-types";
 
-const RutgersWalletCardFinal = () => {
+const RutgersWalletCardFinal = ({ userName = "User", balance = "$0.00", expiryDate = null }) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [userName] = useState("Admin User");
-  const [balance] = useState("$2,450.00");
-  const [expiryDate] = useState("12/26");
   const [cardBackground, setCardBackground] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const backgroundInputRef = useRef(null);
+
+  // Calculate expiry date (2 years from now) if not provided
+  const cardExpiryDate =
+    expiryDate ||
+    (() => {
+      const date = new Date();
+      date.setFullYear(date.getFullYear() + 2);
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const year = String(date.getFullYear()).slice(-2);
+      return `${month}/${year}`;
+    })();
 
   const handleCardClick = (e) => {
     if (e.target.closest(".background-upload-area")) {
@@ -491,7 +500,7 @@ const RutgersWalletCardFinal = () => {
                       lineHeight: 1.2,
                     }}
                   >
-                    {balance}
+                    {balance || "$0.00"}
                   </div>
                 </div>
               </div>
@@ -668,7 +677,7 @@ const RutgersWalletCardFinal = () => {
                       textShadow: cardBackground ? "0 2px 4px rgba(0, 0, 0, 0.3)" : "none",
                     }}
                   >
-                    {expiryDate}
+                    {cardExpiryDate}
                   </div>
                 </div>
                 <div
@@ -688,6 +697,12 @@ const RutgersWalletCardFinal = () => {
       </div>
     </div>
   );
+};
+
+RutgersWalletCardFinal.propTypes = {
+  userName: PropTypes.string,
+  balance: PropTypes.string,
+  expiryDate: PropTypes.string,
 };
 
 export default RutgersWalletCardFinal;
