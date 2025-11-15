@@ -33,6 +33,8 @@ export const ROUTES = {
   SETTINGS: "/settings",
   BUDGETS: "/budgets",
   CARDS: "/cards",
+  ORDER: "/order",
+  VENDOR_DETAIL: "/order/vendor",
 };
 
 export const PAGINATION = {

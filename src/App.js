@@ -55,6 +55,8 @@ import NotificationsPage from "pages/Notifications";
 import ChatBotPage from "pages/ChatBot";
 import BudgetsPage from "pages/Budgets";
 import CardsPage from "pages/Cards";
+import OrderPage from "pages/Order";
+import VendorDetailPage from "pages/VendorDetail";
 
 // Images
 import signinImage from "assets/images/illustrations/illustration-signin.jpg";
@@ -149,6 +151,8 @@ export default function App() {
                       <Route path="/chatbot" element={<ChatBotPage />} />
                       <Route path="/budgets" element={<BudgetsPage />} />
                       <Route path="/cards" element={<CardsPage />} />
+                      <Route path="/order" element={<OrderPage />} />
+                      <Route path="/order/vendor/:id" element={<VendorDetailPage />} />
                       <Route path="/" element={<Navigate to={ROUTES.HOME} replace />} />
                       <Route path="*" element={<Navigate to={ROUTES.HOME} replace />} />
                     </Routes>

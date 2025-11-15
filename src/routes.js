@@ -71,4 +71,9 @@ export const dashboardRoutes = [
     icon: <Icon>credit_card</Icon>,
     route: ROUTES.CARDS,
   },
+  {
+    name: "Order",
+    icon: <Icon>shopping_cart</Icon>,
+    route: ROUTES.ORDER,
+  },
 ];
