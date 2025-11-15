@@ -71,4 +71,9 @@ export const dashboardRoutes = [
     icon: <Icon>credit_card</Icon>,
     route: ROUTES.CARDS,
   },
+  {
+    name: "Transactions",
+    icon: <Icon>receipt_long</Icon>,
+    route: ROUTES.TRANSACTIONS,
+  },
 ];
