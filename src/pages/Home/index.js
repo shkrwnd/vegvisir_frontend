@@ -63,8 +63,8 @@ import { useSnackbar } from "shared/hooks";
 
 // Material Kit 2 PRO React examples
 
-// Images
-import bgImage from "assets/images/bg-presentation.jpg";
+// Custom components
+import RutgersWalletCardFinal from "components/custom/RutgersWalletCardFinal";
 
 function Home() {
   const {
@@ -164,75 +164,8 @@ function Home() {
 
   return (
     <Container maxWidth={false} sx={{ px: 0 }}>
-      {/* Hero Section */}
-      <MKBox
-        mb={6}
-        sx={{
-          background: `linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%), url(${bgImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          borderRadius: 3,
-          p: { xs: 4, md: 6 },
-          mx: 3,
-          color: "white",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.2) 100%)",
-            zIndex: 1,
-          },
-        }}
-      >
-        <Box sx={{ position: "relative", zIndex: 2 }}>
-          <Chip
-            label="Welcome Back"
-            color="primary"
-            sx={{
-              mb: 2,
-              backgroundColor: "rgba(255,255,255,0.2)",
-              color: "white",
-              fontWeight: 500,
-            }}
-          />
-          <MKTypography
-            variant="h1"
-            fontWeight="bold"
-            mb={2}
-            sx={({ breakpoints, typography: { size } }) => ({
-              [breakpoints.down("md")]: {
-                fontSize: size["3xl"],
-              },
-              [breakpoints.down("sm")]: {
-                fontSize: size["2xl"],
-              },
-              textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
-            })}
-          >
-            Dashboard
-          </MKTypography>
-          <MKTypography
-            variant="h6"
-            mb={4}
-            sx={{
-              opacity: 0.95,
-              maxWidth: "600px",
-              mx: "auto",
-              fontWeight: 300,
-              textShadow: "1px 1px 2px rgba(0,0,0,0.5)",
-            }}
-          >
-            Manage your data, track performance, and make informed decisions with our comprehensive
-            dashboard.
-          </MKTypography>
-        </Box>
-      </MKBox>
+      {/* Wallet Card Section */}
+      <RutgersWalletCardFinal />
 
       {/* Quick Stats */}
       <Grid container spacing={3} mb={6} sx={{ px: 3 }}>
