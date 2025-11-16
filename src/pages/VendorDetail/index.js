@@ -142,6 +142,8 @@ function VendorDetailPage() {
 
     if (result.success) {
       const payment = result.data;
+      // Clear any previous errors
+      setPaymentError(null);
 
       // Check if payment status is pending
       if (payment.status === "pending") {
@@ -231,6 +233,9 @@ function VendorDetailPage() {
       } else if (payment.status === "failed") {
         setPaymentError("Payment failed. Please try again.");
       }
+    } else {
+      // Payment creation failed
+      setPaymentError(result.error || "Failed to create payment. Please try again.");
     }
   };
 
@@ -475,7 +480,9 @@ function VendorDetailPage() {
             <>
               {(error || paymentError) && (
                 <Alert severity="error" sx={{ mb: 2 }}>
-                  {paymentError || error}
+                  {typeof (paymentError || error) === "string"
+                    ? paymentError || error
+                    : JSON.stringify(paymentError || error)}
                 </Alert>
               )}
               <TextField

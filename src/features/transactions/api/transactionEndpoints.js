@@ -26,4 +26,13 @@ export const transactionAPI = {
   getById: (id) => {
     return apiClient.get(`/api/v1/transactions/${id}`);
   },
+
+  /**
+   * Get transaction analytics
+   * @param {Object} params - { start_date, end_date }
+   * @returns {Promise} Analytics object with total_spending, spending_by_category, spending_over_time
+   */
+  getAnalytics: (params = {}) => {
+    return apiClient.get("/api/v1/transactions/analytics", { params });
+  },
 };
