@@ -51,6 +51,8 @@ import ClearIcon from "@mui/icons-material/Clear";
 // Material Kit 2 PRO React components
 import MKBox from "components/base/MKBox";
 import MKTypography from "components/base/MKTypography";
+import MKButton from "components/base/MKButton";
+import MKInput from "components/base/MKInput";
 
 // Core config
 import { STORAGE_KEYS, ROUTES } from "core/config";
@@ -61,8 +63,14 @@ const drawerWidth = 240;
 function Navbar({ sidebarOpen, onSidebarToggle }) {
   const [settingsAnchorEl, setSettingsAnchorEl] = useState(null);
   const settingsOpen = Boolean(settingsAnchorEl);
-  const { logout } = useAuth();
+  const { logout, user: authUser } = useAuth();
   const navigate = useNavigate();
+
+  const getUserDisplayName = () => {
+    if (authUser?.name) return authUser.name.split(" ")[0];
+    if (authUser?.email) return authUser.email.split("@")[0];
+    return "User";
+  };
 
   // Search functionality state
   const [searchQuery, setSearchQuery] = useState("");
@@ -436,7 +444,7 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                 Welcome back,
               </MKTypography>
               <MKTypography variant="body2" fontWeight="medium" color="text.primary">
-                Admin
+                {getUserDisplayName()}
               </MKTypography>
             </MKBox>
 
@@ -473,34 +481,26 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                 "& .MuiPaper-root": {
                   borderRadius: ({ borders: { borderRadius } }) => borderRadius.lg,
                   boxShadow: ({ boxShadows: { md } }) => md,
-                  minWidth: 220,
+                  minWidth: 240,
                   mt: 1,
-                  border: ({ borders: { borderWidth }, palette: { grey } }) =>
-                    `${borderWidth[0]} solid ${grey[200]}`,
-                  background: ({ palette: { white } }) => white.main,
-                  "& .MuiMenuItem-root": {
-                    px: 2,
-                    py: 1.25,
-                    borderRadius: ({ borders: { borderRadius } }) => borderRadius.md,
-                    mx: 0.75,
-                    my: 0.25,
-                    transition: "all 200ms ease-out",
-                    "&:hover": {
-                      backgroundColor: ({ palette: { primary } }) => primary.light + "10",
-                      transform: "translateX(2px)",
-                    },
-                    "&:first-of-type": {
-                      mt: 0.5,
-                    },
-                    "&:last-of-type": {
-                      mb: 0.5,
-                    },
-                  },
                 },
               }}
             >
+              {/* User Info Header */}
+              <MKBox sx={{ px: 2, py: 1.5 }}>
+                <MKTypography variant="body2" fontWeight="bold" noWrap>
+                  {authUser?.name || getUserDisplayName()}
+                </MKTypography>
+                <MKTypography variant="caption" color="text.secondary" noWrap>
+                  {authUser?.email || ""}
+                </MKTypography>
+              </MKBox>
+              <Divider sx={{ my: 0.5 }} />
               <MenuItem
-                onClick={handleSettingsClose}
+                onClick={() => {
+                  handleSettingsClose();
+                  navigate(ROUTES.PROFILE);
+                }}
                 sx={{
                   "&:hover .MuiListItemIcon-root": {
                     transform: "scale(1.1)",
@@ -520,7 +520,33 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
               </MenuItem>
 
               <MenuItem
-                onClick={handleSettingsClose}
+                onClick={() => {
+                  handleSettingsClose();
+                  navigate(ROUTES.SETTINGS);
+                }}
+                sx={{
+                  "&:hover .MuiListItemIcon-root": {
+                    transform: "scale(1.1)",
+                  },
+                }}
+              >
+                <ListItemIcon sx={{ minWidth: 36 }}>
+                  <SettingsIcon fontSize="small" color="info" />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Settings"
+                  primaryTypographyProps={{
+                    variant: "body2",
+                    fontWeight: 500,
+                  }}
+                />
+              </MenuItem>
+
+              <MenuItem
+                onClick={() => {
+                  handleSettingsClose();
+                  navigate(ROUTES.NOTIFICATIONS);
+                }}
                 sx={{
                   "&:hover .MuiListItemIcon-root": {
                     transform: "scale(1.1)",

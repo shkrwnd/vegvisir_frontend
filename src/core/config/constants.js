@@ -31,6 +31,7 @@ export const ROUTES = {
   CHATBOT: "/chatbot",
   CHATBOT_FULLSCREEN: "/chatbot-fullscreen",
   SETTINGS: "/settings",
+  PROFILE: "/profile",
   BUDGETS: "/budgets",
   CARDS: "/cards",
 };

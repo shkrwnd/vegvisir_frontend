@@ -50,6 +50,7 @@ import DashboardPage from "pages/Dashboard";
 import AnalyticsPage from "pages/Analytics";
 import UsersPage from "pages/Users";
 import SettingsPage from "pages/Settings";
+import ProfilePage from "pages/Profile";
 import DataTablesPage from "pages/DataTables";
 import NotificationsPage from "pages/Notifications";
 import ChatBotPage from "pages/ChatBot";
@@ -144,6 +145,7 @@ export default function App() {
                       <Route path="/analytics" element={<AnalyticsPage />} />
                       <Route path="/users" element={<UsersPage />} />
                       <Route path="/settings" element={<SettingsPage />} />
+                      <Route path="/profile" element={<ProfilePage />} />
                       <Route path="/data-tables" element={<DataTablesPage />} />
                       <Route path="/notifications" element={<NotificationsPage />} />
                       <Route path="/chatbot" element={<ChatBotPage />} />
