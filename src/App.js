@@ -32,6 +32,7 @@ import { ROUTES } from "core/config";
 // Components
 import ProtectedRoute from "components/ProtectedRoute";
 import PublicRoute from "components/PublicRoute";
+import FloatingChatBot from "components/custom/FloatingChatBot";
 
 // Features
 import { ChatBotProvider } from "features/chatbot/context";
@@ -78,6 +79,7 @@ export default function App() {
       <CssBaseline />
       <AuthProvider>
         <ChatBotProvider>
+          <FloatingChatBot />
           <Routes>
             {/* Authentication routes with IllustrationLayout - Public */}
             <Route
@@ -149,7 +151,6 @@ export default function App() {
                       <Route path="/settings" element={<SettingsPage />} />
                       <Route path="/data-tables" element={<DataTablesPage />} />
                       <Route path="/notifications" element={<NotificationsPage />} />
-                      <Route path="/chatbot" element={<ChatBotPage />} />
                       <Route path="/budgets" element={<BudgetsPage />} />
                       <Route path="/cards" element={<CardsPage />} />
                       <Route path="/transactions" element={<TransactionsPage />} />

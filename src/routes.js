@@ -57,11 +57,6 @@ export const dashboardRoutes = [
     route: ROUTES.NOTIFICATIONS,
   },
   {
-    name: "ChatBot",
-    icon: <Icon>smart_toy</Icon>,
-    route: ROUTES.CHATBOT,
-  },
-  {
     name: "Budgets",
     icon: <Icon>account_balance_wallet</Icon>,
     route: ROUTES.BUDGETS,
