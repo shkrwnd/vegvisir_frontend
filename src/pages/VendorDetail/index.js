@@ -19,6 +19,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
 
 // Material Kit 2 PRO React components
 import MKBox from "components/base/MKBox";
@@ -27,6 +28,7 @@ import MKButton from "components/base/MKButton";
 
 // Features
 import { useVendorPayment } from "features/vendors";
+import { useWallet } from "features/wallet";
 
 // Core
 import { ROUTES } from "core/config";
@@ -42,6 +44,7 @@ function VendorDetailPage() {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   const { createPayment, loading, error } = useVendorPayment();
+  const { balance, loading: walletLoading } = useWallet();
 
   const getCategoryIcon = (category) => {
     switch (category) {
@@ -303,18 +306,30 @@ function VendorDetailPage() {
             </>
           )}
         </DialogContent>
-        <DialogActions>
-          <MKButton variant="text" color="dark" onClick={handleClosePaymentDialog}>
-            Cancel
-          </MKButton>
-          <MKButton
-            variant="gradient"
-            color="info"
-            onClick={handlePayment}
-            disabled={loading || paymentSuccess || !amount || parseFloat(amount) <= 0}
-          >
-            {loading ? "Processing..." : "Confirm Payment"}
-          </MKButton>
+        <DialogActions
+          sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: 2 }}
+        >
+          <Box>
+            <MKTypography variant="body2" color="text.secondary">
+              Current Balance:
+            </MKTypography>
+            <MKTypography variant="h6" fontWeight="bold" sx={{ mt: 0.5 }}>
+              {walletLoading ? "Loading..." : `$${parseFloat(balance || 0).toFixed(2)}`}
+            </MKTypography>
+          </Box>
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <MKButton variant="text" color="dark" onClick={handleClosePaymentDialog}>
+              Cancel
+            </MKButton>
+            <MKButton
+              variant="gradient"
+              color="info"
+              onClick={handlePayment}
+              disabled={loading || paymentSuccess || !amount || parseFloat(amount) <= 0}
+            >
+              {loading ? "Processing..." : "Confirm Payment"}
+            </MKButton>
+          </Box>
         </DialogActions>
       </Dialog>
     </MKBox>
