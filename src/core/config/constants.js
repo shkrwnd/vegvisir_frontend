@@ -36,6 +36,8 @@ export const ROUTES = {
   CARDS: "/cards",
   WALLET: "/wallet",
   TRANSACTIONS: "/transactions",
+  EVENTS: "/events",
+  RESTAURANTS: "/restaurants",
   MARKETPLACE: "/marketplace",
   VENDOR_DETAIL: "/marketplace/vendor",
   MAP: "/map",

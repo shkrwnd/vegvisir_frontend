@@ -53,6 +53,8 @@ import CardsPage from "pages/Cards";
 import TransactionsPage from "pages/Transactions";
 import MarketplacePage from "pages/Marketplace";
 import VendorDetailPage from "pages/VendorDetail";
+import EventsPage from "pages/Events";
+import RestaurantsPage from "pages/Restaurants";
 import MapPage from "pages/Map";
 
 // Images
@@ -152,6 +154,8 @@ export default function App() {
                         <Route path="/marketplace" element={<MarketplacePage />} />
                         <Route path="/marketplace/vendor/:id" element={<VendorDetailPage />} />
                         <Route path="/map" element={<MapPage />} />
+                        <Route path="/events" element={<EventsPage />} />
+                        <Route path="/restaurants" element={<RestaurantsPage />} />
                         <Route path="/" element={<Navigate to={ROUTES.HOME} replace />} />
                         <Route path="*" element={<Navigate to={ROUTES.HOME} replace />} />
                       </Routes>

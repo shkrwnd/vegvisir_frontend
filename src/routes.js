@@ -57,6 +57,16 @@ export const dashboardRoutes = [
     route: ROUTES.MARKETPLACE,
   },
   {
+    name: "Events",
+    icon: <Icon>events</Icon>,
+    route: ROUTES.EVENTS,
+  },
+  {
+    name: "Restaurants",
+    icon: <Icon>restaurant</Icon>,
+    route: ROUTES.RESTAURANTS,
+  },
+  {
     name: "Map",
     icon: <Icon>map</Icon>,
     route: ROUTES.MAP,
