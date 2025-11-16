@@ -35,6 +35,8 @@ export const ROUTES = {
   CARDS: "/cards",
   WALLET: "/wallet",
   TRANSACTIONS: "/transactions",
+  EVENTS: "/events",
+  RESTAURANTS: "/restaurants",
 };
 
 export const PAGINATION = {

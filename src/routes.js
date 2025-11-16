@@ -76,4 +76,14 @@ export const dashboardRoutes = [
     icon: <Icon>receipt_long</Icon>,
     route: ROUTES.TRANSACTIONS,
   },
+  {
+    name: "Events",
+    icon: <Icon>events</Icon>,
+    route: ROUTES.EVENTS,
+  },
+  {
+    name: "Restaurants",
+    icon: <Icon>restaurant</Icon>,
+    route: ROUTES.RESTAURANTS,
+  },
 ];
