@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // @mui material components
 import Container from "@mui/material/Container";
@@ -60,12 +60,17 @@ import Icon from "@mui/material/Icon";
 // Features
 import { useWallet } from "features/wallet";
 import { useCards } from "features/cards";
+import { useTransactions } from "features/transactions";
 
 // Shared hooks
 import { useSnackbar } from "shared/hooks";
 
 // Core
 import { useAuth } from "core/context";
+import { ROUTES } from "core/config";
+
+// React Router
+import { useNavigate } from "react-router-dom";
 
 // Material Kit 2 PRO React examples
 
@@ -73,6 +78,7 @@ import { useAuth } from "core/context";
 import RutgersWalletCardFinal from "components/custom/RutgersWalletCardFinal";
 
 function Home() {
+  const navigate = useNavigate();
   const {
     wallet,
     balance,
@@ -84,6 +90,28 @@ function Home() {
   const { cards, loading: cardsLoading } = useCards();
   const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
   const { user } = useAuth();
+
+  // Fetch top 10 recent transactions
+  const {
+    transactions,
+    loading: transactionsLoading,
+    error: transactionsError,
+    refetch: refetchTransactions,
+  } = useTransactions();
+
+  // Fetch only 10 transactions on mount
+  useEffect(() => {
+    refetchTransactions({ skip: 0, limit: 10 });
+  }, [refetchTransactions]);
+
+  // Get top 10 transactions sorted by date (most recent first)
+  const recentTransactions = transactions
+    .sort((a, b) => {
+      const dateA = new Date(a.transaction_date || a.created_at);
+      const dateB = new Date(b.transaction_date || b.created_at);
+      return dateB - dateA; // Descending order (newest first)
+    })
+    .slice(0, 10);
 
   const [openDialog, setOpenDialog] = useState(false);
   const [openSendMoneyDialog, setOpenSendMoneyDialog] = useState(false);
@@ -170,6 +198,23 @@ function Home() {
   const maskCardNumber = (cardNumber) => {
     if (!cardNumber) return "";
     return `**** ${cardNumber}`;
+  };
+
+  const formatTransactionDate = (dateString) => {
+    if (!dateString) return "N/A";
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        return "N/A";
+      }
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+    } catch (error) {
+      return "N/A";
+    }
   };
 
   return (
@@ -495,17 +540,34 @@ function Home() {
 
       {/* Transactions Section */}
       <MKBox mb={6} sx={{ px: { xs: 0, sm: 1, md: 3 } }}>
-        <MKTypography
-          variant="h5"
-          fontWeight="bold"
+        <MKBox
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
           mb={3}
-          sx={{
-            color: ({ palette: { text } }) => text.main,
-            fontSize: { xs: "1.5rem", md: "2rem" },
-          }}
+          flexDirection={{ xs: "column", sm: "row" }}
+          gap={2}
         >
-          Recent Transactions
-        </MKTypography>
+          <MKTypography
+            variant="h5"
+            fontWeight="bold"
+            sx={{
+              color: ({ palette: { text } }) => text.main,
+              fontSize: { xs: "1.5rem", md: "2rem" },
+            }}
+          >
+            Recent Transactions
+          </MKTypography>
+          <MKButton
+            variant="outlined"
+            color="info"
+            size="medium"
+            onClick={() => navigate(ROUTES.TRANSACTIONS)}
+            endIcon={<Icon>arrow_forward</Icon>}
+          >
+            View All Transactions
+          </MKButton>
+        </MKBox>
         <Card
           sx={{
             borderRadius: 3,
@@ -521,110 +583,85 @@ function Home() {
             color: ({ palette: { text } }) => text.main,
           }}
         >
-          {/* Dummy Transactions - Amex Style */}
-          {[
-            {
-              id: 1,
-              date: "Dec 15, 2024",
-              merchant: "Campus Dining Hall",
-              amount: -12.5,
-              type: "purchase",
-            },
-            {
-              id: 2,
-              date: "Dec 14, 2024",
-              merchant: "Bookstore",
-              amount: -45.99,
-              type: "purchase",
-            },
-            {
-              id: 3,
-              date: "Dec 13, 2024",
-              merchant: "Flex Dollars Load",
-              amount: 100.0,
-              type: "load",
-            },
-            {
-              id: 4,
-              date: "Dec 12, 2024",
-              merchant: "Campus Coffee Shop",
-              amount: -5.75,
-              type: "purchase",
-            },
-            {
-              id: 5,
-              date: "Dec 11, 2024",
-              merchant: "Laundry Services",
-              amount: -8.0,
-              type: "purchase",
-            },
-            {
-              id: 6,
-              date: "Dec 10, 2024",
-              merchant: "Flex Dollars Load",
-              amount: 50.0,
-              type: "load",
-            },
-          ].map((transaction, index) => (
-            <MKBox
-              key={transaction.id}
-              sx={{
-                p: { xs: 2, md: 3 },
-                borderBottom: ({ palette: { mode, primary, grey } }) =>
-                  index < 5
-                    ? mode === "dark"
-                      ? `1px solid rgba(204, 0, 0, 0.2)`
-                      : `1px solid ${grey[200]}`
-                    : "none",
-                display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                justifyContent: "space-between",
-                alignItems: { xs: "flex-start", sm: "center" },
-                gap: { xs: 1, sm: 0 },
-                transition: "background 0.2s ease",
-                "&:hover": {
-                  backgroundColor: ({ palette: { mode, primary, grey } }) =>
-                    mode === "dark" ? "rgba(204, 0, 0, 0.1)" : grey[100],
-                },
-              }}
-            >
-              <MKBox sx={{ flex: 1, width: { xs: "100%", sm: "auto" } }}>
-                <MKTypography
-                  variant="body1"
-                  fontWeight="bold"
-                  mb={0.5}
-                  sx={{
-                    color: ({ palette: { text } }) => text.main,
-                    fontSize: { xs: "0.9rem", md: "1rem" },
-                  }}
-                >
-                  {transaction.merchant}
-                </MKTypography>
-                <MKTypography
-                  variant="body2"
-                  sx={{
-                    color: ({ palette: { mode, grey, text } }) =>
-                      mode === "dark" ? grey[600] : text.secondary || grey[600],
-                    fontSize: { xs: "0.8rem", md: "0.875rem" },
-                  }}
-                >
-                  {transaction.date}
-                </MKTypography>
-              </MKBox>
-              <MKTypography
-                variant="h6"
-                fontWeight="bold"
-                sx={{
-                  color: ({ palette: { mode, success, text } }) =>
-                    transaction.amount > 0 ? success.main || "#4CAF50" : text.main,
-                  fontSize: { xs: "1rem", md: "1.25rem" },
-                }}
-              >
-                {transaction.amount > 0 ? "+" : ""}
-                {formatCurrency(Math.abs(transaction.amount))}
+          {/* Recent Transactions */}
+          {transactionsLoading ? (
+            <MKBox display="flex" justifyContent="center" alignItems="center" py={6}>
+              <CircularProgress />
+            </MKBox>
+          ) : transactionsError ? (
+            <MKBox p={3} textAlign="center">
+              <MKTypography variant="body2" color="error">
+                Error loading transactions: {transactionsError}
               </MKTypography>
             </MKBox>
-          ))}
+          ) : recentTransactions.length === 0 ? (
+            <MKBox p={3} textAlign="center">
+              <MKTypography variant="body2" color="text.secondary">
+                No transactions found
+              </MKTypography>
+            </MKBox>
+          ) : (
+            recentTransactions.map((transaction, index) => (
+              <MKBox
+                key={transaction.id}
+                sx={{
+                  p: { xs: 2, md: 3 },
+                  borderBottom: ({ palette: { mode, primary, grey } }) =>
+                    index < recentTransactions.length - 1
+                      ? mode === "dark"
+                        ? `1px solid rgba(204, 0, 0, 0.2)`
+                        : `1px solid ${grey[200]}`
+                      : "none",
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  justifyContent: "space-between",
+                  alignItems: { xs: "flex-start", sm: "center" },
+                  gap: { xs: 1, sm: 0 },
+                  transition: "background 0.2s ease",
+                  "&:hover": {
+                    backgroundColor: ({ palette: { mode, primary, grey } }) =>
+                      mode === "dark" ? "rgba(204, 0, 0, 0.1)" : grey[100],
+                  },
+                }}
+              >
+                <MKBox sx={{ flex: 1, width: { xs: "100%", sm: "auto" } }}>
+                  <MKTypography
+                    variant="body1"
+                    fontWeight="bold"
+                    mb={0.5}
+                    sx={{
+                      color: ({ palette: { text } }) => text.main,
+                      fontSize: { xs: "0.9rem", md: "1rem" },
+                    }}
+                  >
+                    {transaction.description || "Transaction"}
+                  </MKTypography>
+                  <MKTypography
+                    variant="body2"
+                    sx={{
+                      color: ({ palette: { mode, grey, text } }) =>
+                        mode === "dark" ? grey[600] : text.secondary || grey[600],
+                      fontSize: { xs: "0.8rem", md: "0.875rem" },
+                    }}
+                  >
+                    {formatTransactionDate(transaction.transaction_date || transaction.created_at)}
+                  </MKTypography>
+                </MKBox>
+                <MKTypography
+                  variant="h6"
+                  fontWeight="bold"
+                  sx={{
+                    color: ({ palette: { mode, success, text } }) =>
+                      transaction.amount > 0 ? success.main || "#4CAF50" : text.main,
+                    fontSize: { xs: "1rem", md: "1.25rem" },
+                  }}
+                >
+                  {transaction.amount > 0 ? "+" : ""}
+                  {formatCurrency(Math.abs(transaction.amount))}
+                </MKTypography>
+              </MKBox>
+            ))
+          )}
         </Card>
       </MKBox>
 
