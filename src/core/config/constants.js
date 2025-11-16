@@ -36,6 +36,8 @@ export const ROUTES = {
   CARDS: "/cards",
   WALLET: "/wallet",
   TRANSACTIONS: "/transactions",
+  ORDER: "/order",
+  VENDOR_DETAIL: "/order/vendor",
 };
 
 export const PAGINATION = {

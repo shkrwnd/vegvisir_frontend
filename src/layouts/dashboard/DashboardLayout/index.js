@@ -57,6 +57,11 @@ function DashboardLayout({ children }) {
       currentPath += `/${segment}`;
       const isLast = index === pathSegments.length - 1;
 
+      // Skip numeric IDs (like vendor IDs) from breadcrumb
+      if (/^\d+$/.test(segment)) {
+        return;
+      }
+
       // Map route segments to readable labels
       const labelMap = {
         home: "Home",
@@ -67,6 +72,10 @@ function DashboardLayout({ children }) {
         "data-tables": "Data Tables",
         notifications: "Notifications",
         chatbot: "ChatBot",
+        budgets: "Budgets",
+        cards: "Cards",
+        order: "Order",
+        vendor: location.state?.vendor?.name || "Vendor",
       };
 
       const label = labelMap[segment] || segment.charAt(0).toUpperCase() + segment.slice(1);

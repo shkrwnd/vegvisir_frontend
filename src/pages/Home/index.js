@@ -43,6 +43,9 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import AddIcon from "@mui/icons-material/Add";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
+import PersonIcon from "@mui/icons-material/Person";
+import StoreIcon from "@mui/icons-material/Store";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 // Material Kit 2 PRO React components
 import MKBox from "components/base/MKBox";
@@ -83,6 +86,7 @@ function Home() {
   const { user } = useAuth();
 
   const [openDialog, setOpenDialog] = useState(false);
+  const [openSendMoneyDialog, setOpenSendMoneyDialog] = useState(false);
   const [formData, setFormData] = useState({
     amount: "",
     card_id: "",
@@ -135,6 +139,8 @@ function Home() {
     try {
       const result = await loadMoney(parseFloat(formData.amount), parseInt(formData.card_id));
       if (result.success) {
+        // Explicitly refetch the balance to ensure it updates
+        await refetch();
         showSnackbar(
           "success",
           "check_circle",
@@ -184,13 +190,7 @@ function Home() {
           onLoadMoney={handleOpenDialog}
           onRefresh={refetch}
           onSendMoney={() => {
-            // TODO: Implement send money functionality
-            showSnackbar(
-              "info",
-              "info",
-              "Coming Soon",
-              "Send money feature will be available soon!"
-            );
+            setOpenSendMoneyDialog(true);
           }}
           isLoading={walletLoading}
           onAddClubCard={() => {
@@ -204,6 +204,215 @@ function Home() {
           }}
         />
       </MKBox>
+
+      {/* Send Money Dialog */}
+      <Dialog
+        open={openSendMoneyDialog}
+        onClose={() => setOpenSendMoneyDialog(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          <MKTypography variant="h5" fontWeight="bold">
+            Pay
+          </MKTypography>
+        </DialogTitle>
+        <DialogContent>
+          <MKBox sx={{ pt: 2 }}>
+            <MKTypography variant="body2" color="text.secondary" mb={3}>
+              Choose how you want to pay
+            </MKTypography>
+            <MKBox
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                gap: 2,
+                flexWrap: "wrap",
+              }}
+            >
+              {/* Pay a Friend Option */}
+              <Card
+                onClick={() => {
+                  setOpenSendMoneyDialog(false);
+                  showSnackbar(
+                    "info",
+                    "info",
+                    "Pay a Friend",
+                    "Pay a friend feature will be available soon!"
+                  );
+                }}
+                sx={{
+                  flex: 1,
+                  p: 3,
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  border: "2px solid",
+                  borderColor: "rgba(204, 0, 0, 0.2)",
+                  borderRadius: 3,
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: "0 8px 24px rgba(204, 0, 0, 0.2)",
+                    borderColor: "primary.main",
+                    backgroundColor: "rgba(204, 0, 0, 0.05)",
+                  },
+                }}
+              >
+                <MKBox
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <MKBox
+                    sx={{
+                      width: 64,
+                      height: 64,
+                      borderRadius: "50%",
+                      backgroundColor: "rgba(204, 0, 0, 0.1)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      mb: 2,
+                    }}
+                  >
+                    <PersonIcon sx={{ fontSize: 32, color: "primary.main" }} />
+                  </MKBox>
+                  <MKTypography variant="h6" fontWeight="bold" mb={1}>
+                    Pay a Friend
+                  </MKTypography>
+                  <MKTypography variant="body2" color="text.secondary">
+                    Send money to another user
+                  </MKTypography>
+                </MKBox>
+              </Card>
+
+              {/* Pay a Vendor Option */}
+              <Card
+                onClick={() => {
+                  setOpenSendMoneyDialog(false);
+                  showSnackbar(
+                    "info",
+                    "info",
+                    "Marketplace",
+                    "Marketplace feature will be available soon!"
+                  );
+                }}
+                sx={{
+                  flex: 1,
+                  p: 3,
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  border: "2px solid",
+                  borderColor: "rgba(204, 0, 0, 0.2)",
+                  borderRadius: 3,
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: "0 8px 24px rgba(204, 0, 0, 0.2)",
+                    borderColor: "primary.main",
+                    backgroundColor: "rgba(204, 0, 0, 0.05)",
+                  },
+                }}
+              >
+                <MKBox
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <MKBox
+                    sx={{
+                      width: 64,
+                      height: 64,
+                      borderRadius: "50%",
+                      backgroundColor: "rgba(204, 0, 0, 0.1)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      mb: 2,
+                    }}
+                  >
+                    <StoreIcon sx={{ fontSize: 32, color: "primary.main" }} />
+                  </MKBox>
+                  <MKTypography variant="h6" fontWeight="bold" mb={1}>
+                    Marketplace
+                  </MKTypography>
+                  <MKTypography variant="body2" color="text.secondary">
+                    Make a payment to a campus vendor
+                  </MKTypography>
+                </MKBox>
+              </Card>
+
+              {/* Pay Forward Option */}
+              <Card
+                onClick={() => {
+                  setOpenSendMoneyDialog(false);
+                  showSnackbar(
+                    "info",
+                    "info",
+                    "Pay Forward",
+                    "Pay forward feature will be available soon!"
+                  );
+                }}
+                sx={{
+                  flex: 1,
+                  minWidth: { xs: "100%", sm: "calc(50% - 8px)" },
+                  p: 3,
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  border: "2px solid",
+                  borderColor: "rgba(204, 0, 0, 0.2)",
+                  borderRadius: 3,
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: "0 8px 24px rgba(204, 0, 0, 0.2)",
+                    borderColor: "primary.main",
+                    backgroundColor: "rgba(204, 0, 0, 0.05)",
+                  },
+                }}
+              >
+                <MKBox
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <MKBox
+                    sx={{
+                      width: 64,
+                      height: 64,
+                      borderRadius: "50%",
+                      backgroundColor: "rgba(204, 0, 0, 0.1)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      mb: 2,
+                    }}
+                  >
+                    <FavoriteIcon sx={{ fontSize: 32, color: "primary.main" }} />
+                  </MKBox>
+                  <MKTypography variant="h6" fontWeight="bold" mb={1}>
+                    Pay Forward
+                  </MKTypography>
+                  <MKTypography variant="body2" color="text.secondary">
+                    Make a donation or pay it forward
+                  </MKTypography>
+                </MKBox>
+              </Card>
+            </MKBox>
+          </MKBox>
+        </DialogContent>
+        <DialogActions sx={{ p: 2 }}>
+          <MKButton onClick={() => setOpenSendMoneyDialog(false)} color="secondary">
+            Cancel
+          </MKButton>
+        </DialogActions>
+      </Dialog>
 
       {/* Load Money Dialog */}
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>

@@ -187,15 +187,26 @@ const RutgersWalletCardFinal = ({
               width: "100%",
               height: "100%",
               backfaceVisibility: "hidden",
-              borderRadius: "28px",
+              borderRadius: "32px",
               overflow: "hidden",
-              border: "2px solid rgba(255, 255, 255, 1)",
-              boxShadow: `
-              0 8px 32px 0 rgba(0, 0, 0, 0.15),
-              0 20px 60px 0 rgba(204, 0, 0, ${isHovered ? "0.25" : "0.15"}),
-              inset 0 1px 0 0 rgba(255, 255, 255, 0.3)
-            `,
-              transition: "all 0.4s ease",
+              // Glassmorphism styling
+              background: cardBackground
+                ? "rgba(255, 255, 255, 0.08)"
+                : "rgba(255, 255, 255, 0.08)",
+              backdropFilter: "blur(25px) saturate(200%)",
+              WebkitBackdropFilter: "blur(25px) saturate(200%)",
+              border: "2px solid rgba(255, 255, 255, 0.2)",
+              boxShadow:
+                isHovered && !isFlipped
+                  ? `0 12px 40px 0 rgba(0, 0, 0, 0.5),
+                   inset 0 2px 4px 0 rgba(255, 255, 255, 0.2),
+                   inset 0 -2px 4px 0 rgba(0, 0, 0, 0.15),
+                   0 0 80px rgba(204, 0, 0, 0.25)`
+                  : `0 8px 32px 0 rgba(0, 0, 0, 0.4),
+                   inset 0 2px 4px 0 rgba(255, 255, 255, 0.15),
+                   inset 0 -2px 4px 0 rgba(0, 0, 0, 0.1),
+                   0 0 60px rgba(204, 0, 0, 0.15)`,
+              transition: "all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)",
               transform:
                 isHovered && !isFlipped ? "translateY(-8px) scale(1.02)" : "translateY(0) scale(1)",
             }}
@@ -229,16 +240,7 @@ const RutgersWalletCardFinal = ({
               </>
             ) : (
               <>
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: "rgba(255, 255, 255, 0.95)",
-                  }}
-                />
+                {/* Subtle gradient overlay for glass effect */}
                 <div
                   style={{
                     position: "absolute",
@@ -247,19 +249,7 @@ const RutgersWalletCardFinal = ({
                     right: 0,
                     bottom: 0,
                     background:
-                      "linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(248, 250, 252, 0.3) 100%)",
-                    opacity: 0.8,
-                  }}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                    width: "60%",
-                    height: "100%",
-                    background:
-                      "linear-gradient(135deg, transparent 0%, rgba(204, 0, 0, 0.08) 100%)",
+                      "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(204, 0, 0, 0.05) 100%)",
                     opacity: 0.6,
                   }}
                 />
@@ -323,14 +313,14 @@ const RutgersWalletCardFinal = ({
                     display: "flex",
                     alignItems: "center",
                     gap: "12px",
-                    background: cardBackground ? "rgba(0, 0, 0, 0.6)" : "rgba(255, 255, 255, 0.9)",
-                    backdropFilter: "blur(10px)",
+                    background: "rgba(255, 255, 255, 0.1)",
+                    backdropFilter: "blur(15px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(15px) saturate(180%)",
                     padding: "12px 16px",
                     borderRadius: "16px",
-                    border: cardBackground
-                      ? "1px solid rgba(255, 255, 255, 0.3)"
-                      : "1px solid rgba(0, 0, 0, 0.08)",
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    boxShadow:
+                      "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.2)",
                   }}
                 >
                   <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
@@ -343,18 +333,19 @@ const RutgersWalletCardFinal = ({
                   <div>
                     <div
                       style={{
-                        color: cardBackground ? "#ffffff" : "#CC0000",
+                        color: "#CC0000",
                         fontWeight: 900,
                         fontSize: "1.1rem",
                         letterSpacing: "0.5px",
                         lineHeight: 1.2,
+                        textShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
                       }}
                     >
                       RUTGERS
                     </div>
                     <div
                       style={{
-                        color: cardBackground ? "rgba(255, 255, 255, 0.8)" : "#1f2937",
+                        color: "#1f2937",
                         fontSize: "0.7rem",
                         fontWeight: 600,
                         letterSpacing: "1px",
@@ -378,22 +369,24 @@ const RutgersWalletCardFinal = ({
                 {/* User Name */}
                 <div
                   style={{
-                    background: cardBackground ? "rgba(0, 0, 0, 0.6)" : "rgba(255, 255, 255, 0.9)",
-                    backdropFilter: "blur(10px)",
+                    background: "rgba(255, 255, 255, 0.1)",
+                    backdropFilter: "blur(15px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(15px) saturate(180%)",
                     padding: "14px 20px",
                     borderRadius: "16px",
-                    border: cardBackground
-                      ? "1px solid rgba(255, 255, 255, 0.2)"
-                      : "1px solid rgba(0, 0, 0, 0.05)",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
                     flex: "0 0 auto",
+                    boxShadow:
+                      "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.2)",
                   }}
                 >
                   <div
                     style={{
-                      color: cardBackground ? "#ffffff" : "#1f2937",
+                      color: "#1f2937",
                       fontWeight: 800,
                       fontSize: "1.2rem",
                       lineHeight: 1.2,
+                      textShadow: "0 1px 2px rgba(255, 255, 255, 0.5)",
                     }}
                   >
                     {userName}
@@ -404,18 +397,14 @@ const RutgersWalletCardFinal = ({
                 <div
                   style={{
                     textAlign: "right",
-                    background: cardBackground
-                      ? "rgba(204, 0, 0, 0.7)"
-                      : "linear-gradient(135deg, rgba(204, 0, 0, 0.08) 0%, rgba(204, 0, 0, 0.08) 100%)",
-                    backdropFilter: "blur(10px)",
+                    background: "rgba(255, 255, 255, 0.1)",
+                    backdropFilter: "blur(15px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(15px) saturate(180%)",
                     padding: "14px 20px",
                     borderRadius: "16px",
-                    border: cardBackground
-                      ? "2px solid rgba(255, 255, 255, 0.3)"
-                      : "2px solid rgba(204, 0, 0, 0.2)",
-                    boxShadow: cardBackground
-                      ? "0 4px 12px rgba(0, 0, 0, 0.3)"
-                      : "0 4px 12px rgba(204, 0, 0, 0.1)",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    boxShadow:
+                      "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.2)",
                     flex: "0 0 auto",
                   }}
                 >
@@ -429,7 +418,7 @@ const RutgersWalletCardFinal = ({
                   >
                     <div
                       style={{
-                        color: cardBackground ? "rgba(255, 255, 255, 0.9)" : "#6b7280",
+                        color: "#6b7280",
                         fontSize: "0.75rem",
                         textTransform: "uppercase",
                         letterSpacing: "1.5px",
@@ -451,17 +440,15 @@ const RutgersWalletCardFinal = ({
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        color: cardBackground ? "rgba(255, 255, 255, 0.7)" : "#6b7280",
+                        color: "#6b7280",
                         transition: "all 0.2s ease",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.color = cardBackground ? "#ffffff" : "#CC0000";
+                        e.currentTarget.style.color = "#CC0000";
                         e.currentTarget.style.transform = "scale(1.1)";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.color = cardBackground
-                          ? "rgba(255, 255, 255, 0.7)"
-                          : "#6b7280";
+                        e.currentTarget.style.color = "#6b7280";
                         e.currentTarget.style.transform = "scale(1)";
                       }}
                     >
@@ -472,12 +459,10 @@ const RutgersWalletCardFinal = ({
                   </div>
                   <div
                     style={{
-                      color: cardBackground ? "#ffffff" : "#CC0000",
+                      color: "#CC0000",
                       fontWeight: 900,
                       fontSize: "1.6rem",
-                      textShadow: cardBackground
-                        ? "0 2px 8px rgba(0, 0, 0, 0.5)"
-                        : "0 0 15px rgba(204, 0, 0, 0.3)",
+                      textShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
                       lineHeight: 1.2,
                     }}
                   >
@@ -495,11 +480,20 @@ const RutgersWalletCardFinal = ({
               width: "100%",
               height: "100%",
               backfaceVisibility: "hidden",
-              borderRadius: "28px",
+              borderRadius: "32px",
               padding: "32px",
               overflow: "hidden",
-              border: "2px solid rgba(255, 255, 255, 1)",
-              boxShadow: `0 8px 32px 0 rgba(0, 0, 0, 0.15), 0 20px 60px 0 rgba(204, 0, 0, 0.2)`,
+              // Glassmorphism styling
+              background: cardBackground
+                ? "rgba(255, 255, 255, 0.08)"
+                : "rgba(255, 255, 255, 0.08)",
+              backdropFilter: "blur(25px) saturate(200%)",
+              WebkitBackdropFilter: "blur(25px) saturate(200%)",
+              border: "2px solid rgba(255, 255, 255, 0.2)",
+              boxShadow: `0 8px 32px 0 rgba(0, 0, 0, 0.4),
+                inset 0 2px 4px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -2px 4px 0 rgba(0, 0, 0, 0.1),
+                0 0 60px rgba(204, 0, 0, 0.15)`,
               transform: "rotateY(180deg)",
             }}
           >
@@ -689,7 +683,7 @@ const RutgersWalletCardFinal = ({
           gap: "12px",
         }}
       >
-        {/* Send Money Button - Main Button */}
+        {/* Pay Button - Main Button */}
         {onSendMoney && (
           <button
             onClick={onSendMoney}
@@ -732,7 +726,7 @@ const RutgersWalletCardFinal = ({
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
             </svg>
-            Send Money
+            Pay
           </button>
         )}
 

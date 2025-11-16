@@ -8,11 +8,35 @@
 import PropTypes from "prop-types";
 import { createContext, useContext, useState, useEffect } from "react";
 import { STORAGE_KEYS } from "../config";
+import { isTokenValid } from "../utils/tokenUtils";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // Initialize state from localStorage immediately to prevent flash of logout
+  const [user, setUser] = useState(() => {
+    try {
+      const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
+      const savedUser = localStorage.getItem(STORAGE_KEYS.USER);
+      // Check if token exists and is valid
+      if (token && savedUser) {
+        if (isTokenValid(token)) {
+          return JSON.parse(savedUser);
+        } else {
+          // Token is expired, clear storage
+          console.warn("Token expired on init, clearing auth state");
+          localStorage.removeItem(STORAGE_KEYS.TOKEN);
+          localStorage.removeItem(STORAGE_KEYS.USER);
+        }
+      }
+    } catch (error) {
+      console.error("Error parsing user data on init:", error);
+      // Clear potentially corrupted data
+      localStorage.removeItem(STORAGE_KEYS.TOKEN);
+      localStorage.removeItem(STORAGE_KEYS.USER);
+    }
+    return null;
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,10 +44,31 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
     const savedUser = localStorage.getItem(STORAGE_KEYS.USER);
     if (token && savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch (error) {
-        console.error("Error parsing user data:", error);
+      // Validate token expiration
+      if (isTokenValid(token)) {
+        try {
+          const parsedUser = JSON.parse(savedUser);
+          setUser(parsedUser);
+        } catch (error) {
+          console.error("Error parsing user data:", error);
+          setUser(null);
+          // Clear corrupted data
+          localStorage.removeItem(STORAGE_KEYS.TOKEN);
+          localStorage.removeItem(STORAGE_KEYS.USER);
+        }
+      } else {
+        // Token is expired, clear auth state
+        console.warn("Token expired, clearing auth state");
+        setUser(null);
+        localStorage.removeItem(STORAGE_KEYS.TOKEN);
+        localStorage.removeItem(STORAGE_KEYS.USER);
+      }
+    } else if (!token) {
+      // If token is missing, clear user state
+      setUser(null);
+      // Also clear user data if token is missing
+      if (savedUser) {
+        localStorage.removeItem(STORAGE_KEYS.USER);
       }
     }
     setLoading(false);

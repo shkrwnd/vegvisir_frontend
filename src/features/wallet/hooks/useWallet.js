@@ -43,7 +43,12 @@ export const useWallet = () => {
   const loadMoney = async (amount, cardId) => {
     try {
       const response = await walletAPI.loadMoney({ amount, card_id: cardId });
-      await fetchBalance(); // Refresh the balance
+      // Update wallet state immediately if response contains wallet data
+      if (response.data && response.data.balance !== undefined) {
+        setWallet(response.data);
+      }
+      // Also refetch to ensure we have the latest data
+      await fetchBalance();
       return { success: true, data: response.data };
     } catch (err) {
       return {

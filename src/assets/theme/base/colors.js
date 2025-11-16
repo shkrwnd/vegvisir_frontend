@@ -21,12 +21,12 @@ Coded by www.creative-tim.com
 
 export default {
   background: {
-    default: "#1a1a1a",
+    default: "#f0f2f5",
   },
 
   text: {
-    main: "#ffffff",
-    focus: "#ffffff",
+    main: "#1a1a1a",
+    focus: "#000000",
   },
 
   transparent: {
@@ -85,15 +85,15 @@ export default {
   },
 
   grey: {
-    100: "#1a1a1a",
-    200: "#2d2d2d",
-    300: "#404040",
-    400: "#525252",
-    500: "#666666",
-    600: "#808080",
-    700: "#999999",
-    800: "#b3b3b3",
-    900: "#ffffff",
+    100: "#f8f9fa",
+    200: "#f0f2f5",
+    300: "#dee2e6",
+    400: "#ced4da",
+    500: "#adb5bd",
+    600: "#6c757d",
+    700: "#495057",
+    800: "#343a40",
+    900: "#212529",
   },
 
   gradients: {
@@ -237,8 +237,8 @@ export default {
     },
 
     dark: {
-      background: "#8097bf",
-      text: "#1e2e4a",
+      background: "#ffffff",
+      text: "#000000",
     },
   },
 

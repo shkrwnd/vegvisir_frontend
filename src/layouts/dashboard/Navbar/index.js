@@ -47,8 +47,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import HistoryIcon from "@mui/icons-material/History";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import ClearIcon from "@mui/icons-material/Clear";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 // Material Kit 2 PRO React components
 import MKBox from "components/base/MKBox";
@@ -56,7 +54,7 @@ import MKTypography from "components/base/MKTypography";
 
 // Core config
 import { STORAGE_KEYS, ROUTES } from "core/config";
-import { useAuth, useTheme } from "core/context";
+import { useAuth } from "core/context";
 
 const drawerWidth = 240;
 
@@ -64,7 +62,6 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
   const [settingsAnchorEl, setSettingsAnchorEl] = useState(null);
   const settingsOpen = Boolean(settingsAnchorEl);
   const { logout } = useAuth();
-  const { mode, toggleMode } = useTheme();
   const navigate = useNavigate();
 
   // Search functionality state
@@ -461,27 +458,6 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
               </MKTypography>
             </MKBox>
 
-            {/* Theme Toggle Button */}
-            <IconButton
-              id="dashboard-theme-toggle"
-              onClick={toggleMode}
-              sx={{
-                backgroundColor: ({ palette: { mode, grey } }) =>
-                  mode === "dark" ? grey[300] : "rgba(0,0,0,0.04)",
-                "&:hover": {
-                  backgroundColor: ({ palette: { mode, grey } }) =>
-                    mode === "dark" ? grey[400] : "rgba(0,0,0,0.08)",
-                },
-                borderRadius: 2,
-                p: 1,
-                transition: "all 200ms ease-out",
-                color: mode === "dark" ? "#FFD700" : "#FFA500",
-              }}
-              aria-label="toggle theme"
-            >
-              {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
-            </IconButton>
-
             <IconButton
               id="dashboard-settings-button"
               onClick={handleSettingsClick}
@@ -529,6 +505,7 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                     mx: 0.75,
                     my: 0.25,
                     transition: "all 200ms ease-out",
+                    color: "#000000",
                     "&:hover": {
                       backgroundColor: ({ palette: { primary } }) => primary.light + "10",
                       transform: "translateX(2px)",
@@ -538,6 +515,9 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                     },
                     "&:last-of-type": {
                       mb: 0.5,
+                    },
+                    "& .MuiListItemText-primary": {
+                      color: "#000000",
                     },
                   },
                 },

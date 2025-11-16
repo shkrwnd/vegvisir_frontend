@@ -37,9 +37,9 @@ export const dashboardRoutes = [
     route: ROUTES.ANALYTICS,
   },
   {
-    name: "ChatBot",
-    icon: <Icon>smart_toy</Icon>,
-    route: ROUTES.CHATBOT,
+    name: "Budgets",
+    icon: <Icon>account_balance_wallet</Icon>,
+    route: ROUTES.BUDGETS,
   },
   {
     name: "Cards",
@@ -50,5 +50,10 @@ export const dashboardRoutes = [
     name: "Transactions",
     icon: <Icon>receipt_long</Icon>,
     route: ROUTES.TRANSACTIONS,
+  },
+  {
+    name: "Order",
+    icon: <Icon>shopping_cart</Icon>,
+    route: ROUTES.ORDER,
   },
 ];

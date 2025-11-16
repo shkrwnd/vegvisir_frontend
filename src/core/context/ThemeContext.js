@@ -356,17 +356,10 @@ const darkColors = {
 const ThemeContext = createContext(null);
 
 export const ThemeProvider = ({ children }) => {
-  const [mode, setMode] = useState(() => {
-    const savedMode = localStorage.getItem(STORAGE_KEYS.THEME_MODE);
-    return savedMode === "light" ? "light" : "dark";
-  });
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.THEME_MODE, mode);
-  }, [mode]);
+  const [mode] = useState("light");
 
   const toggleMode = () => {
-    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+    // Toggle disabled - always use light mode
   };
 
   const colors = mode === "light" ? lightColors : darkColors;

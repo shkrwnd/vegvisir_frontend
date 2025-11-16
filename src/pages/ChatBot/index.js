@@ -65,7 +65,8 @@ function ChatBot() {
 
   const handleFullscreenToggle = () => {
     if (isFullscreen) {
-      navigate(ROUTES.CHATBOT);
+      // When collapsing from fullscreen, navigate to home and open floating chatbot
+      navigate(`${ROUTES.HOME}?openChat=true`, { replace: true });
     } else {
       navigate(ROUTES.CHATBOT_FULLSCREEN);
     }
