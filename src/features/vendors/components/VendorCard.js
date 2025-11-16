@@ -81,7 +81,7 @@ function VendorCard({ vendor, onClick }) {
               variant="contained"
               badgeContent={vendor.category}
               color={getCategoryColor(vendor.category)}
-              size="xs"
+              size="sm"
             />
           </MKBox>
 
@@ -118,28 +118,6 @@ function VendorCard({ vendor, onClick }) {
               {vendor.description}
             </MKTypography>
           )}
-
-          {/* Meal Plan acceptance indicator */}
-          <MKBox mt={2} sx={{ minHeight: "40px" }}>
-            {vendor.accepts_raider_card && (
-              <MKBox
-                display="flex"
-                alignItems="center"
-                p={1}
-                sx={{
-                  backgroundColor: ({ palette }) => palette.success.main + "15",
-                  borderRadius: "8px",
-                }}
-              >
-                <Icon fontSize="small" sx={{ mr: 0.5, color: "success.main" }}>
-                  check_circle
-                </Icon>
-                <MKTypography variant="caption" color="success" fontWeight="medium">
-                  Meal Plan
-                </MKTypography>
-              </MKBox>
-            )}
-          </MKBox>
         </MKBox>
       </CardContent>
     </Card>

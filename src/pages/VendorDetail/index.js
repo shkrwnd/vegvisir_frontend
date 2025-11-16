@@ -165,25 +165,6 @@ function VendorDetailPage() {
                     </MKTypography>
                   </MKBox>
                 )}
-
-                {/* Meal Plan Acceptance */}
-                {vendor.accepts_raider_card && (
-                  <MKBox
-                    p={2}
-                    mb={3}
-                    sx={{
-                      backgroundColor: ({ palette }) => palette.success.main + "15",
-                      borderRadius: "12px",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Icon sx={{ mr: 1, color: "success.main" }}>check_circle</Icon>
-                    <MKTypography variant="body2" color="success" fontWeight="medium">
-                      Meal Plan
-                    </MKTypography>
-                  </MKBox>
-                )}
               </MKBox>
 
               {/* Payment Button at Bottom */}
