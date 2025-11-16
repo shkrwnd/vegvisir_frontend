@@ -7,22 +7,51 @@ import MKBox from "components/base/MKBox";
 import MKTypography from "components/base/MKTypography";
 import MKButton from "components/base/MKButton";
 
-// Example restaurant data
+// Updated restaurant data
 const restaurants = [
+  // Raider Dollars + Flex Dollars
   {
-    name: "JBJ Soul Kitchen",
-    address: "350 Dr Martin Luther King Jr Blvd, Newark, NJ 07102",
+    name: "On the RUN",
+    address: "Paul Robeson Campus Center, 350 Dr Martin Luther King Jr Blvd, Newark, NJ 07102",
     flex: true,
     mealSwipe: false,
-    raider: true,
-    link: "https://www.google.com/maps/search/?api=1&query=350+Dr+Martin+Luther+King+Jr+Blvd+Newark+NJ",
+    link: "https://www.google.com/maps/search/?api=1&query=Paul+Robeson+Campus+Center+Newark+NJ",
   },
+  {
+    name: "Robeson Food Court",
+    address: "Paul Robeson Campus Center, 350 Dr Martin Luther King Jr Blvd, Newark, NJ 07102",
+    flex: true,
+    mealSwipe: false,
+    link: "https://www.google.com/maps/search/?api=1&query=Paul+Robeson+Campus+Center+Newark+NJ",
+  },
+  {
+    name: "Starbucks Coffee (Robeson)",
+    address: "Paul Robeson Campus Center, 350 Dr Martin Luther King Jr Blvd, Newark, NJ 07102",
+    flex: true,
+    mealSwipe: false,
+    link: "https://www.google.com/maps/search/?api=1&query=Paul+Robeson+Campus+Center+Newark+NJ",
+  },
+  {
+    name: "Starbucks Coffee (RBS)",
+    address: "Rutgers Business School, 1 Washington Park, Newark, NJ 07102",
+    flex: true,
+    mealSwipe: false,
+    link: "https://www.google.com/maps/search/?api=1&query=Rutgers+Business+School+Newark+NJ",
+  },
+  {
+    name: "Stonsby Commons",
+    address: "Adjacent to Woodward Hall, 91 Bleeker Street, Newark, NJ 07102",
+    flex: true,
+    mealSwipe: true,
+    link: "https://www.google.com/maps/search/?api=1&query=91+Bleeker+Street+Newark+NJ",
+  },
+
+  // Raider Dollars only (no Flex or Meal Swipes)
   {
     name: "7 Heaven",
     address: "162 University Avenue, Newark, NJ 07102",
     flex: false,
     mealSwipe: false,
-    raider: true,
     link: "https://www.google.com/maps/search/?api=1&query=162+University+Avenue+Newark+NJ",
   },
   {
@@ -30,7 +59,6 @@ const restaurants = [
     address: "691 Broad Street, Newark, NJ 07102",
     flex: false,
     mealSwipe: false,
-    raider: false,
     link: "https://www.google.com/maps/search/?api=1&query=691+Broad+Street+Newark+NJ",
   },
   {
@@ -38,16 +66,16 @@ const restaurants = [
     address: "635 Broad Street, Newark, NJ 07102",
     flex: false,
     mealSwipe: false,
-    raider: false,
     link: "https://www.google.com/maps/search/?api=1&query=635+Broad+Street+Newark+NJ",
   },
+  // Add more Raider Dollar locations as needed...
 ];
 
 function Restaurants() {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <MKTypography variant="h4" fontWeight="bold" mb={3}>
-        Campus Restaurants
+        Campus Dining Locations
       </MKTypography>
       <Grid container spacing={3}>
         {restaurants.map((restaurant, index) => (
@@ -72,11 +100,13 @@ function Restaurants() {
               <MKTypography variant="body2" color="text.secondary" mb={2}>
                 {restaurant.address}
               </MKTypography>
+
               <MKBox display="flex" flexWrap="wrap" gap={1} mb={2}>
+                <Chip label="Raider Dollars" color="warning" size="small" />
                 {restaurant.flex && <Chip label="Flex Dollars" color="primary" size="small" />}
                 {restaurant.mealSwipe && <Chip label="Meal Swipes" color="success" size="small" />}
-                {restaurant.raider && <Chip label="Raider Dollars" color="warning" size="small" />}
               </MKBox>
+
               <MKButton
                 variant="gradient"
                 color="info"

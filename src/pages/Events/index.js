@@ -15,7 +15,7 @@ function Events() {
       name: "Tech Talk",
       date: "Nov 15, 2025",
       time: "2:00 PM",
-      location: "101 Science Hall",
+      location: "Prcc",
       description: "An insightful tech talk on AI trends",
       rsvp: false,
     },
