@@ -46,6 +46,10 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PersonIcon from "@mui/icons-material/Person";
 import StoreIcon from "@mui/icons-material/Store";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import DescriptionIcon from "@mui/icons-material/Description";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
 
 // Material Kit 2 PRO React components
 import MKBox from "components/base/MKBox";
@@ -62,6 +66,7 @@ import { useWallet } from "features/wallet";
 import { useCards } from "features/cards";
 import { useTransactions } from "features/transactions";
 import { useRewards } from "features/rewards";
+import { useDonations } from "features/donations";
 
 // Shared hooks
 import { useSnackbar } from "shared/hooks";
@@ -92,6 +97,7 @@ function Home() {
   const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
   const { user } = useAuth();
   const { balance: rewardsBalance, loading: rewardsLoading } = useRewards();
+  const { makeDonation, getDonationBox, loading: donationLoading } = useDonations();
 
   // Fetch top 10 recent transactions
   const {
@@ -117,12 +123,20 @@ function Home() {
 
   const [openDialog, setOpenDialog] = useState(false);
   const [openSendMoneyDialog, setOpenSendMoneyDialog] = useState(false);
+  const [openDonationDialog, setOpenDonationDialog] = useState(false);
+  const [donationBox, setDonationBox] = useState(null);
   const [formData, setFormData] = useState({
     amount: "",
     card_id: "",
   });
+  const [donationFormData, setDonationFormData] = useState({
+    amount: "",
+    description: "",
+  });
   const [formErrors, setFormErrors] = useState({});
+  const [donationFormErrors, setDonationFormErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  const [submittingDonation, setSubmittingDonation] = useState(false);
 
   const handleOpenDialog = () => {
     setFormData({
@@ -140,6 +154,130 @@ function Home() {
       card_id: "",
     });
     setFormErrors({});
+  };
+
+  // Fetch donation box on mount
+  useEffect(() => {
+    const fetchDonationBox = async () => {
+      try {
+        const data = await getDonationBox();
+        setDonationBox(data);
+      } catch (err) {
+        console.error("Error fetching donation box:", err);
+      }
+    };
+    fetchDonationBox();
+  }, [getDonationBox]);
+
+  const handleOpenDonationDialog = async () => {
+    setOpenSendMoneyDialog(false);
+    // Fetch latest donation box info
+    try {
+      const data = await getDonationBox();
+      setDonationBox(data);
+    } catch (err) {
+      console.error("Error fetching donation box:", err);
+    }
+    setDonationFormData({
+      amount: "",
+      description: "",
+    });
+    setDonationFormErrors({});
+    setOpenDonationDialog(true);
+  };
+
+  const handleCloseDonationDialog = () => {
+    setOpenDonationDialog(false);
+    setDonationFormData({
+      amount: "",
+      description: "",
+    });
+    setDonationFormErrors({});
+  };
+
+  const validateDonationForm = () => {
+    const errors = {};
+
+    if (!donationFormData.amount || donationFormData.amount.trim() === "") {
+      errors.amount = "Amount is required";
+    } else {
+      const amount = parseFloat(donationFormData.amount);
+      if (isNaN(amount) || amount <= 0) {
+        errors.amount = "Amount must be a positive number";
+      } else if (amount > balance) {
+        errors.amount = `Amount cannot exceed your wallet balance of ${formatCurrency(balance)}`;
+      }
+    }
+
+    if (donationFormData.description && donationFormData.description.length > 500) {
+      errors.description = "Description must be 500 characters or less";
+    }
+
+    setDonationFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleDonationInputChange = (e) => {
+    const { name, value } = e.target;
+    setDonationFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    if (donationFormErrors[name]) {
+      setDonationFormErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const handleDonationSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateDonationForm()) {
+      return;
+    }
+
+    try {
+      setSubmittingDonation(true);
+
+      const donationData = await makeDonation(
+        donationFormData.amount,
+        donationFormData.description
+      );
+
+      // Update donation box total
+      if (donationData.donation_box_total !== undefined) {
+        setDonationBox((prev) => ({
+          ...prev,
+          total_amount: donationData.donation_box_total,
+        }));
+      }
+
+      // Refetch donation box and wallet
+      const updatedBox = await getDonationBox();
+      setDonationBox(updatedBox);
+      await refetch();
+
+      showSnackbar(
+        "success",
+        "check_circle",
+        "Donation Successful!",
+        `Thank you for your donation of ${formatCurrency(parseFloat(donationFormData.amount))}!`
+      );
+
+      handleCloseDonationDialog();
+    } catch (err) {
+      console.error("Error making donation:", err);
+      showSnackbar(
+        "error",
+        "error",
+        "Donation Failed",
+        err.response?.data?.message || "Failed to process donation. Please try again."
+      );
+    } finally {
+      setSubmittingDonation(false);
+    }
   };
 
   const validateForm = () => {
@@ -426,17 +564,9 @@ function Home() {
                 </MKBox>
               </Card>
 
-              {/* Pay Forward Option */}
+              {/* Donate Option */}
               <Card
-                onClick={() => {
-                  setOpenSendMoneyDialog(false);
-                  showSnackbar(
-                    "info",
-                    "info",
-                    "Pay Forward",
-                    "Pay forward feature will be available soon!"
-                  );
-                }}
+                onClick={handleOpenDonationDialog}
                 sx={{
                   flex: 1,
                   minWidth: { xs: "100%", sm: "calc(50% - 8px)" },
@@ -449,8 +579,8 @@ function Home() {
                   "&:hover": {
                     transform: "translateY(-4px)",
                     boxShadow: "0 8px 24px rgba(204, 0, 0, 0.2)",
-                    borderColor: "primary.main",
-                    backgroundColor: "rgba(204, 0, 0, 0.05)",
+                    borderColor: "error.main",
+                    backgroundColor: "rgba(244, 67, 54, 0.05)",
                   },
                 }}
               >
@@ -467,21 +597,26 @@ function Home() {
                       width: 64,
                       height: 64,
                       borderRadius: "50%",
-                      backgroundColor: "rgba(204, 0, 0, 0.1)",
+                      backgroundColor: "rgba(244, 67, 54, 0.1)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       mb: 2,
                     }}
                   >
-                    <FavoriteIcon sx={{ fontSize: 32, color: "primary.main" }} />
+                    <FavoriteIcon sx={{ fontSize: 32, color: "error.main" }} />
                   </MKBox>
                   <MKTypography variant="h6" fontWeight="bold" mb={1}>
-                    Pay Forward
+                    Donate
                   </MKTypography>
                   <MKTypography variant="body2" color="text.secondary">
-                    Make a donation or pay it forward
+                    Support campus initiatives
                   </MKTypography>
+                  {donationBox && (
+                    <MKTypography variant="caption" color="text.secondary" mt={1}>
+                      Total: {formatCurrency(donationBox.total_amount || 0)}
+                    </MKTypography>
+                  )}
                 </MKBox>
               </Card>
             </MKBox>
@@ -492,6 +627,127 @@ function Home() {
             Cancel
           </MKButton>
         </DialogActions>
+      </Dialog>
+
+      {/* Donation Dialog */}
+      <Dialog open={openDonationDialog} onClose={handleCloseDonationDialog} maxWidth="sm" fullWidth>
+        <MKBox component="form" onSubmit={handleDonationSubmit}>
+          <DialogTitle>
+            <MKBox display="flex" alignItems="center" gap={1}>
+              <FavoriteIcon sx={{ color: "error.main" }} />
+              <MKTypography variant="h5" fontWeight="bold">
+                Make a Donation
+              </MKTypography>
+            </MKBox>
+          </DialogTitle>
+          <DialogContent>
+            <MKBox sx={{ pt: 2 }}>
+              {donationBox && (
+                <MKBox
+                  sx={{
+                    p: 2,
+                    mb: 3,
+                    borderRadius: 2,
+                    backgroundColor: ({ palette: { error } }) => `${error.main}10`,
+                    border: ({ palette: { error } }) => `1px solid ${error.main}30`,
+                  }}
+                >
+                  <MKTypography variant="body2" color="text.secondary" mb={0.5}>
+                    Total Donated
+                  </MKTypography>
+                  <MKTypography variant="h5" fontWeight="bold" color="error.main">
+                    {formatCurrency(donationBox.total_amount || 0)}
+                  </MKTypography>
+                </MKBox>
+              )}
+
+              <Grid container spacing={3}>
+                {/* Amount Field */}
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Donation Amount"
+                    name="amount"
+                    type="number"
+                    value={donationFormData.amount}
+                    onChange={handleDonationInputChange}
+                    error={!!donationFormErrors.amount}
+                    helperText={
+                      donationFormErrors.amount || `Your wallet balance: ${formatCurrency(balance)}`
+                    }
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <AttachMoneyIcon />
+                        </InputAdornment>
+                      ),
+                      inputProps: {
+                        min: 0.01,
+                        step: 0.01,
+                      },
+                    }}
+                    disabled={submittingDonation || donationLoading}
+                    required
+                  />
+                </Grid>
+
+                {/* Description Field */}
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Description (Optional)"
+                    name="description"
+                    value={donationFormData.description}
+                    onChange={handleDonationInputChange}
+                    error={!!donationFormErrors.description}
+                    helperText={
+                      donationFormErrors.description ||
+                      `${donationFormData.description.length}/500 characters`
+                    }
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <DescriptionIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    multiline
+                    rows={4}
+                    disabled={submittingDonation || donationLoading}
+                    inputProps={{
+                      maxLength: 500,
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </MKBox>
+          </DialogContent>
+          <DialogActions sx={{ p: 2 }}>
+            <MKButton
+              type="button"
+              onClick={handleCloseDonationDialog}
+              color="secondary"
+              disabled={submittingDonation}
+            >
+              Cancel
+            </MKButton>
+            <MKButton
+              type="submit"
+              variant="gradient"
+              color="error"
+              disabled={submittingDonation || donationLoading || !donationFormData.amount}
+              startIcon={
+                submittingDonation ? (
+                  <CircularProgress size={20} color="inherit" />
+                ) : (
+                  <FavoriteIcon />
+                )
+              }
+            >
+              {submittingDonation ? "Processing..." : "Donate"}
+            </MKButton>
+          </DialogActions>
+        </MKBox>
       </Dialog>
 
       {/* Load Money Dialog */}
