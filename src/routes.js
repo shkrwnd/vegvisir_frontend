@@ -52,8 +52,8 @@ export const dashboardRoutes = [
     route: ROUTES.TRANSACTIONS,
   },
   {
-    name: "Order",
+    name: "Marketplace",
     icon: <Icon>shopping_cart</Icon>,
-    route: ROUTES.ORDER,
+    route: ROUTES.MARKETPLACE,
   },
 ];

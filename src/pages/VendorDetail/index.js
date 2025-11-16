@@ -92,7 +92,7 @@ function VendorDetailPage() {
       // Close dialog after 2 seconds and navigate back
       setTimeout(() => {
         handleClosePaymentDialog();
-        navigate(ROUTES.ORDER);
+        navigate(ROUTES.MARKETPLACE);
       }, 2000);
     }
   };
@@ -103,7 +103,7 @@ function VendorDetailPage() {
         <MKTypography variant="h5" color="text" mb={2}>
           Vendor not found
         </MKTypography>
-        <MKButton color="info" onClick={() => navigate(ROUTES.ORDER)}>
+        <MKButton color="info" onClick={() => navigate(ROUTES.MARKETPLACE)}>
           Back to Vendors
         </MKButton>
       </MKBox>

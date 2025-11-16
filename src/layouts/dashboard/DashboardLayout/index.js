@@ -74,7 +74,7 @@ function DashboardLayout({ children }) {
         chatbot: "ChatBot",
         budgets: "Budgets",
         cards: "Cards",
-        order: "Order",
+        marketplace: "Marketplace",
         vendor: location.state?.vendor?.name || "Vendor",
       };
 

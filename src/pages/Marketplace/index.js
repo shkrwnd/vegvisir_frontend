@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Order Page - Vendors List
+* Marketplace Page - Vendors List
 =========================================================
 * Displays all vendors that accept Raider card with search and filtering
 */
@@ -30,7 +30,7 @@ import { VendorCard } from "features/vendors/components";
 // Core
 import { ROUTES } from "core/config";
 
-function OrderPage() {
+function MarketplacePage() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -73,7 +73,7 @@ function OrderPage() {
       {/* Header */}
       <MKBox mb={4}>
         <MKTypography variant="h3" fontWeight="bold" mb={1}>
-          Order from Campus Vendors
+          Marketplace
         </MKTypography>
         <MKTypography variant="body1" color="text" sx={{ opacity: 0.8 }}>
           Browse and pay vendors that accept your Raider card
@@ -167,4 +167,4 @@ function OrderPage() {
   );
 }
 
-export default OrderPage;
+export default MarketplacePage;
