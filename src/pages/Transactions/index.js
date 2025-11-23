@@ -200,17 +200,68 @@ function Transactions() {
   };
 
   return (
-    <Container maxWidth={false} sx={{ px: 0 }}>
+    <Container
+      maxWidth={false}
+      sx={{
+        px: 0,
+        width: "100%",
+        maxWidth: "100vw",
+        overflowX: "hidden",
+        boxSizing: "border-box",
+      }}
+    >
       {/* Header Section */}
-      <MKBox mb={6}>
-        <MKBox display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-          <MKTypography variant="h4" fontWeight="bold">
-            Transactions
-          </MKTypography>
+      <MKBox
+        mb={6}
+        sx={{
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 3, sm: 4, md: 5 },
+          background:
+            "linear-gradient(135deg, rgba(204, 0, 0, 0.1) 0%, rgba(204, 0, 0, 0.05) 100%)",
+          borderRadius: 3,
+          border: "1px solid rgba(204, 0, 0, 0.2)",
+          boxShadow: "0 4px 20px rgba(204, 0, 0, 0.1)",
+        }}
+      >
+        <MKBox
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+          gap={2}
+        >
+          <MKBox>
+            <MKBox display="flex" alignItems="center" gap={2}>
+              <MKBox
+                sx={{
+                  width: { xs: "4px", sm: "6px" },
+                  height: { xs: "40px", sm: "50px" },
+                  background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+                  borderRadius: "4px",
+                  boxShadow: "0 4px 12px rgba(204, 0, 0, 0.3)",
+                }}
+              />
+              <MKTypography
+                variant="h3"
+                fontWeight="bold"
+                sx={{
+                  background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.5rem" },
+                  letterSpacing: "0.5px",
+                  lineHeight: 1.2,
+                }}
+              >
+                Transactions
+              </MKTypography>
+            </MKBox>
+          </MKBox>
           <MKButton
             variant="outlined"
             color="info"
-            size="medium"
+            size="small"
             onClick={() => {
               const filterObj = {
                 skip: page * rowsPerPage,
@@ -231,20 +282,28 @@ function Transactions() {
             }}
             startIcon={<RefreshIcon />}
             disabled={loading}
+            sx={{
+              color: "#CC0000",
+              borderColor: "#CC0000",
+              "&:hover": {
+                borderColor: "#CC0000",
+                backgroundColor: "rgba(204, 0, 0, 0.05)",
+              },
+            }}
           >
             Refresh
           </MKButton>
         </MKBox>
-        <MKTypography variant="body1" color="text">
-          View and filter your transaction history. Transactions are automatically created when
-          payments are completed.
-        </MKTypography>
       </MKBox>
 
       {/* Error Message */}
       {error && (
-        <MKBox mb={3} sx={{ px: 3 }}>
-          <MKTypography variant="body2" color="error">
+        <MKBox mb={3} sx={{ px: { xs: 1, sm: 2, md: 3 } }}>
+          <MKTypography
+            variant="body2"
+            color="error"
+            sx={{ fontSize: { xs: "0.875rem", sm: "1rem" } }}
+          >
             Error: {error}
           </MKTypography>
         </MKBox>
@@ -254,13 +313,21 @@ function Transactions() {
       <Card
         sx={{
           mb: 3,
-          mx: 3,
-          p: 3,
+          mx: { xs: 1, sm: 2, md: 3 },
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
           boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+          width: { xs: "calc(100% - 16px)", sm: "calc(100% - 32px)", md: "calc(100% - 48px)" },
+          boxSizing: "border-box",
         }}
       >
-        <MKBox display="flex" flexWrap="wrap" gap={2} alignItems="center">
+        <MKBox
+          display="flex"
+          flexDirection={{ xs: "column", sm: "row" }}
+          flexWrap="wrap"
+          gap={2}
+          alignItems={{ xs: "stretch", sm: "center" }}
+        >
           {/* Search */}
           <TextField
             size="small"
@@ -281,11 +348,20 @@ function Transactions() {
                 </InputAdornment>
               ),
             }}
-            sx={{ minWidth: 250 }}
+            sx={{
+              minWidth: { xs: "100%", sm: 250 },
+              flex: { xs: "1 1 100%", sm: "0 1 auto" },
+            }}
           />
 
           {/* Category Filter */}
-          <FormControl size="small" sx={{ minWidth: 150 }}>
+          <FormControl
+            size="small"
+            sx={{
+              minWidth: { xs: "100%", sm: 150 },
+              flex: { xs: "1 1 100%", sm: "0 1 auto" },
+            }}
+          >
             <InputLabel>Category</InputLabel>
             <Select
               value={categoryFilter}
@@ -316,7 +392,10 @@ function Transactions() {
             InputLabelProps={{
               shrink: true,
             }}
-            sx={{ minWidth: 150 }}
+            sx={{
+              minWidth: { xs: "100%", sm: 150 },
+              flex: { xs: "1 1 100%", sm: "0 1 auto" },
+            }}
           />
 
           {/* End Date */}
@@ -332,7 +411,10 @@ function Transactions() {
             InputLabelProps={{
               shrink: true,
             }}
-            sx={{ minWidth: 150 }}
+            sx={{
+              minWidth: { xs: "100%", sm: 150 },
+              flex: { xs: "1 1 100%", sm: "0 1 auto" },
+            }}
           />
 
           {/* Clear Filters */}
@@ -341,7 +423,11 @@ function Transactions() {
             color="secondary"
             size="small"
             onClick={clearFilters}
-            sx={{ ml: "auto" }}
+            sx={{
+              ml: { xs: 0, sm: "auto" },
+              width: { xs: "100%", sm: "auto" },
+              flex: { xs: "1 1 100%", sm: "0 0 auto" },
+            }}
           >
             Clear Filters
           </MKButton>
@@ -351,11 +437,14 @@ function Transactions() {
       {/* Transactions Table */}
       <Card
         sx={{
-          mx: 3,
+          mx: { xs: 1, sm: 2, md: 3 },
           borderRadius: 3,
           boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
           border: "1px solid rgba(0,0,0,0.05)",
           overflow: "hidden",
+          backgroundColor: "#ffffff",
+          width: { xs: "calc(100% - 16px)", sm: "calc(100% - 32px)", md: "calc(100% - 48px)" },
+          boxSizing: "border-box",
         }}
       >
         {loading ? (
@@ -364,94 +453,229 @@ function Transactions() {
           </Box>
         ) : (
           <>
-            <TableContainer>
+            <TableContainer
+              sx={{
+                overflowX: "auto",
+                width: "100%",
+                "&::-webkit-scrollbar": {
+                  height: "8px",
+                },
+                "&::-webkit-scrollbar-track": {
+                  backgroundColor: "#f1f1f1",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "#888",
+                  borderRadius: "4px",
+                },
+                "&::-webkit-scrollbar-thumb:hover": {
+                  backgroundColor: "#555",
+                },
+              }}
+            >
               <Table
                 sx={{
-                  tableLayout: "fixed",
+                  tableLayout: { xs: "auto", sm: "fixed" },
                   width: "100%",
+                  minWidth: { xs: "600px", sm: "auto" },
                   "& .MuiTableCell-root": {
-                    padding: "12px 16px",
+                    padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
                     verticalAlign: "middle",
+                    fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                    boxSizing: "border-box",
                   },
                   "& .MuiTableCell-head": {
                     backgroundColor: ({ palette: { grey } }) => grey[50],
                     borderBottom: ({ borders: { borderWidth, borderColor } }) =>
                       `${borderWidth[2]} solid ${borderColor}`,
-                    padding: "12px 16px",
+                    padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
                     fontWeight: 600,
+                    color: "#000000",
+                    fontSize: { xs: "0.7rem", sm: "0.75rem" },
+                    boxSizing: "border-box",
                   },
                   "& .MuiTableCell-body": {
-                    padding: "12px 16px",
+                    padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
+                    color: "#000000",
+                    fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                    boxSizing: "border-box",
                   },
                   "& .MuiTableSortLabel-root": {
                     "& .MuiTableSortLabel-icon": {
                       transition: "opacity 0.2s",
+                      marginLeft: "4px",
                     },
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                  },
+                  "& .MuiTableCell-head[align='left']": {
+                    textAlign: "left",
+                    "& .MuiTableSortLabel-root": {
+                      justifyContent: "flex-start",
+                    },
+                  },
+                  "& .MuiTableCell-head[align='right']": {
+                    textAlign: "right",
+                    "& .MuiTableSortLabel-root": {
+                      justifyContent: "flex-end",
+                    },
+                  },
+                  "& .MuiTableCell-head[align='center']": {
+                    textAlign: "center",
+                    "& .MuiTableSortLabel-root": {
+                      justifyContent: "center",
+                    },
+                  },
+                  "& .MuiTableCell-body[align='left']": {
+                    textAlign: "left",
+                  },
+                  "& .MuiTableCell-body[align='right']": {
+                    textAlign: "right",
+                  },
+                  "& .MuiTableCell-body[align='center']": {
+                    textAlign: "center",
                   },
                 }}
               >
                 <colgroup>
-                  <col style={{ width: "180px" }} />
-                  <col style={{ width: "auto" }} />
-                  <col style={{ width: "120px" }} />
-                  <col style={{ width: "120px" }} />
-                  <col style={{ width: "150px" }} />
+                  <col style={{ width: "100px", minWidth: "100px" }} />
+                  <col style={{ width: "auto", minWidth: "150px" }} />
+                  <col style={{ width: "80px", minWidth: "80px" }} />
+                  <col style={{ width: "100px", minWidth: "100px" }} />
+                  <col style={{ width: "120px", minWidth: "120px" }} />
                 </colgroup>
                 <TableHead>
                   <TableRow>
-                    <TableCell>
+                    <TableCell align="left" sx={{ textAlign: "left", padding: 0 }}>
                       <TableSortLabel
                         active={orderBy === "transaction_date"}
                         direction={orderBy === "transaction_date" ? order : "asc"}
                         onClick={() => handleRequestSort("transaction_date")}
+                        sx={{
+                          justifyContent: "flex-start",
+                          width: "100%",
+                          margin: 0,
+                          padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
+                          "& .MuiTableSortLabel-icon": {
+                            marginLeft: "4px",
+                            fontSize: { xs: "0.875rem", sm: "1rem" },
+                          },
+                        }}
                       >
-                        <MKTypography variant="caption" fontWeight="bold" color="secondary">
+                        <MKTypography
+                          variant="caption"
+                          fontWeight="bold"
+                          sx={{
+                            color: "#000000",
+                            fontSize: { xs: "0.7rem", sm: "0.75rem" },
+                          }}
+                        >
                           DATE
                         </MKTypography>
                       </TableSortLabel>
                     </TableCell>
-                    <TableCell>
+                    <TableCell align="left" sx={{ textAlign: "left", padding: 0 }}>
                       <TableSortLabel
                         active={orderBy === "description"}
                         direction={orderBy === "description" ? order : "asc"}
                         onClick={() => handleRequestSort("description")}
+                        sx={{
+                          justifyContent: "flex-start",
+                          width: "100%",
+                          margin: 0,
+                          padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
+                          "& .MuiTableSortLabel-icon": {
+                            marginLeft: "4px",
+                            fontSize: { xs: "0.875rem", sm: "1rem" },
+                          },
+                        }}
                       >
-                        <MKTypography variant="caption" fontWeight="bold" color="secondary">
+                        <MKTypography
+                          variant="caption"
+                          fontWeight="bold"
+                          sx={{
+                            color: "#000000",
+                            fontSize: { xs: "0.7rem", sm: "0.75rem" },
+                          }}
+                        >
                           DESCRIPTION
                         </MKTypography>
                       </TableSortLabel>
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell align="left" sx={{ textAlign: "left", padding: 0 }}>
                       <TableSortLabel
                         active={orderBy === "category"}
                         direction={orderBy === "category" ? order : "asc"}
                         onClick={() => handleRequestSort("category")}
+                        sx={{
+                          justifyContent: "flex-start",
+                          width: "100%",
+                          margin: 0,
+                          padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
+                          "& .MuiTableSortLabel-icon": {
+                            marginLeft: "4px",
+                            fontSize: { xs: "0.875rem", sm: "1rem" },
+                          },
+                        }}
                       >
-                        <MKTypography variant="caption" fontWeight="bold" color="secondary">
+                        <MKTypography
+                          variant="caption"
+                          fontWeight="bold"
+                          sx={{
+                            color: "#000000",
+                            fontSize: { xs: "0.7rem", sm: "0.75rem" },
+                          }}
+                        >
                           CATEGORY
                         </MKTypography>
                       </TableSortLabel>
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="right" sx={{ textAlign: "right", padding: 0 }}>
                       <TableSortLabel
                         active={orderBy === "amount"}
                         direction={orderBy === "amount" ? order : "asc"}
                         onClick={() => handleRequestSort("amount")}
+                        sx={{
+                          justifyContent: "flex-end",
+                          width: "100%",
+                          margin: 0,
+                          padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
+                          "& .MuiTableSortLabel-icon": {
+                            marginLeft: "4px",
+                            fontSize: { xs: "0.875rem", sm: "1rem" },
+                          },
+                        }}
                       >
-                        <MKTypography variant="caption" fontWeight="bold" color="secondary">
+                        <MKTypography
+                          variant="caption"
+                          fontWeight="bold"
+                          sx={{
+                            color: "#000000",
+                            fontSize: { xs: "0.7rem", sm: "0.75rem" },
+                          }}
+                        >
                           AMOUNT
                         </MKTypography>
                       </TableSortLabel>
                     </TableCell>
-                    <TableCell align="center">
-                      <MKTypography
-                        variant="caption"
-                        fontWeight="bold"
-                        color="secondary"
-                        sx={{ whiteSpace: "nowrap" }}
+                    <TableCell align="left" sx={{ textAlign: "left", padding: 0 }}>
+                      <MKBox
+                        sx={{
+                          padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
+                        }}
                       >
-                        PAYMENT METHOD
-                      </MKTypography>
+                        <MKTypography
+                          variant="caption"
+                          fontWeight="bold"
+                          sx={{
+                            color: "#000000",
+                            whiteSpace: "nowrap",
+                            fontSize: { xs: "0.7rem", sm: "0.75rem" },
+                          }}
+                        >
+                          PAYMENT METHOD
+                        </MKTypography>
+                      </MKBox>
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -459,7 +683,7 @@ function Transactions() {
                   {paginatedData.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={5} align="center" sx={{ py: 8 }}>
-                        <MKTypography variant="body1" color="text.secondary">
+                        <MKTypography variant="body1" sx={{ color: "#000000" }}>
                           {transactions.length === 0
                             ? "No transactions found"
                             : "No transactions match your filters"}
@@ -474,17 +698,39 @@ function Transactions() {
                       }
                       return (
                         <TableRow key={transaction.id} hover>
-                          <TableCell>
-                            <MKTypography variant="body2" color="text">
+                          <TableCell
+                            align="left"
+                            sx={{
+                              textAlign: "left",
+                              padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
+                            }}
+                          >
+                            <MKTypography variant="body2" sx={{ color: "#000000" }}>
                               {formatDate(transaction.transaction_date || transaction.created_at)}
                             </MKTypography>
                           </TableCell>
-                          <TableCell>
-                            <MKTypography variant="body2" fontWeight="medium">
+                          <TableCell
+                            align="left"
+                            sx={{
+                              textAlign: "left",
+                              padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
+                            }}
+                          >
+                            <MKTypography
+                              variant="body2"
+                              fontWeight="medium"
+                              sx={{ color: "#000000" }}
+                            >
                               {transaction.description || "N/A"}
                             </MKTypography>
                           </TableCell>
-                          <TableCell align="center">
+                          <TableCell
+                            align="left"
+                            sx={{
+                              textAlign: "left",
+                              padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
+                            }}
+                          >
                             <Chip
                               label={
                                 transaction.category?.charAt(0).toUpperCase() +
@@ -495,13 +741,29 @@ function Transactions() {
                               sx={{ fontWeight: 500 }}
                             />
                           </TableCell>
-                          <TableCell align="right">
-                            <MKTypography variant="body2" fontWeight="bold" color="error">
+                          <TableCell
+                            align="right"
+                            sx={{
+                              textAlign: "right",
+                              padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
+                            }}
+                          >
+                            <MKTypography
+                              variant="body2"
+                              fontWeight="bold"
+                              sx={{ color: "#000000" }}
+                            >
                               {formatCurrency(transaction.amount)}
                             </MKTypography>
                           </TableCell>
-                          <TableCell align="center">
-                            <MKTypography variant="body2" color="text.secondary">
+                          <TableCell
+                            align="left"
+                            sx={{
+                              textAlign: "left",
+                              padding: { xs: "8px 8px", sm: "10px 12px", md: "12px 16px" },
+                            }}
+                          >
+                            <MKTypography variant="body2" sx={{ color: "#000000" }}>
                               {transaction.payment_method?.charAt(0).toUpperCase() +
                                 transaction.payment_method?.slice(1) || "N/A"}
                             </MKTypography>
@@ -523,6 +785,34 @@ function Transactions() {
               rowsPerPage={rowsPerPage}
               onRowsPerPageChange={handleChangeRowsPerPage}
               rowsPerPageOptions={[5, 10, 25, 50]}
+              labelRowsPerPage="Rows:"
+              sx={{
+                "& .MuiTablePagination-toolbar": {
+                  color: "#000000",
+                  flexWrap: "wrap",
+                  gap: 1,
+                  px: { xs: 1, sm: 2 },
+                  fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                },
+                "& .MuiTablePagination-selectLabel": {
+                  color: "#000000",
+                  fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                },
+                "& .MuiTablePagination-displayedRows": {
+                  color: "#000000",
+                  fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                },
+                "& .MuiTablePagination-select": {
+                  color: "#000000",
+                  fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                },
+                "& .MuiTablePagination-actions": {
+                  color: "#000000",
+                },
+                "& .MuiIconButton-root": {
+                  padding: { xs: "4px", sm: "8px" },
+                },
+              }}
             />
           </>
         )}

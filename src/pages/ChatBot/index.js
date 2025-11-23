@@ -343,7 +343,7 @@ function ChatBot() {
                         : `${borderRadius.lg} ${borderRadius.lg} ${borderRadius.lg} ${borderRadius.xs}`,
                     backgroundColor:
                       message.role === "user" ? ({ palette: { info } }) => info.main : "white",
-                    color: message.role === "user" ? "white !important" : "text.primary",
+                    color: message.role === "user" ? "white !important" : "#000000",
                     fontWeight: message.role === "user" ? 500 : 400,
                     boxShadow: ({ boxShadows: { sm } }) => sm,
                     position: "relative",
@@ -352,13 +352,13 @@ function ChatBot() {
                       boxShadow: ({ boxShadows: { md } }) => md,
                     },
                     "& *": {
-                      color: message.role === "user" ? "white !important" : "inherit",
+                      color: message.role === "user" ? "white !important" : "#000000 !important",
                       fontWeight: message.role === "user" ? "500 !important" : "inherit",
                     },
                     "& p": {
                       margin: 0,
                       marginBottom: 0.75,
-                      color: message.role === "user" ? "white !important" : "inherit",
+                      color: message.role === "user" ? "white !important" : "#000000 !important",
                       fontWeight: message.role === "user" ? "500 !important" : "inherit",
                       "&:last-child": {
                         marginBottom: 0,
@@ -368,20 +368,20 @@ function ChatBot() {
                       margin: 0,
                       paddingLeft: 1.5,
                       marginBottom: 0.75,
-                      color: message.role === "user" ? "white !important" : "inherit",
+                      color: message.role === "user" ? "white !important" : "#000000 !important",
                     },
                     "& li": {
                       marginBottom: 0.25,
-                      color: message.role === "user" ? "white !important" : "inherit",
+                      color: message.role === "user" ? "white !important" : "#000000 !important",
                       fontWeight: message.role === "user" ? "500 !important" : "inherit",
                     },
                     "& strong": {
                       fontWeight: "bold",
-                      color: message.role === "user" ? "white !important" : "inherit",
+                      color: message.role === "user" ? "white !important" : "#000000 !important",
                     },
                     "& em": {
                       fontStyle: "italic",
-                      color: message.role === "user" ? "white !important" : "inherit",
+                      color: message.role === "user" ? "white !important" : "#000000 !important",
                     },
                     "& code": {
                       backgroundColor:
@@ -390,7 +390,7 @@ function ChatBot() {
                       borderRadius: 1,
                       fontSize: "0.875em",
                       fontFamily: "monospace",
-                      color: message.role === "user" ? "white !important" : "inherit",
+                      color: message.role === "user" ? "white !important" : "#000000 !important",
                       fontWeight: message.role === "user" ? "500 !important" : "inherit",
                     },
                     "& pre": {
@@ -400,23 +400,23 @@ function ChatBot() {
                       borderRadius: 1,
                       overflow: "auto",
                       marginBottom: 1,
-                      color: message.role === "user" ? "white !important" : "inherit",
+                      color: message.role === "user" ? "white !important" : "#000000 !important",
                       "& code": {
                         backgroundColor: "transparent",
                         padding: 0,
-                        color: message.role === "user" ? "white !important" : "inherit",
+                        color: message.role === "user" ? "white !important" : "#000000 !important",
                       },
                     },
                     // KaTeX math styling
                     "& .katex": {
                       fontSize: "1.1em",
-                      color: message.role === "user" ? "white !important" : "inherit",
+                      color: message.role === "user" ? "white !important" : "#000000 !important",
                     },
                     "& .katex-display": {
                       margin: "1em 0",
                       overflowX: "auto",
                       overflowY: "hidden",
-                      color: message.role === "user" ? "white !important" : "inherit",
+                      color: message.role === "user" ? "white !important" : "#000000 !important",
                     },
                   }}
                 >
@@ -431,7 +431,8 @@ function ChatBot() {
                             component="p"
                             sx={{
                               wordBreak: "break-word",
-                              color: "inherit",
+                              color:
+                                message.role === "user" ? "white !important" : "#000000 !important",
                               marginBottom: 0.75,
                               fontSize: "0.875rem",
                               lineHeight: 1.5,
@@ -447,7 +448,10 @@ function ChatBot() {
                             component="strong"
                             variant="body2"
                             fontWeight="bold"
-                            sx={{ color: "inherit" }}
+                            sx={{
+                              color:
+                                message.role === "user" ? "white !important" : "#000000 !important",
+                            }}
                           >
                             {children}
                           </MKTypography>
@@ -456,7 +460,11 @@ function ChatBot() {
                           <MKTypography
                             component="em"
                             variant="body2"
-                            sx={{ fontStyle: "italic", color: "inherit" }}
+                            sx={{
+                              fontStyle: "italic",
+                              color:
+                                message.role === "user" ? "white !important" : "#000000 !important",
+                            }}
                           >
                             {children}
                           </MKTypography>
@@ -482,7 +490,8 @@ function ChatBot() {
                             component="li"
                             variant="body2"
                             sx={{
-                              color: "inherit",
+                              color:
+                                message.role === "user" ? "white !important" : "#000000 !important",
                               marginBottom: 0.25,
                               wordBreak: "break-word",
                               fontSize: "0.875rem",
@@ -509,12 +518,18 @@ function ChatBot() {
                               <MKBox
                                 component="code"
                                 sx={{
-                                  backgroundColor: "rgba(0,0,0,0.1)",
+                                  backgroundColor:
+                                    message.role === "user"
+                                      ? "rgba(255,255,255,0.2)"
+                                      : "rgba(0,0,0,0.1)",
                                   padding: "2px 4px",
                                   borderRadius: 1,
                                   fontSize: "0.875em",
                                   fontFamily: "monospace",
-                                  color: "inherit",
+                                  color:
+                                    message.role === "user"
+                                      ? "white !important"
+                                      : "#000000 !important",
                                 }}
                               >
                                 {children}
@@ -537,7 +552,10 @@ function ChatBot() {
                                 variant="body2"
                                 sx={{
                                   fontFamily: "monospace",
-                                  color: "inherit",
+                                  color:
+                                    message.role === "user"
+                                      ? "white !important"
+                                      : "#000000 !important",
                                 }}
                               >
                                 {children}
@@ -549,7 +567,12 @@ function ChatBot() {
                           <MKTypography
                             variant="h6"
                             component="h1"
-                            sx={{ color: "inherit", marginBottom: 0.75, fontSize: "1.1rem" }}
+                            sx={{
+                              color:
+                                message.role === "user" ? "white !important" : "#000000 !important",
+                              marginBottom: 0.75,
+                              fontSize: "1.1rem",
+                            }}
                           >
                             {children}
                           </MKTypography>
@@ -559,7 +582,12 @@ function ChatBot() {
                             variant="body1"
                             component="h2"
                             fontWeight="bold"
-                            sx={{ color: "inherit", marginBottom: 0.75, fontSize: "1rem" }}
+                            sx={{
+                              color:
+                                message.role === "user" ? "white !important" : "#000000 !important",
+                              marginBottom: 0.75,
+                              fontSize: "1rem",
+                            }}
                           >
                             {children}
                           </MKTypography>
@@ -569,7 +597,12 @@ function ChatBot() {
                             variant="body2"
                             component="h3"
                             fontWeight="bold"
-                            sx={{ color: "inherit", marginBottom: 0.75, fontSize: "0.9375rem" }}
+                            sx={{
+                              color:
+                                message.role === "user" ? "white !important" : "#000000 !important",
+                              marginBottom: 0.75,
+                              fontSize: "0.9375rem",
+                            }}
                           >
                             {children}
                           </MKTypography>
@@ -606,22 +639,28 @@ function ChatBot() {
                             borderRadius: 1,
                             backgroundColor:
                               message.role === "user" ? "rgba(255,255,255,0.1)" : "grey.100",
-                            color: message.role === "user" ? "white !important" : "inherit",
+                            color:
+                              message.role === "user" ? "white !important" : "#000000 !important",
                             "& *": {
-                              color: message.role === "user" ? "white !important" : "inherit",
+                              color:
+                                message.role === "user" ? "white !important" : "#000000 !important",
                             },
                           }}
                         >
                           <InsertDriveFileIcon
                             fontSize="small"
-                            sx={{ color: message.role === "user" ? "white !important" : "inherit" }}
+                            sx={{
+                              color:
+                                message.role === "user" ? "white !important" : "#000000 !important",
+                            }}
                           />
                           <MKTypography
                             variant="caption"
                             sx={{
                               flex: 1,
                               wordBreak: "break-word",
-                              color: message.role === "user" ? "white !important" : "inherit",
+                              color:
+                                message.role === "user" ? "white !important" : "#000000 !important",
                             }}
                           >
                             {file.name || file.fileName}

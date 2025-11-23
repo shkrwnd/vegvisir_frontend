@@ -114,14 +114,35 @@ function DashboardLayout({ children }) {
             zIndex: 1,
             minHeight: "100vh",
             backgroundColor: ({ palette: { background } }) => background.default,
+            width: "100%",
+            maxWidth: "100vw",
+            overflowX: "hidden",
+            boxSizing: "border-box",
           }}
         >
-          <Container maxWidth={false} sx={{ px: { xs: 1, sm: 2, md: 3 } }}>
-            {location.pathname !== "/home" && (
-              <MKBox width={{ xs: "100%", md: "50%", lg: "25%" }} mb={{ xs: 2, md: 3 }}>
-                <Breadcrumbs routes={getBreadcrumbRoutes()} />
-              </MKBox>
-            )}
+          <Container
+            maxWidth={false}
+            sx={{
+              px: { xs: 0.5, sm: 2, md: 3 },
+              width: "100%",
+              maxWidth: "100vw",
+              overflowX: "hidden",
+              boxSizing: "border-box",
+            }}
+          >
+            {location.pathname !== "/home" &&
+              location.pathname !== "/analytics" &&
+              location.pathname !== "/budgets" &&
+              location.pathname !== "/cards" &&
+              location.pathname !== "/transactions" &&
+              location.pathname !== "/marketplace" &&
+              location.pathname !== "/events" &&
+              location.pathname !== "/restaurants" &&
+              location.pathname !== "/map" && (
+                <MKBox width={{ xs: "100%", md: "50%", lg: "25%" }} mb={{ xs: 2, md: 3 }}>
+                  <Breadcrumbs routes={getBreadcrumbRoutes()} />
+                </MKBox>
+              )}
             {children}
           </Container>
         </Box>

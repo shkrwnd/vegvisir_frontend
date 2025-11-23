@@ -28,6 +28,7 @@ import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
+import Box from "@mui/material/Box";
 
 // @mui icons
 import HomeIcon from "@mui/icons-material/Home";
@@ -57,7 +58,7 @@ const menuItems = dashboardRoutes.map((route, index) => ({
   text: route.name,
   icon: route.icon,
   route: route.route,
-  badge: index === 2 ? "New" : null, // Analytics gets "New" badge
+  badge: index === 1 ? "New" : null, // Analytics gets "New" badge (index changed after removing Dashboard)
 }));
 
 function Sidebar({ open, onClose }) {
@@ -99,24 +100,33 @@ function Sidebar({ open, onClose }) {
           boxShadow: ({ boxShadows: { md } }) => md,
         }}
       >
-        <MKBox display="flex" alignItems="center">
-          <Avatar
-            sx={{
-              width: 32,
-              height: 32,
-              mr: 1.5,
-              backgroundColor: "rgba(255,255,255,0.2)",
+        <MKBox display="flex" alignItems="center" gap={1.5}>
+          <Box
+            component="img"
+            src="/scarlet-pay-logo.svg"
+            alt="Scarlet Pay Logo"
+            onError={(e) => {
+              e.target.style.display = "none";
             }}
-          >
-            <AccountCircleIcon />
-          </Avatar>
+            sx={{
+              height: 44,
+              width: "auto",
+              objectFit: "contain",
+              flexShrink: 0,
+            }}
+          />
           <MKTypography
             variant="h6"
             fontWeight="bold"
             color="white"
-            sx={{ textTransform: "uppercase" }}
+            sx={{
+              textTransform: "uppercase",
+              fontSize: "1.125rem",
+              letterSpacing: "0.5px",
+              lineHeight: 1.2,
+            }}
           >
-            Scarlet Pay
+            SCARLET PAY
           </MKTypography>
         </MKBox>
         <Tooltip title="Close sidebar" arrow>

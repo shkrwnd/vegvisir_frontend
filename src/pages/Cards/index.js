@@ -262,26 +262,76 @@ function Cards() {
   return (
     <Container maxWidth={false} sx={{ px: 0 }}>
       {/* Header Section */}
-      <MKBox mb={6}>
-        <MKBox display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-          <MKTypography variant="h4" fontWeight="bold">
-            Card Management
-          </MKTypography>
+      <MKBox
+        mb={6}
+        sx={{
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 3, sm: 4, md: 5 },
+          background:
+            "linear-gradient(135deg, rgba(204, 0, 0, 0.1) 0%, rgba(204, 0, 0, 0.05) 100%)",
+          borderRadius: 3,
+          border: "1px solid rgba(204, 0, 0, 0.2)",
+          boxShadow: "0 4px 20px rgba(204, 0, 0, 0.1)",
+        }}
+      >
+        <MKBox
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+          gap={2}
+        >
+          <MKBox>
+            <MKBox display="flex" alignItems="center" gap={2}>
+              <MKBox
+                sx={{
+                  width: { xs: "4px", sm: "6px" },
+                  height: { xs: "40px", sm: "50px" },
+                  background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+                  borderRadius: "4px",
+                  boxShadow: "0 4px 12px rgba(204, 0, 0, 0.3)",
+                }}
+              />
+              <MKTypography
+                variant="h3"
+                fontWeight="bold"
+                sx={{
+                  background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.5rem" },
+                  letterSpacing: "0.5px",
+                  lineHeight: 1.2,
+                }}
+              >
+                Cards
+              </MKTypography>
+            </MKBox>
+          </MKBox>
           <MKBox display="flex" gap={2}>
             <MKButton
               variant="outlined"
               color="info"
-              size="large"
+              size="small"
               onClick={refetch}
               startIcon={<RefreshIcon />}
               disabled={loading}
+              sx={{
+                color: "#CC0000",
+                borderColor: "#CC0000",
+                "&:hover": {
+                  borderColor: "#CC0000",
+                  backgroundColor: "rgba(204, 0, 0, 0.05)",
+                },
+              }}
             >
               Refresh
             </MKButton>
             <MKButton
               variant="gradient"
               color="info"
-              size="large"
+              size="small"
               onClick={() => handleOpenDialog()}
               startIcon={<AddIcon />}
             >
@@ -289,9 +339,6 @@ function Cards() {
             </MKButton>
           </MKBox>
         </MKBox>
-        <MKTypography variant="body1" color="text">
-          Manage your payment cards. Add, update, or remove cards for easy payment processing.
-        </MKTypography>
       </MKBox>
 
       {/* Error Message */}
@@ -431,13 +478,36 @@ function Cards() {
       )}
 
       {/* Create/Edit Card Dialog */}
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
-        <DialogTitle>
-          <MKTypography variant="h5" fontWeight="bold">
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            backgroundColor: "#FFFFFF",
+            color: "#000000",
+            border: "2px solid #000000",
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            backgroundColor: "#FFFFFF",
+            color: "#000000",
+            borderBottom: "2px solid #000000",
+          }}
+        >
+          <MKTypography variant="h5" fontWeight="bold" sx={{ color: "#000000" }}>
             {editingCard ? "Edit Card" : "Add New Card"}
           </MKTypography>
         </DialogTitle>
-        <DialogContent>
+        <DialogContent
+          sx={{
+            backgroundColor: "#FFFFFF",
+            color: "#000000",
+          }}
+        >
           <MKBox sx={{ pt: 2 }}>
             {!editingCard && (
               <>
@@ -455,21 +525,94 @@ function Cards() {
                     helperText={formErrors.card_number || "Enter the last 4 digits of your card"}
                     fullWidth
                     inputProps={{ maxLength: 4 }}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        color: "#000000",
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#000000",
+                          borderWidth: "2px",
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#000000",
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#000000",
+                          borderWidth: "2px",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#000000",
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "#000000",
+                      },
+                      "& .MuiFormHelperText-root": {
+                        color: "#666666",
+                      },
+                    }}
                   />
                 </MKBox>
                 <MKBox mb={2}>
                   <FormControl fullWidth error={!!formErrors.card_type}>
-                    <InputLabel>Card Type</InputLabel>
+                    <InputLabel sx={{ color: "#000000" }}>Card Type</InputLabel>
                     <Select
                       value={formData.card_type}
                       onChange={(e) => setFormData({ ...formData, card_type: e.target.value })}
                       label="Card Type"
+                      sx={{
+                        color: "#000000",
+                        fontSize: "1.1rem",
+                        padding: "14px 14px",
+                        height: "56px",
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#000000",
+                          borderWidth: "2px",
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#000000",
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#000000",
+                          borderWidth: "2px",
+                        },
+                        "& .MuiSvgIcon-root": {
+                          color: "#000000",
+                        },
+                      }}
                     >
-                      <MenuItem value="debit">Debit</MenuItem>
-                      <MenuItem value="credit">Credit</MenuItem>
+                      <MenuItem
+                        value="debit"
+                        sx={{
+                          color: "#000000",
+                          backgroundColor: "#FFFFFF",
+                          fontSize: "1.1rem",
+                          padding: "12px 16px",
+                          "&:hover": {
+                            backgroundColor: "#F5F5F5",
+                          },
+                        }}
+                      >
+                        Debit
+                      </MenuItem>
+                      <MenuItem
+                        value="credit"
+                        sx={{
+                          color: "#000000",
+                          backgroundColor: "#FFFFFF",
+                          fontSize: "1.1rem",
+                          padding: "12px 16px",
+                          "&:hover": {
+                            backgroundColor: "#F5F5F5",
+                          },
+                        }}
+                      >
+                        Credit
+                      </MenuItem>
                     </Select>
                     {formErrors.card_type && (
-                      <FormHelperText>{formErrors.card_type}</FormHelperText>
+                      <FormHelperText sx={{ color: "#d32f2f" }}>
+                        {formErrors.card_type}
+                      </FormHelperText>
                     )}
                   </FormControl>
                 </MKBox>
@@ -485,6 +628,31 @@ function Cards() {
                 error={!!formErrors.cardholder_name}
                 helperText={formErrors.cardholder_name}
                 fullWidth
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    color: "#000000",
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#000000",
+                      borderWidth: "2px",
+                    },
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#000000",
+                    },
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#000000",
+                      borderWidth: "2px",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#000000",
+                  },
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: "#000000",
+                  },
+                  "& .MuiFormHelperText-root": {
+                    color: "#666666",
+                  },
+                }}
               />
             </MKBox>
             <MKBox mb={2}>
@@ -500,6 +668,31 @@ function Cards() {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    color: "#000000",
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#000000",
+                      borderWidth: "2px",
+                    },
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#000000",
+                    },
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#000000",
+                      borderWidth: "2px",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#000000",
+                  },
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: "#000000",
+                  },
+                  "& .MuiFormHelperText-root": {
+                    color: "#666666",
+                  },
+                }}
               />
             </MKBox>
             <MKBox mb={2}>
@@ -512,6 +705,31 @@ function Cards() {
                 error={!!formErrors.bank_name}
                 helperText={formErrors.bank_name}
                 fullWidth
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    color: "#000000",
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#000000",
+                      borderWidth: "2px",
+                    },
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#000000",
+                    },
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#000000",
+                      borderWidth: "2px",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#000000",
+                  },
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: "#000000",
+                  },
+                  "& .MuiFormHelperText-root": {
+                    color: "#666666",
+                  },
+                }}
               />
             </MKBox>
             <MKBox mb={2}>
@@ -524,18 +742,48 @@ function Cards() {
                   />
                 }
                 label="Set as default card"
+                sx={{ color: "#000000" }}
               />
-              <MKTypography variant="caption" color="text.secondary" display="block" mt={0.5}>
+              <MKTypography variant="caption" display="block" mt={0.5} sx={{ color: "#666666" }}>
                 Setting this as default will unset other default cards
               </MKTypography>
             </MKBox>
           </MKBox>
         </DialogContent>
-        <DialogActions sx={{ p: 2 }}>
-          <MKButton onClick={handleCloseDialog} color="secondary">
+        <DialogActions
+          sx={{
+            p: 2,
+            backgroundColor: "#FFFFFF",
+            borderTop: "2px solid #000000",
+          }}
+        >
+          <MKButton
+            onClick={handleCloseDialog}
+            variant="outlined"
+            sx={{
+              color: "#000000",
+              borderColor: "#000000",
+              borderWidth: "2px",
+              "&:hover": {
+                borderColor: "#000000",
+                borderWidth: "2px",
+                backgroundColor: "rgba(0, 0, 0, 0.05)",
+              },
+            }}
+          >
             Cancel
           </MKButton>
-          <MKButton onClick={handleSubmit} variant="gradient" color="info" disabled={submitting}>
+          <MKButton
+            onClick={handleSubmit}
+            variant="gradient"
+            color="info"
+            disabled={submitting}
+            sx={{
+              "&:disabled": {
+                opacity: 0.5,
+              },
+            }}
+          >
             {submitting ? "Saving..." : editingCard ? "Update" : "Add"}
           </MKButton>
         </DialogActions>

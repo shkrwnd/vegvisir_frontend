@@ -246,7 +246,18 @@ function Analytics() {
   return (
     <Container maxWidth={false} sx={{ px: 0 }}>
       {/* Header Section */}
-      <MKBox mb={6} sx={{ px: 3 }}>
+      <MKBox
+        mb={6}
+        sx={{
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 3, sm: 4, md: 5 },
+          background:
+            "linear-gradient(135deg, rgba(204, 0, 0, 0.1) 0%, rgba(204, 0, 0, 0.05) 100%)",
+          borderRadius: 3,
+          border: "1px solid rgba(204, 0, 0, 0.2)",
+          boxShadow: "0 4px 20px rgba(204, 0, 0, 0.1)",
+        }}
+      >
         <MKBox
           display="flex"
           justifyContent="space-between"
@@ -255,20 +266,60 @@ function Analytics() {
           gap={2}
         >
           <MKBox>
-            <MKTypography variant="h4" fontWeight="bold" mb={1}>
-              Transaction Analytics
-            </MKTypography>
-            <MKTypography variant="body2" color="text.secondary">
+            <MKBox display="flex" alignItems="center" gap={2} mb={2}>
+              <MKBox
+                sx={{
+                  width: { xs: "4px", sm: "6px" },
+                  height: { xs: "40px", sm: "50px" },
+                  background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+                  borderRadius: "4px",
+                  boxShadow: "0 4px 12px rgba(204, 0, 0, 0.3)",
+                }}
+              />
+              <MKTypography
+                variant="h3"
+                fontWeight="bold"
+                sx={{
+                  background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.5rem" },
+                  letterSpacing: "0.5px",
+                  lineHeight: 1.2,
+                }}
+              >
+                Transaction Analytics
+              </MKTypography>
+            </MKBox>
+            <MKTypography
+              variant="body1"
+              sx={{
+                color: ({ palette: { text } }) => text.main,
+                fontSize: { xs: "0.95rem", sm: "1rem" },
+                lineHeight: 1.6,
+                opacity: 0.9,
+                pl: { xs: 3, sm: 4 },
+              }}
+            >
               Analyze your spending patterns and track your financial activity
             </MKTypography>
           </MKBox>
           <MKButton
-            variant="gradient"
+            variant="outlined"
             color="info"
             size="small"
             onClick={handleRefresh}
             disabled={loading}
             startIcon={<RefreshIcon />}
+            sx={{
+              color: "#CC0000",
+              borderColor: "#CC0000",
+              "&:hover": {
+                borderColor: "#CC0000",
+                backgroundColor: "rgba(204, 0, 0, 0.05)",
+              },
+            }}
           >
             Refresh
           </MKButton>
@@ -284,14 +335,14 @@ function Analytics() {
             boxShadow: ({ palette: { mode } }) =>
               mode === "dark" ? "0 8px 32px rgba(0,0,0,0.3)" : "0 8px 32px rgba(0,0,0,0.1)",
             background: ({ palette: { mode } }) =>
-              mode === "dark" ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.8)",
+              mode === "dark" ? "rgba(0, 0, 0, 0.6)" : "rgba(255,255,255,0.8)",
             border: ({ palette: { mode } }) =>
               mode === "dark" ? "1px solid rgba(255,255,255,0.1)" : "none",
           }}
         >
           <MKBox display="flex" alignItems="center" mb={2.5}>
-            <CalendarTodayIcon sx={{ fontSize: 24, mr: 1.5, color: "primary.main" }} />
-            <MKTypography variant="h6" fontWeight="bold">
+            <CalendarTodayIcon sx={{ fontSize: 24, mr: 1.5, color: "#ffffff" }} />
+            <MKTypography variant="h6" fontWeight="bold" sx={{ color: "#ffffff" }}>
               Select Date Range
             </MKTypography>
           </MKBox>
@@ -309,6 +360,24 @@ function Analytics() {
                 sx={{
                   "& .MuiOutlinedInput-root": {
                     borderRadius: 2,
+                    "& fieldset": {
+                      borderColor: "rgba(255, 255, 255, 0.3)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(255, 255, 255, 0.5)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#ffffff",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "rgba(255, 255, 255, 0.7)",
+                    "&.Mui-focused": {
+                      color: "#ffffff",
+                    },
+                  },
+                  "& .MuiInputBase-input": {
+                    color: "#ffffff",
                   },
                 }}
               />
@@ -326,6 +395,24 @@ function Analytics() {
                 sx={{
                   "& .MuiOutlinedInput-root": {
                     borderRadius: 2,
+                    "& fieldset": {
+                      borderColor: "rgba(255, 255, 255, 0.3)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(255, 255, 255, 0.5)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#ffffff",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "rgba(255, 255, 255, 0.7)",
+                    "&.Mui-focused": {
+                      color: "#ffffff",
+                    },
+                  },
+                  "& .MuiInputBase-input": {
+                    color: "#ffffff",
                   },
                 }}
               />
@@ -387,10 +474,10 @@ function Analytics() {
                       mode === "dark" ? "0 8px 32px rgba(0,0,0,0.3)" : "0 8px 32px rgba(0,0,0,0.1)",
                     background: ({ palette: { mode } }) =>
                       mode === "dark"
-                        ? "linear-gradient(135deg, rgba(233, 30, 99, 0.15) 0%, rgba(233, 30, 99, 0.05) 100%)"
+                        ? "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%)"
                         : "linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(233, 30, 99, 0.03) 100%)",
                     border: ({ palette: { mode } }) =>
-                      mode === "dark" ? "1px solid rgba(233, 30, 99, 0.2)" : "none",
+                      mode === "dark" ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
                     transition: "transform 0.2s ease, box-shadow 0.2s ease",
                     "&:hover": {
                       transform: "translateY(-4px)",
@@ -407,23 +494,23 @@ function Analytics() {
                         p: 1.5,
                         borderRadius: 2,
                         backgroundColor: ({ palette: { mode } }) =>
-                          mode === "dark" ? "rgba(233, 30, 99, 0.2)" : "rgba(233, 30, 99, 0.1)",
+                          mode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(233, 30, 99, 0.1)",
                         mr: 2,
                       }}
                     >
-                      <AttachMoneyIcon sx={{ fontSize: 28, color: "error.main" }} />
+                      <AttachMoneyIcon sx={{ fontSize: 28, color: "#ffffff" }} />
                     </MKBox>
                     <MKBox>
-                      <MKTypography variant="body2" color="text.secondary" fontWeight="medium">
+                      <MKTypography variant="body2" sx={{ color: "#ffffff" }} fontWeight="medium">
                         Total Spending
                       </MKTypography>
-                      <MKTypography variant="h4" fontWeight="bold" color="error.main">
+                      <MKTypography variant="h4" fontWeight="bold" sx={{ color: "#ffffff" }}>
                         {formatCurrency(totalSpending)}
                       </MKTypography>
                     </MKBox>
                   </MKBox>
                   {analytics.period && (
-                    <MKTypography variant="caption" color="text.secondary">
+                    <MKTypography variant="caption" sx={{ color: "rgba(255, 255, 255, 0.7)" }}>
                       {formatDate(analytics.period.start_date)} -{" "}
                       {formatDate(analytics.period.end_date)}
                     </MKTypography>
@@ -442,10 +529,10 @@ function Analytics() {
                       mode === "dark" ? "0 8px 32px rgba(0,0,0,0.3)" : "0 8px 32px rgba(0,0,0,0.1)",
                     background: ({ palette: { mode } }) =>
                       mode === "dark"
-                        ? "linear-gradient(135deg, rgba(33, 150, 243, 0.15) 0%, rgba(33, 150, 243, 0.05) 100%)"
+                        ? "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%)"
                         : "linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 150, 243, 0.03) 100%)",
                     border: ({ palette: { mode } }) =>
-                      mode === "dark" ? "1px solid rgba(33, 150, 243, 0.2)" : "none",
+                      mode === "dark" ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
                     transition: "transform 0.2s ease, box-shadow 0.2s ease",
                     "&:hover": {
                       transform: "translateY(-4px)",
@@ -462,22 +549,22 @@ function Analytics() {
                         p: 1.5,
                         borderRadius: 2,
                         backgroundColor: ({ palette: { mode } }) =>
-                          mode === "dark" ? "rgba(33, 150, 243, 0.2)" : "rgba(33, 150, 243, 0.1)",
+                          mode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(33, 150, 243, 0.1)",
                         mr: 2,
                       }}
                     >
-                      <TrendingUpIcon sx={{ fontSize: 28, color: "info.main" }} />
+                      <TrendingUpIcon sx={{ fontSize: 28, color: "#ffffff" }} />
                     </MKBox>
                     <MKBox>
-                      <MKTypography variant="body2" color="text.secondary" fontWeight="medium">
+                      <MKTypography variant="body2" sx={{ color: "#ffffff" }} fontWeight="medium">
                         Average Daily
                       </MKTypography>
-                      <MKTypography variant="h4" fontWeight="bold" color="info.main">
+                      <MKTypography variant="h4" fontWeight="bold" sx={{ color: "#ffffff" }}>
                         {formatCurrency(averageSpending)}
                       </MKTypography>
                     </MKBox>
                   </MKBox>
-                  <MKTypography variant="caption" color="text.secondary">
+                  <MKTypography variant="caption" sx={{ color: "rgba(255, 255, 255, 0.7)" }}>
                     Per time period
                   </MKTypography>
                 </Card>
@@ -494,10 +581,10 @@ function Analytics() {
                       mode === "dark" ? "0 8px 32px rgba(0,0,0,0.3)" : "0 8px 32px rgba(0,0,0,0.1)",
                     background: ({ palette: { mode } }) =>
                       mode === "dark"
-                        ? "linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(76, 175, 80, 0.05) 100%)"
+                        ? "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%)"
                         : "linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.03) 100%)",
                     border: ({ palette: { mode } }) =>
-                      mode === "dark" ? "1px solid rgba(76, 175, 80, 0.2)" : "none",
+                      mode === "dark" ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
                     transition: "transform 0.2s ease, box-shadow 0.2s ease",
                     "&:hover": {
                       transform: "translateY(-4px)",
@@ -514,22 +601,22 @@ function Analytics() {
                         p: 1.5,
                         borderRadius: 2,
                         backgroundColor: ({ palette: { mode } }) =>
-                          mode === "dark" ? "rgba(76, 175, 80, 0.2)" : "rgba(76, 175, 80, 0.1)",
+                          mode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(76, 175, 80, 0.1)",
                         mr: 2,
                       }}
                     >
-                      <CategoryIcon sx={{ fontSize: 28, color: "success.main" }} />
+                      <CategoryIcon sx={{ fontSize: 28, color: "#ffffff" }} />
                     </MKBox>
                     <MKBox>
-                      <MKTypography variant="body2" color="text.secondary" fontWeight="medium">
+                      <MKTypography variant="body2" sx={{ color: "#ffffff" }} fontWeight="medium">
                         Categories
                       </MKTypography>
-                      <MKTypography variant="h4" fontWeight="bold" color="success.main">
+                      <MKTypography variant="h4" fontWeight="bold" sx={{ color: "#ffffff" }}>
                         {categoryCount}
                       </MKTypography>
                     </MKBox>
                   </MKBox>
-                  <MKTypography variant="caption" color="text.secondary">
+                  <MKTypography variant="caption" sx={{ color: "rgba(255, 255, 255, 0.7)" }}>
                     Active categories
                   </MKTypography>
                 </Card>
@@ -546,10 +633,10 @@ function Analytics() {
                       mode === "dark" ? "0 8px 32px rgba(0,0,0,0.3)" : "0 8px 32px rgba(0,0,0,0.1)",
                     background: ({ palette: { mode } }) =>
                       mode === "dark"
-                        ? "linear-gradient(135deg, rgba(255, 152, 0, 0.15) 0%, rgba(255, 152, 0, 0.05) 100%)"
+                        ? "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%)"
                         : "linear-gradient(135deg, rgba(255, 152, 0, 0.1) 0%, rgba(255, 152, 0, 0.03) 100%)",
                     border: ({ palette: { mode } }) =>
-                      mode === "dark" ? "1px solid rgba(255, 152, 0, 0.2)" : "none",
+                      mode === "dark" ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
                     transition: "transform 0.2s ease, box-shadow 0.2s ease",
                     "&:hover": {
                       transform: "translateY(-4px)",
@@ -566,27 +653,27 @@ function Analytics() {
                         p: 1.5,
                         borderRadius: 2,
                         backgroundColor: ({ palette: { mode } }) =>
-                          mode === "dark" ? "rgba(255, 152, 0, 0.2)" : "rgba(255, 152, 0, 0.1)",
+                          mode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 152, 0, 0.1)",
                         mr: 2,
                       }}
                     >
-                      <ShoppingCartIcon sx={{ fontSize: 28, color: "warning.main" }} />
+                      <ShoppingCartIcon sx={{ fontSize: 28, color: "#ffffff" }} />
                     </MKBox>
                     <MKBox>
-                      <MKTypography variant="body2" color="text.secondary" fontWeight="medium">
+                      <MKTypography variant="body2" sx={{ color: "#ffffff" }} fontWeight="medium">
                         Top Category
                       </MKTypography>
                       <MKTypography
                         variant="h6"
                         fontWeight="bold"
-                        color="warning.main"
+                        sx={{ color: "#ffffff" }}
                         textTransform="capitalize"
                       >
                         {topCategory ? topCategory.category : "N/A"}
                       </MKTypography>
                     </MKBox>
                   </MKBox>
-                  <MKTypography variant="caption" color="text.secondary">
+                  <MKTypography variant="caption" sx={{ color: "rgba(255, 255, 255, 0.7)" }}>
                     {topCategory ? formatCurrency(topCategory.total) : "No data"}
                   </MKTypography>
                 </Card>
@@ -608,23 +695,6 @@ function Analytics() {
                   mode === "dark" ? "1px solid rgba(255,255,255,0.1)" : "none",
               }}
             >
-              <MKBox display="flex" alignItems="center" mb={3}>
-                <MKBox
-                  sx={{
-                    p: 1.5,
-                    borderRadius: 2,
-                    backgroundColor: ({ palette: { mode } }) =>
-                      mode === "dark" ? "rgba(233, 30, 99, 0.2)" : "rgba(233, 30, 99, 0.1)",
-                    mr: 1.5,
-                  }}
-                >
-                  <TrendingUpIcon sx={{ fontSize: 28, color: "error.main" }} />
-                </MKBox>
-                <MKTypography variant="h5" fontWeight="bold">
-                  Daily Spending Trend & Projection
-                </MKTypography>
-              </MKBox>
-
               {chartData.length > 0 ? (
                 <ResponsiveContainer width="100%" height={400}>
                   <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 60 }}>
@@ -731,7 +801,7 @@ function Analytics() {
                   boxShadow: ({ palette: { mode } }) =>
                     mode === "dark" ? "0 8px 32px rgba(0,0,0,0.3)" : "0 8px 32px rgba(0,0,0,0.1)",
                   background: ({ palette: { mode } }) =>
-                    mode === "dark" ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.8)",
+                    mode === "dark" ? "rgba(0, 0, 0, 0.6)" : "rgba(255,255,255,0.8)",
                   border: ({ palette: { mode } }) =>
                     mode === "dark" ? "1px solid rgba(255,255,255,0.1)" : "none",
                 }}
@@ -742,13 +812,13 @@ function Analytics() {
                       p: 1.5,
                       borderRadius: 2,
                       backgroundColor: ({ palette: { mode } }) =>
-                        mode === "dark" ? "rgba(25, 118, 210, 0.2)" : "rgba(25, 118, 210, 0.1)",
+                        mode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(25, 118, 210, 0.1)",
                       mr: 1.5,
                     }}
                   >
-                    <CategoryIcon sx={{ fontSize: 28, color: "primary.main" }} />
+                    <CategoryIcon sx={{ fontSize: 28, color: "#ffffff" }} />
                   </MKBox>
-                  <MKTypography variant="h5" fontWeight="bold">
+                  <MKTypography variant="h5" fontWeight="bold" sx={{ color: "#ffffff" }}>
                     Spending by Category
                   </MKTypography>
                 </MKBox>
@@ -794,10 +864,14 @@ function Analytics() {
                                     fontWeight="bold"
                                     textTransform="capitalize"
                                     mb={0.25}
+                                    sx={{ color: "#ffffff" }}
                                   >
                                     {item.category}
                                   </MKTypography>
-                                  <MKTypography variant="caption" color="text.secondary">
+                                  <MKTypography
+                                    variant="caption"
+                                    sx={{ color: "rgba(255, 255, 255, 0.7)" }}
+                                  >
                                     {categoryPercentage.toFixed(1)}% of total
                                   </MKTypography>
                                 </MKBox>
@@ -806,7 +880,7 @@ function Analytics() {
                                 <MKTypography
                                   variant="h6"
                                   fontWeight="bold"
-                                  color={getCategoryColor(item.category) + ".main"}
+                                  sx={{ color: "#ffffff" }}
                                 >
                                   {formatCurrency(item.total)}
                                 </MKTypography>
@@ -863,7 +937,7 @@ function Analytics() {
                   boxShadow: ({ palette: { mode } }) =>
                     mode === "dark" ? "0 8px 32px rgba(0,0,0,0.3)" : "0 8px 32px rgba(0,0,0,0.1)",
                   background: ({ palette: { mode } }) =>
-                    mode === "dark" ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.8)",
+                    mode === "dark" ? "rgba(0, 0, 0, 0.6)" : "rgba(255,255,255,0.8)",
                   border: ({ palette: { mode } }) =>
                     mode === "dark" ? "1px solid rgba(255,255,255,0.1)" : "none",
                 }}
@@ -874,13 +948,13 @@ function Analytics() {
                       p: 1.5,
                       borderRadius: 2,
                       backgroundColor: ({ palette: { mode } }) =>
-                        mode === "dark" ? "rgba(33, 150, 243, 0.2)" : "rgba(33, 150, 243, 0.1)",
+                        mode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(33, 150, 243, 0.1)",
                       mr: 1.5,
                     }}
                   >
-                    <TimelineIcon sx={{ fontSize: 28, color: "info.main" }} />
+                    <TimelineIcon sx={{ fontSize: 28, color: "#ffffff" }} />
                   </MKBox>
-                  <MKTypography variant="h5" fontWeight="bold">
+                  <MKTypography variant="h5" fontWeight="bold" sx={{ color: "#ffffff" }}>
                     Spending Over Time
                   </MKTypography>
                 </MKBox>
@@ -914,18 +988,25 @@ function Analytics() {
                           >
                             <MKBox display="flex" alignItems="center" gap={1.5}>
                               <CalendarTodayIcon
-                                sx={{ fontSize: 20, color: "info.main", opacity: 0.7 }}
+                                sx={{ fontSize: 20, color: "#ffffff", opacity: 0.7 }}
                               />
                               <MKBox>
-                                <MKTypography variant="body1" fontWeight="medium">
+                                <MKTypography
+                                  variant="body1"
+                                  fontWeight="medium"
+                                  sx={{ color: "#ffffff" }}
+                                >
                                   {formatDate(item.period)}
                                 </MKTypography>
-                                <MKTypography variant="caption" color="text.secondary">
+                                <MKTypography
+                                  variant="caption"
+                                  sx={{ color: "rgba(255, 255, 255, 0.7)" }}
+                                >
                                   {percentage.toFixed(1)}% of peak
                                 </MKTypography>
                               </MKBox>
                             </MKBox>
-                            <MKTypography variant="h6" fontWeight="bold" color="info.main">
+                            <MKTypography variant="h6" fontWeight="bold" sx={{ color: "#ffffff" }}>
                               {formatCurrency(item.total)}
                             </MKTypography>
                           </MKBox>

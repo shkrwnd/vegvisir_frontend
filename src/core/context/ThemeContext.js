@@ -356,10 +356,10 @@ const darkColors = {
 const ThemeContext = createContext(null);
 
 export const ThemeProvider = ({ children }) => {
-  const [mode] = useState("light");
+  const [mode] = useState("dark");
 
   const toggleMode = () => {
-    // Toggle disabled - always use light mode
+    // Toggle disabled - always use dark mode
   };
 
   const colors = mode === "light" ? lightColors : darkColors;

@@ -28,7 +28,7 @@ import MKTypography from "components/base/MKTypography";
 import MKButton from "components/base/MKButton";
 
 function DefaultNavbar({
-  brand = "Material Kit 2",
+  brand = "SCARLET PAY",
   transparent = false,
   light = false,
   action = false,
@@ -61,7 +61,24 @@ function DefaultNavbar({
             lineHeight={1}
             py={transparent ? 1.5 : 0.75}
             pl={relative || transparent ? 0 : { xs: 0, lg: 1 }}
+            display="flex"
+            alignItems="center"
+            gap={1}
           >
+            <MKBox
+              component="img"
+              src="/scarlet-pay-logo.svg"
+              alt="Scarlet Pay Logo"
+              onError={(e) => {
+                e.target.style.display = "none";
+              }}
+              sx={{
+                height: 32,
+                width: "auto",
+                objectFit: "contain",
+                flexShrink: 0,
+              }}
+            />
             <MKTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
               {brand}
             </MKTypography>

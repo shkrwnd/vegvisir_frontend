@@ -27,11 +27,54 @@ function Dashboard() {
   return (
     <Container maxWidth={false} sx={{ px: 0 }}>
       {/* Header Section */}
-      <MKBox mb={6}>
-        <MKTypography variant="h4" fontWeight="bold" mb={2}>
-          Dashboard Overview
-        </MKTypography>
-        <MKTypography variant="body1" color="text">
+      <MKBox
+        mb={6}
+        sx={{
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 3, sm: 4, md: 5 },
+          background:
+            "linear-gradient(135deg, rgba(204, 0, 0, 0.1) 0%, rgba(204, 0, 0, 0.05) 100%)",
+          borderRadius: 3,
+          border: "1px solid rgba(204, 0, 0, 0.2)",
+          boxShadow: "0 4px 20px rgba(204, 0, 0, 0.1)",
+        }}
+      >
+        <MKBox display="flex" alignItems="center" gap={2} mb={2}>
+          <MKBox
+            sx={{
+              width: { xs: "4px", sm: "6px" },
+              height: { xs: "40px", sm: "50px" },
+              background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+              borderRadius: "4px",
+              boxShadow: "0 4px 12px rgba(204, 0, 0, 0.3)",
+            }}
+          />
+          <MKTypography
+            variant="h3"
+            fontWeight="bold"
+            sx={{
+              background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.5rem" },
+              letterSpacing: "0.5px",
+              lineHeight: 1.2,
+            }}
+          >
+            Dashboard Overview
+          </MKTypography>
+        </MKBox>
+        <MKTypography
+          variant="body1"
+          sx={{
+            color: ({ palette: { text } }) => text.main,
+            fontSize: { xs: "0.95rem", sm: "1rem" },
+            lineHeight: 1.6,
+            opacity: 0.9,
+            pl: { xs: 3, sm: 4 },
+          }}
+        >
           Welcome to your comprehensive dashboard. Here you can view key metrics and manage your
           data.
         </MKTypography>

@@ -188,12 +188,15 @@ const RutgersWalletCardFinal = forwardRef(
         <div
           style={{
             perspective: "1500px",
-            width: "100%",
-            maxWidth: isMobile ? "100%" : "480px",
+            width: isMobile ? "calc(100vw - 120px)" : "480px",
+            maxWidth: isMobile ? "calc(100vw - 120px)" : "480px",
             margin: "0 auto 20px",
             position: "relative",
             zIndex: 2,
-            padding: isMobile ? "0 16px" : "0",
+            boxSizing: "border-box",
+            flexShrink: 0,
+            overflow: "visible",
+            padding: isMobile ? "0" : "0 4px",
           }}
         >
           <div
@@ -203,9 +206,9 @@ const RutgersWalletCardFinal = forwardRef(
             style={{
               position: "relative",
               width: "100%",
-              height: isMobile ? "calc((100vw - 32px) / 1.58)" : "calc(480px / 1.58)",
-              maxHeight: isMobile ? "240px" : "304px",
-              minHeight: isMobile ? "200px" : "280px",
+              height: isMobile ? "calc((100vw - 120px) / 1.586)" : "calc(480px / 1.586)",
+              minHeight: isMobile ? "calc((100vw - 120px) / 1.586)" : "calc(480px / 1.586)",
+              maxHeight: isMobile ? "calc((100vw - 120px) / 1.586)" : "calc(480px / 1.586)",
               transition: "transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1)",
               transformStyle: "preserve-3d",
               transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
@@ -225,12 +228,16 @@ const RutgersWalletCardFinal = forwardRef(
                 background: cardBackground
                   ? cardTheme === "black"
                     ? "rgba(0, 0, 0, 0.9)"
-                    : "rgba(255, 255, 255, 0.95)"
+                    : "rgba(255, 255, 255, 0.1)"
                   : cardTheme === "black"
                   ? "rgba(0, 0, 0, 0.95)"
-                  : "rgba(255, 255, 255, 0.95)",
-                backdropFilter: "blur(25px) saturate(200%)",
-                WebkitBackdropFilter: "blur(25px) saturate(200%)",
+                  : "rgba(255, 255, 255, 0.1)",
+                ...(cardTheme === "white" && cardBackground
+                  ? {}
+                  : {
+                      backdropFilter: "blur(25px) saturate(200%)",
+                      WebkitBackdropFilter: "blur(25px) saturate(200%)",
+                    }),
                 border:
                   cardTheme === "black"
                     ? "2px solid rgba(255, 255, 255, 0.1)"
@@ -291,19 +298,21 @@ const RutgersWalletCardFinal = forwardRef(
                       backgroundImage: `url(${cardBackground})`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
-                      filter: "brightness(0.8)",
+                      filter: cardTheme === "white" ? "brightness(1)" : "brightness(0.8)",
                     }}
                   />
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      background: "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4))",
-                    }}
-                  />
+                  {cardTheme === "black" ? (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4))",
+                      }}
+                    />
+                  ) : null}
                 </>
               ) : (
                 <>
@@ -329,9 +338,8 @@ const RutgersWalletCardFinal = forwardRef(
                         left: 0,
                         right: 0,
                         bottom: 0,
-                        background:
-                          "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(250, 250, 250, 0.05) 100%)",
-                        opacity: 0.6,
+                        background: "transparent",
+                        opacity: 0,
                       }}
                     />
                   )}
@@ -378,8 +386,13 @@ const RutgersWalletCardFinal = forwardRef(
                       display: "flex",
                       alignItems: "center",
                       gap: "clamp(8px, 2vw, 12px)",
-                      background:
-                        cardTheme === "black" ? "rgba(0, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.9)",
+                      background: cardBackground
+                        ? cardTheme === "black"
+                          ? "rgba(0, 0, 0, 0.85)"
+                          : "rgba(255, 255, 255, 0.95)"
+                        : cardTheme === "black"
+                        ? "rgba(0, 0, 0, 0.7)"
+                        : "rgba(255, 255, 255, 0.9)",
                       backdropFilter: "blur(15px) saturate(180%)",
                       WebkitBackdropFilter: "blur(15px) saturate(180%)",
                       padding: "clamp(10px, 2.5vw, 16px) clamp(12px, 3vw, 16px)",
@@ -388,10 +401,13 @@ const RutgersWalletCardFinal = forwardRef(
                         cardTheme === "black"
                           ? "1px solid rgba(255, 255, 255, 0.3)"
                           : "1px solid rgba(0, 0, 0, 0.2)",
-                      boxShadow:
-                        cardTheme === "black"
-                          ? "0 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.2)"
-                          : "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.5)",
+                      boxShadow: cardBackground
+                        ? cardTheme === "black"
+                          ? "0 4px 16px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.2)"
+                          : "0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.5)"
+                        : cardTheme === "black"
+                        ? "0 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.2)"
+                        : "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.5)",
                     }}
                   >
                     <svg
@@ -415,7 +431,7 @@ const RutgersWalletCardFinal = forwardRef(
                           fontSize: "clamp(0.9rem, 2.5vw, 1.1rem)",
                           letterSpacing: "0.5px",
                           lineHeight: 1.2,
-                          textShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                          textShadow: "none",
                         }}
                       >
                         RUTGERS
@@ -426,10 +442,7 @@ const RutgersWalletCardFinal = forwardRef(
                           fontSize: "clamp(0.65rem, 2vw, 0.7rem)",
                           fontWeight: 600,
                           letterSpacing: "1px",
-                          textShadow:
-                            cardTheme === "black"
-                              ? "0 2px 4px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.5)"
-                              : "0 2px 4px rgba(255, 255, 255, 0.8), 0 1px 2px rgba(255, 255, 255, 0.5)",
+                          textShadow: "none",
                         }}
                       >
                         {walletType}
@@ -452,8 +465,13 @@ const RutgersWalletCardFinal = forwardRef(
                   {/* User Name */}
                   <div
                     style={{
-                      background:
-                        cardTheme === "black" ? "rgba(0, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.9)",
+                      background: cardBackground
+                        ? cardTheme === "black"
+                          ? "rgba(0, 0, 0, 0.85)"
+                          : "rgba(255, 255, 255, 0.95)"
+                        : cardTheme === "black"
+                        ? "rgba(0, 0, 0, 0.7)"
+                        : "rgba(255, 255, 255, 0.9)",
                       backdropFilter: "blur(15px) saturate(180%)",
                       WebkitBackdropFilter: "blur(15px) saturate(180%)",
                       padding: "clamp(10px, 2.5vw, 16px) clamp(12px, 3vw, 16px)",
@@ -465,10 +483,13 @@ const RutgersWalletCardFinal = forwardRef(
                       flex: "1 1 auto",
                       minWidth: 0,
                       maxWidth: "none",
-                      boxShadow:
-                        cardTheme === "black"
-                          ? "0 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.2)"
-                          : "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.5)",
+                      boxShadow: cardBackground
+                        ? cardTheme === "black"
+                          ? "0 4px 16px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.2)"
+                          : "0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.5)"
+                        : cardTheme === "black"
+                        ? "0 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.2)"
+                        : "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.5)",
                     }}
                   >
                     <div
@@ -477,10 +498,7 @@ const RutgersWalletCardFinal = forwardRef(
                         fontWeight: 800,
                         fontSize: "clamp(0.85rem, 2.5vw, 1rem)",
                         lineHeight: 1.2,
-                        textShadow:
-                          cardTheme === "black"
-                            ? "0 2px 4px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.5)"
-                            : "0 2px 4px rgba(255, 255, 255, 0.8), 0 1px 2px rgba(255, 255, 255, 0.5)",
+                        textShadow: "none",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
@@ -494,8 +512,13 @@ const RutgersWalletCardFinal = forwardRef(
                   <div
                     style={{
                       textAlign: "right",
-                      background:
-                        cardTheme === "black" ? "rgba(0, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.9)",
+                      background: cardBackground
+                        ? cardTheme === "black"
+                          ? "rgba(0, 0, 0, 0.85)"
+                          : "rgba(255, 255, 255, 0.95)"
+                        : cardTheme === "black"
+                        ? "rgba(0, 0, 0, 0.7)"
+                        : "rgba(255, 255, 255, 0.9)",
                       backdropFilter: "blur(15px) saturate(180%)",
                       WebkitBackdropFilter: "blur(15px) saturate(180%)",
                       padding: "clamp(10px, 2.5vw, 16px) clamp(12px, 3vw, 16px)",
@@ -504,10 +527,13 @@ const RutgersWalletCardFinal = forwardRef(
                         cardTheme === "black"
                           ? "1px solid rgba(255, 255, 255, 0.3)"
                           : "1px solid rgba(0, 0, 0, 0.2)",
-                      boxShadow:
-                        cardTheme === "black"
-                          ? "0 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.2)"
-                          : "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.5)",
+                      boxShadow: cardBackground
+                        ? cardTheme === "black"
+                          ? "0 4px 16px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.2)"
+                          : "0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.5)"
+                        : cardTheme === "black"
+                        ? "0 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.2)"
+                        : "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.5)",
                       flex: "0 1 auto",
                       minWidth: 0,
                       maxWidth: "none",
@@ -530,10 +556,7 @@ const RutgersWalletCardFinal = forwardRef(
                           textTransform: "uppercase",
                           letterSpacing: "1.5px",
                           fontWeight: 600,
-                          textShadow:
-                            cardTheme === "black"
-                              ? "0 2px 4px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.5)"
-                              : "0 1px 2px rgba(255, 255, 255, 0.8)",
+                          textShadow: "none",
                         }}
                       >
                         Flex Dollars
@@ -553,10 +576,7 @@ const RutgersWalletCardFinal = forwardRef(
                           justifyContent: "center",
                           color: cardTheme === "black" ? "rgba(255, 255, 255, 0.9)" : "#6b7280",
                           transition: "all 0.2s ease",
-                          textShadow:
-                            cardTheme === "black"
-                              ? "0 1px 2px rgba(0, 0, 0, 0.8)"
-                              : "0 1px 2px rgba(255, 255, 255, 0.8)",
+                          textShadow: "none",
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.color = "#CC0000";
@@ -677,7 +697,7 @@ const RutgersWalletCardFinal = forwardRef(
                       fontWeight: 800,
                       fontSize: "1.4rem",
                       marginBottom: "6px",
-                      textShadow: cardBackground ? "0 2px 8px rgba(0, 0, 0, 0.5)" : "none",
+                      textShadow: "none",
                     }}
                   >
                     Rutgers Wallet
@@ -735,7 +755,7 @@ const RutgersWalletCardFinal = forwardRef(
                       color: cardBackground ? "#ffffff" : "#374151",
                       fontWeight: 800,
                       fontSize: "0.9rem",
-                      textShadow: cardBackground ? "0 2px 4px rgba(0, 0, 0, 0.3)" : "none",
+                      textShadow: "none",
                     }}
                   >
                     Scan to Pay
@@ -773,7 +793,7 @@ const RutgersWalletCardFinal = forwardRef(
                         fontFamily: "monospace",
                         fontWeight: 800,
                         fontSize: "1rem",
-                        textShadow: cardBackground ? "0 2px 4px rgba(0, 0, 0, 0.3)" : "none",
+                        textShadow: "none",
                       }}
                     >
                       {cardExpiryDate}

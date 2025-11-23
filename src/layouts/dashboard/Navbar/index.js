@@ -26,6 +26,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
 
 // @mui icons
 import MenuIcon from "@mui/icons-material/Menu";
@@ -78,32 +79,34 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
       id="dashboard-top-navbar"
       position="fixed"
       top={0}
-      left={{ sm: sidebarOpen ? `${drawerWidth}px` : 0 }}
+      left={0}
       right={0}
       zIndex={1300}
       sx={{
         transition: "left 0.3s ease",
-        p: 1,
+        width: "100%",
+        maxWidth: "100vw",
+        overflow: "hidden",
       }}
     >
       <MKBox
         id="dashboard-navbar-content"
-        py={1}
-        px={{ xs: 4, sm: 2, lg: 2 }}
-        my={2}
-        mx={3}
-        width="calc(100% - 48px)"
+        py={{ xs: 1, sm: 1.5, md: 2 }}
+        px={{ xs: 1, sm: 2, md: 3 }}
+        my={{ xs: 1, sm: 2 }}
+        mx={{ xs: 0.5, sm: 2, md: 3 }}
+        width={{ xs: "calc(100vw - 8px)", sm: "calc(100% - 32px)", md: "calc(100% - 48px)" }}
+        maxWidth={{ xs: "calc(100vw - 8px)", sm: "none" }}
         borderRadius="xl"
         shadow="md"
         color="dark"
-        position="absolute"
-        left={0}
+        position="relative"
         zIndex={3}
         sx={({ palette: { white, background, mode }, functions: { rgba } }) => ({
-          backgroundColor: mode === "dark" ? rgba(background.default, 0.9) : rgba(white.main, 0.8),
+          backgroundColor: "rgba(0, 0, 0, 0.95)",
           backdropFilter: `saturate(200%) blur(30px)`,
-          border: ({ palette: { mode, grey } }) =>
-            mode === "dark" ? `1px solid ${grey[300]}` : "none",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
+          boxSizing: "border-box",
         })}
       >
         <MKBox
@@ -111,8 +114,23 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
           display="flex"
           justifyContent="space-between"
           alignItems="center"
+          width="100%"
+          gap={{ xs: 1, sm: 2, md: 3 }}
+          sx={{
+            boxSizing: "border-box",
+            position: "relative",
+          }}
         >
-          <MKBox id="dashboard-navbar-left" display="flex" alignItems="center">
+          {/* Left Side - Menu Button */}
+          <MKBox
+            id="dashboard-navbar-left"
+            display="flex"
+            alignItems="center"
+            sx={{
+              flex: { xs: "0 0 auto", sm: "0 1 auto" },
+              minWidth: 0,
+            }}
+          >
             <IconButton
               id="dashboard-sidebar-toggle"
               color="inherit"
@@ -120,22 +138,57 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
               edge="start"
               onClick={onSidebarToggle}
               sx={{
-                mr: 2,
-                color: "text.primary",
-                backgroundColor: ({ palette: { mode, grey } }) =>
-                  mode === "dark" ? grey[300] : "rgba(0,0,0,0.04)",
+                color: "#ffffff",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
                 "&:hover": {
-                  backgroundColor: ({ palette: { mode, grey } }) =>
-                    mode === "dark" ? grey[400] : "rgba(0,0,0,0.08)",
+                  backgroundColor: "rgba(255, 255, 255, 0.2)",
                 },
-                borderRadius: 2,
-                p: 1,
+                borderRadius: { xs: 1.5, sm: 2 },
+                p: { xs: 0.5, sm: 0.75, md: 1 },
                 transition: "all 200ms ease-out",
+                width: { xs: "36px", sm: "40px", md: "48px" },
+                height: { xs: "36px", sm: "40px", md: "48px" },
+                minWidth: { xs: "36px", sm: "40px", md: "48px" },
+                minHeight: { xs: "36px", sm: "40px", md: "48px" },
+                flexShrink: 0,
               }}
             >
-              <MenuIcon />
+              <MenuIcon
+                sx={{
+                  fontSize: { xs: "20px", sm: "24px", md: "28px" },
+                }}
+              />
             </IconButton>
+          </MKBox>
 
+          {/* Center - Scarlet Pay Logo and Text */}
+          <MKBox
+            id="dashboard-navbar-center"
+            display="flex"
+            alignItems="center"
+            gap={{ xs: 0.75, sm: 1.5, md: 2 }}
+            sx={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+              flexShrink: 0,
+            }}
+          >
+            <Box
+              component="img"
+              src="/scarlet-pay-logo.svg"
+              alt="Scarlet Pay Logo"
+              onError={(e) => {
+                e.target.style.display = "none";
+              }}
+              sx={{
+                height: { xs: "28px", sm: "36px", md: "44px" },
+                width: "auto",
+                objectFit: "contain",
+                flexShrink: 0,
+                display: "block",
+              }}
+            />
             <MKTypography
               id="dashboard-page-title"
               variant="h5"
@@ -145,39 +198,63 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                 fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
                 letterSpacing: "0.5px",
                 textTransform: "uppercase",
+                fontSize: { xs: "0.875rem", sm: "1.25rem", md: "1.5rem" },
+                whiteSpace: "nowrap",
+                flexShrink: 0,
+                lineHeight: 1.2,
               }}
             >
-              Scarlet Pay
+              SCARLET PAY
             </MKTypography>
           </MKBox>
 
           {/* Right Side - User Info and Settings */}
-          <MKBox id="dashboard-navbar-right" display="flex" alignItems="center" gap={2}>
+          <MKBox
+            id="dashboard-navbar-right"
+            display="flex"
+            alignItems="center"
+            gap={{ xs: 0.5, sm: 1, md: 2 }}
+            sx={{
+              flexShrink: 0,
+              minWidth: 0,
+            }}
+          >
             <MKBox
               id="dashboard-user-welcome"
               sx={{
-                display: "flex",
+                display: { xs: "none", md: "flex" },
                 alignItems: "center",
-                px: 2,
-                py: 1,
+                px: { sm: 1.5, md: 2 },
+                py: { sm: 0.75, md: 1 },
                 borderRadius: 2,
-                backgroundColor: ({ palette: { mode, grey, white } }) =>
-                  mode === "dark" ? grey[300] : "rgba(0,0,0,0.04)",
-                border: ({ palette: { mode, grey } }) =>
-                  mode === "dark" ? `1px solid ${grey[400]}` : "none",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
                 "&:hover": {
-                  backgroundColor: ({ palette: { mode, grey } }) =>
-                    mode === "dark" ? grey[400] : "rgba(0,0,0,0.08)",
+                  backgroundColor: "rgba(255, 255, 255, 0.15)",
                   transform: "translateY(-1px)",
                   boxShadow: ({ boxShadows: { sm } }) => sm,
                 },
                 transition: "all 200ms ease-out",
               }}
             >
-              <MKTypography variant="body2" color="text.secondary" mr={1}>
+              <MKTypography
+                variant="body2"
+                sx={{
+                  color: "rgba(255, 255, 255, 0.8)",
+                  fontSize: { sm: "0.75rem", md: "0.875rem" },
+                }}
+                mr={1}
+              >
                 Welcome back,
               </MKTypography>
-              <MKTypography variant="body2" fontWeight="medium" color="text.primary">
+              <MKTypography
+                variant="body2"
+                fontWeight="medium"
+                sx={{
+                  color: "#ffffff",
+                  fontSize: { sm: "0.75rem", md: "0.875rem" },
+                }}
+              >
                 Admin
               </MKTypography>
             </MKBox>
@@ -186,18 +263,26 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
               id="dashboard-settings-button"
               onClick={handleSettingsClick}
               sx={{
-                backgroundColor: ({ palette: { mode, grey } }) =>
-                  mode === "dark" ? grey[300] : "rgba(0,0,0,0.04)",
+                color: "#ffffff",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
                 "&:hover": {
-                  backgroundColor: ({ palette: { mode, grey } }) =>
-                    mode === "dark" ? grey[400] : "rgba(0,0,0,0.08)",
+                  backgroundColor: "rgba(255, 255, 255, 0.2)",
                 },
-                borderRadius: 2,
-                p: 1,
+                borderRadius: { xs: 1.5, sm: 2 },
+                p: { xs: 0.5, sm: 0.75, md: 1 },
                 transition: "all 200ms ease-out",
+                width: { xs: "36px", sm: "40px", md: "48px" },
+                height: { xs: "36px", sm: "40px", md: "48px" },
+                minWidth: { xs: "36px", sm: "40px", md: "48px" },
+                minHeight: { xs: "36px", sm: "40px", md: "48px" },
+                flexShrink: 0,
               }}
             >
-              <SettingsIcon />
+              <SettingsIcon
+                sx={{
+                  fontSize: { xs: "18px", sm: "20px", md: "24px" },
+                }}
+              />
             </IconButton>
 
             <Menu
@@ -219,9 +304,9 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                   boxShadow: ({ boxShadows: { md } }) => md,
                   minWidth: 220,
                   mt: 1,
-                  border: ({ borders: { borderWidth }, palette: { grey } }) =>
-                    `${borderWidth[0]} solid ${grey[200]}`,
-                  background: ({ palette: { white } }) => white.main,
+                  border: "1px solid rgba(0, 0, 0, 0.1)",
+                  background: "rgba(255, 255, 255, 0.95)",
+                  backdropFilter: "blur(20px)",
                   "& .MuiMenuItem-root": {
                     px: 2,
                     py: 1.25,
@@ -229,9 +314,9 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                     mx: 0.75,
                     my: 0.25,
                     transition: "all 200ms ease-out",
-                    color: "#000000",
+                    color: "#000000 !important",
                     "&:hover": {
-                      backgroundColor: ({ palette: { primary } }) => primary.light + "10",
+                      backgroundColor: "rgba(204, 0, 0, 0.1)",
                       transform: "translateX(2px)",
                     },
                     "&:first-of-type": {
@@ -241,7 +326,10 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                       mb: 0.5,
                     },
                     "& .MuiListItemText-primary": {
-                      color: "#000000",
+                      color: "#000000 !important",
+                    },
+                    "& .MuiListItemIcon-root": {
+                      color: "#000000 !important",
                     },
                   },
                 },
@@ -250,13 +338,17 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
               <MenuItem
                 onClick={handleSettingsClose}
                 sx={{
-                  "&:hover .MuiListItemIcon-root": {
-                    transform: "scale(1.1)",
+                  color: "#000000",
+                  "&:hover": {
+                    backgroundColor: "rgba(204, 0, 0, 0.1)",
+                    "& .MuiListItemIcon-root": {
+                      transform: "scale(1.1)",
+                    },
                   },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: 36 }}>
-                  <PersonIcon fontSize="small" color="primary" />
+                <ListItemIcon sx={{ minWidth: 36, color: "#000000" }}>
+                  <PersonIcon fontSize="small" sx={{ color: "#000000" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Profile"
@@ -264,19 +356,24 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                     variant: "body2",
                     fontWeight: 500,
                   }}
+                  sx={{ "& .MuiTypography-root": { color: "#000000" } }}
                 />
               </MenuItem>
 
               <MenuItem
                 onClick={handleSettingsClose}
                 sx={{
-                  "&:hover .MuiListItemIcon-root": {
-                    transform: "scale(1.1)",
+                  color: "#000000",
+                  "&:hover": {
+                    backgroundColor: "rgba(204, 0, 0, 0.1)",
+                    "& .MuiListItemIcon-root": {
+                      transform: "scale(1.1)",
+                    },
                   },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: 36 }}>
-                  <NotificationsIcon fontSize="small" color="info" />
+                <ListItemIcon sx={{ minWidth: 36, color: "#000000" }}>
+                  <NotificationsIcon fontSize="small" sx={{ color: "#000000" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Notifications"
@@ -284,19 +381,24 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                     variant: "body2",
                     fontWeight: 500,
                   }}
+                  sx={{ "& .MuiTypography-root": { color: "#000000" } }}
                 />
               </MenuItem>
 
               <MenuItem
                 onClick={handleSettingsClose}
                 sx={{
-                  "&:hover .MuiListItemIcon-root": {
-                    transform: "scale(1.1)",
+                  color: "#000000",
+                  "&:hover": {
+                    backgroundColor: "rgba(204, 0, 0, 0.1)",
+                    "& .MuiListItemIcon-root": {
+                      transform: "scale(1.1)",
+                    },
                   },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: 36 }}>
-                  <SecurityIcon fontSize="small" color="warning" />
+                <ListItemIcon sx={{ minWidth: 36, color: "#000000" }}>
+                  <SecurityIcon fontSize="small" sx={{ color: "#000000" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Security"
@@ -304,21 +406,26 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                     variant: "body2",
                     fontWeight: 500,
                   }}
+                  sx={{ "& .MuiTypography-root": { color: "#000000" } }}
                 />
               </MenuItem>
 
-              <Divider sx={{ my: 0.75, mx: 0.75 }} />
+              <Divider sx={{ my: 0.75, mx: 0.75, borderColor: "rgba(0, 0, 0, 0.1)" }} />
 
               <MenuItem
                 onClick={handleSettingsClose}
                 sx={{
-                  "&:hover .MuiListItemIcon-root": {
-                    transform: "scale(1.1)",
+                  color: "#000000",
+                  "&:hover": {
+                    backgroundColor: "rgba(204, 0, 0, 0.1)",
+                    "& .MuiListItemIcon-root": {
+                      transform: "scale(1.1)",
+                    },
                   },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: 36 }}>
-                  <HelpIcon fontSize="small" color="success" />
+                <ListItemIcon sx={{ minWidth: 36, color: "#000000" }}>
+                  <HelpIcon fontSize="small" sx={{ color: "#000000" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Help & Support"
@@ -326,31 +433,32 @@ function Navbar({ sidebarOpen, onSidebarToggle }) {
                     variant: "body2",
                     fontWeight: 500,
                   }}
+                  sx={{ "& .MuiTypography-root": { color: "#000000" } }}
                 />
               </MenuItem>
 
               <MenuItem
                 onClick={handleLogout}
                 sx={{
-                  color: ({ palette: { error } }) => error.main,
+                  color: "#CC0000",
                   "&:hover": {
-                    backgroundColor: ({ palette: { error } }) => error.light + "10",
+                    backgroundColor: "rgba(204, 0, 0, 0.2)",
                     "& .MuiListItemIcon-root": {
                       transform: "scale(1.1)",
                     },
                   },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: 36 }}>
-                  <LogoutIcon fontSize="small" color="error" />
+                <ListItemIcon sx={{ minWidth: 36, color: "#CC0000" }}>
+                  <LogoutIcon fontSize="small" sx={{ color: "#CC0000" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Logout"
                   primaryTypographyProps={{
                     variant: "body2",
                     fontWeight: 500,
-                    color: "inherit",
                   }}
+                  sx={{ "& .MuiTypography-root": { color: "#CC0000" } }}
                 />
               </MenuItem>
             </Menu>

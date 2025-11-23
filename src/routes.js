@@ -26,11 +26,12 @@ export const dashboardRoutes = [
     icon: <Icon>home</Icon>,
     route: ROUTES.HOME,
   },
-  {
-    name: "Dashboard",
-    icon: <Icon>dashboard</Icon>,
-    route: ROUTES.DASHBOARD,
-  },
+  // Dashboard - Hidden for now, can be restored later if needed
+  // {
+  //   name: "Dashboard",
+  //   icon: <Icon>dashboard</Icon>,
+  //   route: ROUTES.DASHBOARD,
+  // },
   {
     name: "Analytics",
     icon: <Icon>analytics</Icon>,

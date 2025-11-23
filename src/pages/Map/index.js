@@ -12,6 +12,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 // @mui material components
+import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
@@ -119,126 +120,159 @@ function MapPage() {
   }
 
   return (
-    <MKBox py={6}>
-      <Grid container spacing={3} justifyContent="center">
-        <Grid item xs={12} lg={10}>
-          {/* Header */}
-          <MKBox mb={3}>
-            <MKTypography variant="h3" fontWeight="bold" mb={1}>
-              Campus Map
-            </MKTypography>
-            <MKTypography variant="body1" color="text">
-              Find vendors that accept Raider wallet payments
-            </MKTypography>
-          </MKBox>
+    <Container maxWidth={false} sx={{ px: 0 }}>
+      {/* Header Section */}
+      <MKBox
+        mb={6}
+        sx={{
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 3, sm: 4, md: 5 },
+          background:
+            "linear-gradient(135deg, rgba(204, 0, 0, 0.1) 0%, rgba(204, 0, 0, 0.05) 100%)",
+          borderRadius: 3,
+          border: "1px solid rgba(204, 0, 0, 0.2)",
+          boxShadow: "0 4px 20px rgba(204, 0, 0, 0.1)",
+        }}
+      >
+        <MKBox display="flex" alignItems="center" gap={2}>
+          <MKBox
+            sx={{
+              width: { xs: "4px", sm: "6px" },
+              height: { xs: "40px", sm: "50px" },
+              background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+              borderRadius: "4px",
+              boxShadow: "0 4px 12px rgba(204, 0, 0, 0.3)",
+            }}
+          />
+          <MKTypography
+            variant="h3"
+            fontWeight="bold"
+            sx={{
+              background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.5rem" },
+              letterSpacing: "0.5px",
+              lineHeight: 1.2,
+            }}
+          >
+            Campus Map
+          </MKTypography>
+        </MKBox>
+      </MKBox>
 
-          {/* Category Filters */}
-          <MKBox mb={3} display="flex" gap={1} flexWrap="wrap">
-            <MKButton
-              variant={selectedCategory === null ? "gradient" : "outlined"}
-              color="dark"
-              size="small"
-              onClick={() => setSelectedCategory(null)}
-            >
-              All ({vendors.length})
-            </MKButton>
-            <MKButton
-              variant={selectedCategory === "dining" ? "gradient" : "outlined"}
-              color="success"
-              size="small"
-              onClick={() => setSelectedCategory("dining")}
-            >
-              <Icon sx={{ mr: 0.5 }}>restaurant</Icon>
-              Dining
-            </MKButton>
-            <MKButton
-              variant={selectedCategory === "retail" ? "gradient" : "outlined"}
-              color="info"
-              size="small"
-              onClick={() => setSelectedCategory("retail")}
-            >
-              <Icon sx={{ mr: 0.5 }}>shopping_bag</Icon>
-              Retail
-            </MKButton>
-          </MKBox>
+      {/* Category Filters */}
+      <MKBox mb={3} sx={{ px: 3 }} display="flex" gap={1} flexWrap="wrap">
+        <MKButton
+          variant={selectedCategory === null ? "gradient" : "outlined"}
+          color="dark"
+          size="small"
+          onClick={() => setSelectedCategory(null)}
+        >
+          All ({vendors.length})
+        </MKButton>
+        <MKButton
+          variant={selectedCategory === "dining" ? "gradient" : "outlined"}
+          color="success"
+          size="small"
+          onClick={() => setSelectedCategory("dining")}
+        >
+          <Icon sx={{ mr: 0.5 }}>restaurant</Icon>
+          Dining
+        </MKButton>
+        <MKButton
+          variant={selectedCategory === "retail" ? "gradient" : "outlined"}
+          color="info"
+          size="small"
+          onClick={() => setSelectedCategory("retail")}
+        >
+          <Icon sx={{ mr: 0.5 }}>shopping_bag</Icon>
+          Retail
+        </MKButton>
+      </MKBox>
 
-          {/* Map */}
-          <Card>
-            <MKBox p={0} sx={{ height: "600px", borderRadius: "12px", overflow: "hidden" }}>
-              <MapContainer
-                center={campusCenter}
-                zoom={16}
-                style={{ height: "100%", width: "100%" }}
-                scrollWheelZoom={false}
-                maxBounds={bounds}
-                maxBoundsViscosity={1.0}
-                minZoom={15}
-                maxZoom={18}
+      {/* Map */}
+      <Card
+        sx={{
+          mx: 3,
+          mb: 3,
+          borderRadius: 3,
+          boxShadow: ({ palette: { mode } }) =>
+            mode === "dark" ? "0 8px 32px rgba(0,0,0,0.3)" : "0 4px 20px rgba(0,0,0,0.08)",
+          border: ({ palette: { mode } }) =>
+            mode === "dark" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.05)",
+          overflow: "hidden",
+        }}
+      >
+        <MKBox p={0} sx={{ height: "600px", borderRadius: "12px", overflow: "hidden" }}>
+          <MapContainer
+            center={campusCenter}
+            zoom={16}
+            style={{ height: "100%", width: "100%" }}
+            scrollWheelZoom={false}
+            maxBounds={bounds}
+            maxBoundsViscosity={1.0}
+            minZoom={15}
+            maxZoom={18}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+
+            {filteredVendors.map((vendor) => (
+              <Marker
+                key={vendor.id}
+                position={[vendor.latitude, vendor.longitude]}
+                icon={createCustomIcon(vendor.category)}
               >
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
+                <Popup>
+                  <MKBox p={1} sx={{ minWidth: "200px" }}>
+                    <MKBox display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+                      <MKTypography variant="h6" fontWeight="bold">
+                        {vendor.name}
+                      </MKTypography>
+                      <MKBadge
+                        variant="contained"
+                        badgeContent={vendor.category}
+                        color={
+                          vendor.category === "dining"
+                            ? "success"
+                            : vendor.category === "retail"
+                            ? "info"
+                            : "dark"
+                        }
+                        size="xs"
+                      />
+                    </MKBox>
 
-                {filteredVendors.map((vendor) => (
-                  <Marker
-                    key={vendor.id}
-                    position={[vendor.latitude, vendor.longitude]}
-                    icon={createCustomIcon(vendor.category)}
-                  >
-                    <Popup>
-                      <MKBox p={1} sx={{ minWidth: "200px" }}>
-                        <MKBox
-                          display="flex"
-                          justifyContent="space-between"
-                          alignItems="center"
-                          mb={1}
-                        >
-                          <MKTypography variant="h6" fontWeight="bold">
-                            {vendor.name}
-                          </MKTypography>
-                          <MKBadge
-                            variant="contained"
-                            badgeContent={vendor.category}
-                            color={
-                              vendor.category === "dining"
-                                ? "success"
-                                : vendor.category === "retail"
-                                ? "info"
-                                : "dark"
-                            }
-                            size="xs"
-                          />
-                        </MKBox>
+                    {vendor.location && (
+                      <MKTypography variant="caption" color="text" display="block" mb={1}>
+                        <Icon fontSize="small" sx={{ mr: 0.5, verticalAlign: "middle" }}>
+                          location_on
+                        </Icon>
+                        {vendor.location}
+                      </MKTypography>
+                    )}
 
-                        {vendor.location && (
-                          <MKTypography variant="caption" color="text" display="block" mb={1}>
-                            <Icon fontSize="small" sx={{ mr: 0.5, verticalAlign: "middle" }}>
-                              location_on
-                            </Icon>
-                            {vendor.location}
-                          </MKTypography>
-                        )}
-
-                        <MKButton
-                          variant="gradient"
-                          color="info"
-                          size="small"
-                          fullWidth
-                          onClick={() => handleMarkerClick(vendor)}
-                        >
-                          Learn More
-                        </MKButton>
-                      </MKBox>
-                    </Popup>
-                  </Marker>
-                ))}
-              </MapContainer>
-            </MKBox>
-          </Card>
-        </Grid>
-      </Grid>
-    </MKBox>
+                    <MKButton
+                      variant="gradient"
+                      color="info"
+                      size="small"
+                      fullWidth
+                      onClick={() => handleMarkerClick(vendor)}
+                    >
+                      Learn More
+                    </MKButton>
+                  </MKBox>
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
+        </MKBox>
+      </Card>
+    </Container>
   );
 }
 

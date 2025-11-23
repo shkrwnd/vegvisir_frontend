@@ -33,12 +33,14 @@ function IllustrationLayout({
   title = "",
   description = "",
   illustration = "",
+  illustration2 = "",
   children,
 }) {
   return (
     <MKBox width="100%" height="100%" bgColor="white">
       <MKBox position="absolute" width="100%" mt={1}>
         <DefaultNavbar
+          brand="SCARLET PAY"
           action={{
             type: "external",
             route: "https://www.creative-tim.com/product/material-kit-pro-react",
@@ -56,8 +58,34 @@ function IllustrationLayout({
             borderRadius="lg"
             ml={2}
             mt={2}
-            sx={{ backgroundImage: `url(${illustration})` }}
-          />
+            gap={1}
+            flexDirection="column"
+          >
+            {illustration && (
+              <MKBox
+                flex={1}
+                borderRadius="lg"
+                sx={{
+                  backgroundImage: `url(${illustration})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                }}
+              />
+            )}
+            {illustration2 && (
+              <MKBox
+                flex={1}
+                borderRadius="lg"
+                sx={{
+                  backgroundImage: `url(${illustration2})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                }}
+              />
+            )}
+          </MKBox>
         </Grid>
         <Grid item xs={11} sm={8} md={5} lg={4} xl={3} sx={{ mx: "auto" }}>
           <MKBox display="flex" flexDirection="column" justifyContent="center" height="100vh">
@@ -92,6 +120,7 @@ IllustrationLayout.propTypes = {
   description: PropTypes.string,
   children: PropTypes.node.isRequired,
   illustration: PropTypes.string,
+  illustration2: PropTypes.string,
 };
 
 export default IllustrationLayout;

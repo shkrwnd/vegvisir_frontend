@@ -5,8 +5,11 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+
+// Material Kit 2 PRO React components
+import MKBox from "components/base/MKBox";
+import MKTypography from "components/base/MKTypography";
+import MKButton from "components/base/MKButton";
 
 function Events() {
   const [events, setEvents] = useState([
@@ -46,47 +49,91 @@ function Events() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h4" fontWeight="bold" gutterBottom>
-        Events
-      </Typography>
-      <Grid container spacing={3}>
+    <Container maxWidth={false} sx={{ px: 0 }}>
+      {/* Header Section */}
+      <MKBox
+        mb={6}
+        sx={{
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 3, sm: 4, md: 5 },
+          background:
+            "linear-gradient(135deg, rgba(204, 0, 0, 0.1) 0%, rgba(204, 0, 0, 0.05) 100%)",
+          borderRadius: 3,
+          border: "1px solid rgba(204, 0, 0, 0.2)",
+          boxShadow: "0 4px 20px rgba(204, 0, 0, 0.1)",
+        }}
+      >
+        <MKBox display="flex" alignItems="center" gap={2}>
+          <MKBox
+            sx={{
+              width: { xs: "4px", sm: "6px" },
+              height: { xs: "40px", sm: "50px" },
+              background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+              borderRadius: "4px",
+              boxShadow: "0 4px 12px rgba(204, 0, 0, 0.3)",
+            }}
+          />
+          <MKTypography
+            variant="h3"
+            fontWeight="bold"
+            sx={{
+              background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.5rem" },
+              letterSpacing: "0.5px",
+              lineHeight: 1.2,
+            }}
+          >
+            Events
+          </MKTypography>
+        </MKBox>
+      </MKBox>
+
+      {/* Events Grid */}
+      <Grid container spacing={3} sx={{ px: 3 }}>
         {events.map((event) => (
           <Grid item xs={12} md={6} lg={4} key={event.id}>
             <Card
               sx={{
-                p: 2,
+                p: 3,
                 height: "100%",
                 borderRadius: 3,
-                boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+                boxShadow: ({ palette: { mode } }) =>
+                  mode === "dark" ? "0 8px 32px rgba(0,0,0,0.3)" : "0 4px 20px rgba(0,0,0,0.08)",
+                background: ({ palette: { mode } }) =>
+                  mode === "dark" ? "rgba(0, 0, 0, 0.6)" : "white",
+                border: ({ palette: { mode } }) =>
+                  mode === "dark"
+                    ? "1px solid rgba(255,255,255,0.1)"
+                    : "1px solid rgba(0,0,0,0.05)",
                 transition: "all 0.3s ease",
                 "&:hover": {
                   transform: "translateY(-4px)",
-                  boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
+                  boxShadow: ({ palette: { mode } }) =>
+                    mode === "dark" ? "0 12px 40px rgba(0,0,0,0.4)" : "0 8px 30px rgba(0,0,0,0.12)",
                 },
               }}
             >
               <CardContent>
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
+                <MKTypography variant="h6" fontWeight="bold" mb={1}>
                   {event.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
+                </MKTypography>
+                <MKTypography variant="body2" color="text.secondary" mb={1}>
                   {event.date} | {event.time}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
+                </MKTypography>
+                <MKTypography variant="body2" color="text.secondary" mb={1}>
                   {event.location}
-                  {/* To make building name a Google Maps link in the future:
-                      Wrap the building name part in <a href="https://maps.google.com/?q=Science+Hall" target="_blank" rel="noreferrer">Science Hall</a>
-                  */}
-                </Typography>
-                <Typography variant="body2" sx={{ mb: 2 }}>
+                </MKTypography>
+                <MKTypography variant="body2" color="text" mb={2}>
                   {event.description}
-                </Typography>
-                <Button
+                </MKTypography>
+                <MKButton
                   variant="contained"
                   sx={{
                     backgroundColor: "#fff",
-                    color: "black",
+                    color: "#000000",
                     "&:hover": {
                       backgroundColor: "#f0f0f0",
                     },
@@ -94,7 +141,7 @@ function Events() {
                   onClick={() => handleRSVP(event.id)}
                 >
                   {event.rsvp ? "Un-RSVP" : "RSVP"}
-                </Button>
+                </MKButton>
               </CardContent>
             </Card>
           </Grid>

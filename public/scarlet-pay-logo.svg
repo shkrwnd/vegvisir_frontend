@@ -1,0 +1,63 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fox Head Logo - Stylized Mascot -->
+  
+  <!-- Left Ear -->
+  <path d="M 25 20 L 20 8 L 30 12 L 28 18 Z" fill="#8B0000" stroke="#000000" stroke-width="2"/>
+  <path d="M 25 20 L 23 14 L 27 16 Z" fill="#000000"/>
+  
+  <!-- Right Ear -->
+  <path d="M 95 20 L 100 8 L 90 12 L 92 18 Z" fill="#8B0000" stroke="#000000" stroke-width="2"/>
+  <path d="M 95 20 L 97 14 L 93 16 Z" fill="#000000"/>
+  
+  <!-- Head Base (Black) -->
+  <ellipse cx="60" cy="55" rx="38" ry="42" fill="#000000"/>
+  
+  <!-- Forehead Red Accents -->
+  <path d="M 35 35 Q 45 30 60 32 Q 75 30 85 35" stroke="#CC0000" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <ellipse cx="60" cy="40" rx="28" ry="30" fill="#8B0000"/>
+  
+  <!-- Red Streaks on Forehead -->
+  <path d="M 45 38 L 50 35 L 48 40" stroke="#CC0000" stroke-width="2" fill="none"/>
+  <path d="M 75 38 L 70 35 L 72 40" stroke="#CC0000" stroke-width="2" fill="none"/>
+  
+  <!-- Left Eye Area -->
+  <ellipse cx="48" cy="52" rx="10" ry="12" fill="#8B0000" stroke="#000000" stroke-width="2"/>
+  <ellipse cx="48" cy="52" rx="7" ry="9" fill="#FF4500"/>
+  <circle cx="48" cy="50" r="4" fill="#000000"/>
+  <ellipse cx="48" cy="48" rx="1.5" ry="2" fill="#FFFFFF"/>
+  
+  <!-- Right Eye Area -->
+  <ellipse cx="72" cy="52" rx="10" ry="12" fill="#8B0000" stroke="#000000" stroke-width="2"/>
+  <ellipse cx="72" cy="52" rx="7" ry="9" fill="#FF4500"/>
+  <circle cx="72" cy="50" r="4" fill="#000000"/>
+  <ellipse cx="72" cy="48" rx="1.5" ry="2" fill="#FFFFFF"/>
+  
+  <!-- Eye Highlights -->
+  <ellipse cx="48" cy="46" rx="1" ry="1.5" fill="#FFFFFF" opacity="0.9"/>
+  <ellipse cx="72" cy="46" rx="1" ry="1.5" fill="#FFFFFF" opacity="0.9"/>
+  
+  <!-- Muzzle (White) -->
+  <ellipse cx="60" cy="72" rx="14" ry="18" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+  <ellipse cx="60" cy="74" rx="12" ry="15" fill="#E8E8E8"/>
+  
+  <!-- Nose -->
+  <ellipse cx="60" cy="70" rx="3.5" ry="3" fill="#000000"/>
+  
+  <!-- Upper Muzzle (Black) -->
+  <path d="M 50 68 Q 60 65 70 68" stroke="#000000" stroke-width="2.5" fill="none"/>
+  
+  <!-- Cheek Fur (Jagged White) -->
+  <path d="M 32 62 L 35 58 L 37 62 L 39 58 L 41 62 L 43 58 L 45 62" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 75 62 L 78 58 L 80 62 L 82 58 L 84 62 L 86 58 L 88 62" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Jawline Fur (Jagged) -->
+  <path d="M 42 82 L 45 87 L 47 82 L 49 87 L 51 82 L 53 87 L 55 82" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 65 82 L 68 87 L 70 82 L 72 87 L 74 82 L 76 87 L 78 82" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Chin (White) -->
+  <ellipse cx="60" cy="88" rx="10" ry="8" fill="#FFFFFF" stroke="#000000" stroke-width="1.5"/>
+  
+  <!-- Red Accents on Cheeks -->
+  <path d="M 38 65 L 42 60" stroke="#CC0000" stroke-width="2" fill="none"/>
+  <path d="M 82 65 L 78 60" stroke="#CC0000" stroke-width="2" fill="none"/>
+</svg>

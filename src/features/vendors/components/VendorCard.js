@@ -104,8 +104,8 @@ function VendorCard({ vendor, onClick }) {
           {vendor.description && (
             <MKTypography
               variant="body2"
-              color="text"
               sx={{
+                color: "#000000",
                 opacity: 0.7,
                 overflow: "hidden",
                 textOverflow: "ellipsis",

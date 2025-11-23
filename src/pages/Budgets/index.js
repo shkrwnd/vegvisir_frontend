@@ -287,26 +287,76 @@ function Budgets() {
   return (
     <Container maxWidth={false} sx={{ px: 0 }}>
       {/* Header Section */}
-      <MKBox mb={6}>
-        <MKBox display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-          <MKTypography variant="h4" fontWeight="bold">
-            Budget Management
-          </MKTypography>
+      <MKBox
+        mb={6}
+        sx={{
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 3, sm: 4, md: 5 },
+          background:
+            "linear-gradient(135deg, rgba(204, 0, 0, 0.1) 0%, rgba(204, 0, 0, 0.05) 100%)",
+          borderRadius: 3,
+          border: "1px solid rgba(204, 0, 0, 0.2)",
+          boxShadow: "0 4px 20px rgba(204, 0, 0, 0.1)",
+        }}
+      >
+        <MKBox
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+          gap={2}
+        >
+          <MKBox>
+            <MKBox display="flex" alignItems="center" gap={2}>
+              <MKBox
+                sx={{
+                  width: { xs: "4px", sm: "6px" },
+                  height: { xs: "40px", sm: "50px" },
+                  background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+                  borderRadius: "4px",
+                  boxShadow: "0 4px 12px rgba(204, 0, 0, 0.3)",
+                }}
+              />
+              <MKTypography
+                variant="h3"
+                fontWeight="bold"
+                sx={{
+                  background: "linear-gradient(135deg, #CC0000 0%, #8b0000 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.5rem" },
+                  letterSpacing: "0.5px",
+                  lineHeight: 1.2,
+                }}
+              >
+                Budget
+              </MKTypography>
+            </MKBox>
+          </MKBox>
           <MKBox display="flex" gap={2}>
             <MKButton
               variant="outlined"
               color="info"
-              size="large"
+              size="small"
               onClick={refetch}
               startIcon={<RefreshIcon />}
               disabled={loading}
+              sx={{
+                color: "#CC0000",
+                borderColor: "#CC0000",
+                "&:hover": {
+                  borderColor: "#CC0000",
+                  backgroundColor: "rgba(204, 0, 0, 0.05)",
+                },
+              }}
             >
               Refresh
             </MKButton>
             <MKButton
               variant="gradient"
               color="info"
-              size="large"
+              size="small"
               onClick={() => handleOpenDialog()}
               startIcon={<AddIcon />}
             >
@@ -314,9 +364,6 @@ function Budgets() {
             </MKButton>
           </MKBox>
         </MKBox>
-        <MKTypography variant="body1" color="text">
-          Track and manage your spending budgets. Monitor your expenses and stay within your limits.
-        </MKTypography>
       </MKBox>
 
       {/* Error Message */}

@@ -48,6 +48,7 @@ import StoreIcon from "@mui/icons-material/Store";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import DescriptionIcon from "@mui/icons-material/Description";
+import EventIcon from "@mui/icons-material/Event";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -67,7 +68,6 @@ import Icon from "@mui/material/Icon";
 import { useWallet } from "features/wallet";
 import { useCards } from "features/cards";
 import { useTransactions } from "features/transactions";
-import { useRewards } from "features/rewards";
 import { useDonations } from "features/donations";
 
 // Shared hooks
@@ -98,7 +98,6 @@ function Home() {
   const { cards, loading: cardsLoading } = useCards();
   const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
   const { user } = useAuth();
-  const { balance: rewardsBalance, loading: rewardsLoading } = useRewards();
   const { makeDonation, getDonationBox, loading: donationLoading } = useDonations();
 
   // Fetch top 10 recent transactions
@@ -543,54 +542,36 @@ function Home() {
     <Container
       maxWidth={false}
       sx={{
-        px: { xs: 1, sm: 2, md: 3 },
+        px: { xs: 0.5, sm: 2, md: 3 },
         backgroundColor: ({ palette: { background } }) => background.default,
         minHeight: "100vh",
+        width: "100%",
+        maxWidth: "100vw",
+        overflowX: "hidden",
+        boxSizing: "border-box",
       }}
     >
-      {/* Rewards Balance Section */}
-      <MKBox mb={3} sx={{ px: { xs: 0, sm: 1, md: 3 } }}>
-        <Card
-          sx={{
-            p: 3,
-            borderRadius: 3,
-            boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-            border: "1px solid rgba(0,0,0,0.05)",
-            background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-            color: "white",
-          }}
-        >
-          <MKBox display="flex" alignItems="center" justifyContent="space-between">
-            <MKBox>
-              <MKTypography variant="h6" fontWeight="medium" opacity={0.9} mb={1}>
-                Rewards Balance
-              </MKTypography>
-              {rewardsLoading ? (
-                <CircularProgress size={24} sx={{ color: "white", mt: 1 }} />
-              ) : (
-                <MKTypography variant="h3" fontWeight="bold" mt={1}>
-                  {formatCurrency(rewardsBalance)}
-                </MKTypography>
-              )}
-              <MKTypography variant="caption" opacity={0.8} mt={1} display="block">
-                Cashback earned from vendor payments
-              </MKTypography>
-            </MKBox>
-            <Icon sx={{ fontSize: 48, opacity: 0.3 }}>card_giftcard</Icon>
-          </MKBox>
-        </Card>
-      </MKBox>
-
       {/* Wallet Card Section with Carousel */}
-      <MKBox mb={{ xs: 4, md: 6 }} sx={{ px: { xs: 0, sm: 1, md: 3 } }}>
+      <MKBox
+        mb={{ xs: 4, md: 6 }}
+        sx={{
+          px: { xs: 0, sm: 1, md: 3 },
+          width: "100%",
+          overflowX: "hidden",
+          overflowY: "visible",
+        }}
+      >
         <MKBox
           sx={{
             position: "relative",
-            maxWidth: "600px",
+            maxWidth: { xs: "100%", sm: "600px", md: "750px" },
             margin: "0 auto",
             display: "flex",
             alignItems: "center",
-            gap: { xs: 2, sm: 3 },
+            gap: { xs: 0.5, sm: 2, md: 3 },
+            width: "100%",
+            boxSizing: "border-box",
+            px: { xs: 0, sm: 1, md: 3 },
           }}
         >
           {/* Left Navigation Button - Outside */}
@@ -602,8 +583,8 @@ function Home() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                width: { xs: "44px", sm: "56px" },
-                height: { xs: "44px", sm: "56px" },
+                width: { xs: "36px", sm: "56px" },
+                height: { xs: "36px", sm: "56px" },
                 flexShrink: 0,
                 borderRadius: "50%",
                 background:
@@ -629,7 +610,7 @@ function Home() {
             >
               <ChevronLeftIcon
                 sx={{
-                  fontSize: { xs: "28px", sm: "32px" },
+                  fontSize: { xs: "24px", sm: "32px" },
                   color: "#CC0000",
                   filter: "drop-shadow(0 2px 4px rgba(204, 0, 0, 0.2))",
                 }}
@@ -643,6 +624,9 @@ function Home() {
               position: "relative",
               overflow: "hidden",
               flex: 1,
+              minWidth: 0,
+              width: "100%",
+              display: "flex",
             }}
           >
             {/* Cards Container */}
@@ -652,6 +636,7 @@ function Home() {
                 transform: `translateX(-${currentCardIndex * 100}%)`,
                 transition: "transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1)",
                 willChange: "transform",
+                width: "100%",
               }}
             >
               {walletCards.map((card, index) => (
@@ -661,6 +646,10 @@ function Home() {
                     minWidth: "100%",
                     flexShrink: 0,
                     width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: { xs: 0, sm: "0 8px", md: "0 12px" },
                   }}
                 >
                   <RutgersWalletCardFinal
@@ -682,9 +671,11 @@ function Home() {
                     cardTheme={index === 0 ? "white" : "black"}
                     defaultBackground={
                       index === 0
-                        ? "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=500&fit=crop&q=80"
+                        ? "/IMG_868.JPG"
                         : index === 1
-                        ? "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=500&fit=crop&q=80"
+                        ? "/ff44df36-103b-4776-883a-030843546a4b.JPG"
+                        : index === 2
+                        ? "/2018_02_17_0372_Rutgers_SAS-1x2.jpg"
                         : null
                     }
                   />
@@ -756,8 +747,8 @@ function Home() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                width: { xs: "44px", sm: "56px" },
-                height: { xs: "44px", sm: "56px" },
+                width: { xs: "36px", sm: "56px" },
+                height: { xs: "36px", sm: "56px" },
                 flexShrink: 0,
                 borderRadius: "50%",
                 background:
@@ -783,7 +774,7 @@ function Home() {
             >
               <ChevronRightIcon
                 sx={{
-                  fontSize: { xs: "28px", sm: "32px" },
+                  fontSize: { xs: "24px", sm: "32px" },
                   color: "#CC0000",
                   filter: "drop-shadow(0 2px 4px rgba(204, 0, 0, 0.2))",
                 }}
@@ -1009,199 +1000,394 @@ function Home() {
         fullWidth
       >
         <DialogTitle>
-          <MKTypography variant="h5" fontWeight="bold">
+          <MKTypography
+            variant="h5"
+            fontWeight="bold"
+            sx={{
+              color: ({ palette: { text } }) => text.main,
+              fontSize: { xs: "1.5rem", sm: "1.75rem" },
+            }}
+          >
             Pay
           </MKTypography>
         </DialogTitle>
         <DialogContent>
           <MKBox sx={{ pt: 2 }}>
-            <MKTypography variant="body2" color="text.secondary" mb={3}>
-              Choose how you want to pay
-            </MKTypography>
-            <MKBox
+            <MKTypography
+              variant="body1"
               sx={{
-                display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                gap: 2,
-                flexWrap: "wrap",
+                color: ({ palette: { text } }) => text.secondary,
+                mb: 3,
+                textAlign: "center",
+                fontSize: "1rem",
+                fontWeight: 500,
               }}
             >
+              Choose how you want to pay
+            </MKTypography>
+            <Grid container spacing={2}>
               {/* Pay a Friend Option */}
-              <Card
-                onClick={() => {
-                  setOpenSendMoneyDialog(false);
-                  showSnackbar(
-                    "info",
-                    "info",
-                    "Pay a Friend",
-                    "Pay a friend feature will be available soon!"
-                  );
-                }}
-                sx={{
-                  flex: 1,
-                  p: 3,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  border: "2px solid",
-                  borderColor: "rgba(204, 0, 0, 0.2)",
-                  borderRadius: 3,
-                  "&:hover": {
-                    transform: "translateY(-4px)",
-                    boxShadow: "0 8px 24px rgba(204, 0, 0, 0.2)",
-                    borderColor: "primary.main",
-                    backgroundColor: "rgba(204, 0, 0, 0.05)",
-                  },
-                }}
-              >
-                <MKBox
+              <Grid item xs={12} sm={6}>
+                <Card
+                  onClick={() => {
+                    setOpenSendMoneyDialog(false);
+                    showSnackbar(
+                      "info",
+                      "info",
+                      "Pay a Friend",
+                      "Pay a friend feature will be available soon!"
+                    );
+                  }}
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    textAlign: "center",
+                    height: "100%",
+                    p: 3.5,
+                    cursor: "pointer",
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    border: "1.5px solid",
+                    borderColor: "rgba(204, 0, 0, 0.15)",
+                    borderRadius: 3,
+                    background: ({ palette: { mode, white, grey } }) =>
+                      mode === "dark" ? grey[800] : white.main,
+                    boxShadow: ({ palette: { mode } }) =>
+                      mode === "dark"
+                        ? "0 2px 8px rgba(0, 0, 0, 0.3)"
+                        : "0 2px 8px rgba(0, 0, 0, 0.08)",
+                    "&:hover": {
+                      transform: "translateY(-6px) scale(1.02)",
+                      boxShadow: ({ palette: { mode } }) =>
+                        mode === "dark"
+                          ? "0 12px 32px rgba(204, 0, 0, 0.4)"
+                          : "0 12px 32px rgba(204, 0, 0, 0.25)",
+                      borderColor: "rgba(204, 0, 0, 0.4)",
+                      background: ({ palette: { mode, grey } }) =>
+                        mode === "dark" ? grey[700] : "rgba(204, 0, 0, 0.08)",
+                    },
                   }}
                 >
                   <MKBox
                     sx={{
-                      width: 64,
-                      height: 64,
-                      borderRadius: "50%",
-                      backgroundColor: "rgba(204, 0, 0, 0.1)",
                       display: "flex",
+                      flexDirection: "column",
                       alignItems: "center",
-                      justifyContent: "center",
-                      mb: 2,
+                      textAlign: "center",
                     }}
                   >
-                    <PersonIcon sx={{ fontSize: 32, color: "primary.main" }} />
+                    <MKBox
+                      sx={{
+                        width: 72,
+                        height: 72,
+                        borderRadius: "50%",
+                        background:
+                          "linear-gradient(135deg, rgba(204, 0, 0, 0.2) 0%, rgba(204, 0, 0, 0.1) 100%)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mb: 2.5,
+                        boxShadow: "0 4px 12px rgba(204, 0, 0, 0.15)",
+                      }}
+                    >
+                      <PersonIcon sx={{ fontSize: 36, color: "#CC0000" }} />
+                    </MKBox>
+                    <MKTypography
+                      variant="h6"
+                      fontWeight="bold"
+                      mb={1}
+                      sx={{
+                        color: "#000000",
+                        fontSize: { xs: "1rem", sm: "1.125rem" },
+                      }}
+                    >
+                      Pay a Friend
+                    </MKTypography>
+                    <MKTypography
+                      variant="body2"
+                      sx={{
+                        color: "#000000",
+                        fontSize: "0.875rem",
+                        lineHeight: 1.5,
+                        opacity: 0.8,
+                      }}
+                    >
+                      Send money to another user
+                    </MKTypography>
                   </MKBox>
-                  <MKTypography variant="h6" fontWeight="bold" mb={1}>
-                    Pay a Friend
-                  </MKTypography>
-                  <MKTypography variant="body2" color="text.secondary">
-                    Send money to another user
-                  </MKTypography>
-                </MKBox>
-              </Card>
+                </Card>
+              </Grid>
 
               {/* Pay a Vendor Option */}
-              <Card
-                onClick={() => {
-                  setOpenSendMoneyDialog(false);
-                  showSnackbar(
-                    "info",
-                    "info",
-                    "Marketplace",
-                    "Marketplace feature will be available soon!"
-                  );
-                }}
-                sx={{
-                  flex: 1,
-                  p: 3,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  border: "2px solid",
-                  borderColor: "rgba(204, 0, 0, 0.2)",
-                  borderRadius: 3,
-                  "&:hover": {
-                    transform: "translateY(-4px)",
-                    boxShadow: "0 8px 24px rgba(204, 0, 0, 0.2)",
-                    borderColor: "primary.main",
-                    backgroundColor: "rgba(204, 0, 0, 0.05)",
-                  },
-                }}
-              >
-                <MKBox
+              <Grid item xs={12} sm={6}>
+                <Card
+                  onClick={() => {
+                    setOpenSendMoneyDialog(false);
+                    navigate(ROUTES.MARKETPLACE);
+                  }}
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    textAlign: "center",
+                    height: "100%",
+                    p: 3.5,
+                    cursor: "pointer",
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    border: "1.5px solid",
+                    borderColor: "rgba(204, 0, 0, 0.15)",
+                    borderRadius: 3,
+                    background: ({ palette: { mode, white, grey } }) =>
+                      mode === "dark" ? grey[800] : white.main,
+                    boxShadow: ({ palette: { mode } }) =>
+                      mode === "dark"
+                        ? "0 2px 8px rgba(0, 0, 0, 0.3)"
+                        : "0 2px 8px rgba(0, 0, 0, 0.08)",
+                    "&:hover": {
+                      transform: "translateY(-6px) scale(1.02)",
+                      boxShadow: ({ palette: { mode } }) =>
+                        mode === "dark"
+                          ? "0 12px 32px rgba(204, 0, 0, 0.4)"
+                          : "0 12px 32px rgba(204, 0, 0, 0.25)",
+                      borderColor: "rgba(204, 0, 0, 0.4)",
+                      background: ({ palette: { mode, grey } }) =>
+                        mode === "dark" ? grey[700] : "rgba(204, 0, 0, 0.08)",
+                    },
                   }}
                 >
                   <MKBox
                     sx={{
-                      width: 64,
-                      height: 64,
-                      borderRadius: "50%",
-                      backgroundColor: "rgba(204, 0, 0, 0.1)",
                       display: "flex",
+                      flexDirection: "column",
                       alignItems: "center",
-                      justifyContent: "center",
-                      mb: 2,
+                      textAlign: "center",
                     }}
                   >
-                    <StoreIcon sx={{ fontSize: 32, color: "primary.main" }} />
+                    <MKBox
+                      sx={{
+                        width: 72,
+                        height: 72,
+                        borderRadius: "50%",
+                        background:
+                          "linear-gradient(135deg, rgba(204, 0, 0, 0.2) 0%, rgba(204, 0, 0, 0.1) 100%)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mb: 2.5,
+                        boxShadow: "0 4px 12px rgba(204, 0, 0, 0.15)",
+                      }}
+                    >
+                      <StoreIcon sx={{ fontSize: 36, color: "#CC0000" }} />
+                    </MKBox>
+                    <MKTypography
+                      variant="h6"
+                      fontWeight="bold"
+                      mb={1}
+                      sx={{
+                        color: "#000000",
+                        fontSize: { xs: "1rem", sm: "1.125rem" },
+                      }}
+                    >
+                      Marketplace
+                    </MKTypography>
+                    <MKTypography
+                      variant="body2"
+                      sx={{
+                        color: "#000000",
+                        fontSize: "0.875rem",
+                        lineHeight: 1.5,
+                        opacity: 0.8,
+                      }}
+                    >
+                      Make a payment to a campus vendor
+                    </MKTypography>
                   </MKBox>
-                  <MKTypography variant="h6" fontWeight="bold" mb={1}>
-                    Marketplace
-                  </MKTypography>
-                  <MKTypography variant="body2" color="text.secondary">
-                    Make a payment to a campus vendor
-                  </MKTypography>
-                </MKBox>
-              </Card>
+                </Card>
+              </Grid>
+
+              {/* Pay for Events Option */}
+              <Grid item xs={12} sm={6}>
+                <Card
+                  onClick={() => {
+                    setOpenSendMoneyDialog(false);
+                    navigate(ROUTES.EVENTS);
+                  }}
+                  sx={{
+                    height: "100%",
+                    p: 3.5,
+                    cursor: "pointer",
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    border: "1.5px solid",
+                    borderColor: "rgba(204, 0, 0, 0.15)",
+                    borderRadius: 3,
+                    background: ({ palette: { mode, white, grey } }) =>
+                      mode === "dark" ? grey[800] : white.main,
+                    boxShadow: ({ palette: { mode } }) =>
+                      mode === "dark"
+                        ? "0 2px 8px rgba(0, 0, 0, 0.3)"
+                        : "0 2px 8px rgba(0, 0, 0, 0.08)",
+                    "&:hover": {
+                      transform: "translateY(-6px) scale(1.02)",
+                      boxShadow: ({ palette: { mode } }) =>
+                        mode === "dark"
+                          ? "0 12px 32px rgba(204, 0, 0, 0.4)"
+                          : "0 12px 32px rgba(204, 0, 0, 0.25)",
+                      borderColor: "rgba(204, 0, 0, 0.4)",
+                      background: ({ palette: { mode, grey } }) =>
+                        mode === "dark" ? grey[700] : "rgba(204, 0, 0, 0.08)",
+                    },
+                  }}
+                >
+                  <MKBox
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <MKBox
+                      sx={{
+                        width: 72,
+                        height: 72,
+                        borderRadius: "50%",
+                        background:
+                          "linear-gradient(135deg, rgba(204, 0, 0, 0.2) 0%, rgba(204, 0, 0, 0.1) 100%)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mb: 2.5,
+                        boxShadow: "0 4px 12px rgba(204, 0, 0, 0.15)",
+                      }}
+                    >
+                      <EventIcon sx={{ fontSize: 36, color: "#CC0000" }} />
+                    </MKBox>
+                    <MKTypography
+                      variant="h6"
+                      fontWeight="bold"
+                      mb={1}
+                      sx={{
+                        color: "#000000",
+                        fontSize: { xs: "1rem", sm: "1.125rem" },
+                      }}
+                    >
+                      Pay for Events
+                    </MKTypography>
+                    <MKTypography
+                      variant="body2"
+                      sx={{
+                        color: "#000000",
+                        fontSize: "0.875rem",
+                        lineHeight: 1.5,
+                        opacity: 0.8,
+                      }}
+                    >
+                      Purchase tickets for campus events
+                    </MKTypography>
+                  </MKBox>
+                </Card>
+              </Grid>
 
               {/* Donate Option */}
-              <Card
-                onClick={handleOpenDonationDialog}
-                sx={{
-                  flex: 1,
-                  minWidth: { xs: "100%", sm: "calc(50% - 8px)" },
-                  p: 3,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  border: "2px solid",
-                  borderColor: "rgba(204, 0, 0, 0.2)",
-                  borderRadius: 3,
-                  "&:hover": {
-                    transform: "translateY(-4px)",
-                    boxShadow: "0 8px 24px rgba(204, 0, 0, 0.2)",
-                    borderColor: "error.main",
-                    backgroundColor: "rgba(244, 67, 54, 0.05)",
-                  },
-                }}
-              >
-                <MKBox
+              <Grid item xs={12} sm={6}>
+                <Card
+                  onClick={handleOpenDonationDialog}
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    textAlign: "center",
+                    height: "100%",
+                    p: 3.5,
+                    cursor: "pointer",
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    border: "1.5px solid",
+                    borderColor: "rgba(244, 67, 54, 0.2)",
+                    borderRadius: 3,
+                    background: ({ palette: { mode, white, grey } }) =>
+                      mode === "dark" ? grey[800] : white.main,
+                    boxShadow: ({ palette: { mode } }) =>
+                      mode === "dark"
+                        ? "0 2px 8px rgba(244, 67, 54, 0.2)"
+                        : "0 2px 8px rgba(244, 67, 54, 0.12)",
+                    "&:hover": {
+                      transform: "translateY(-6px) scale(1.02)",
+                      boxShadow: ({ palette: { mode } }) =>
+                        mode === "dark"
+                          ? "0 12px 32px rgba(244, 67, 54, 0.4)"
+                          : "0 12px 32px rgba(244, 67, 54, 0.3)",
+                      borderColor: "rgba(244, 67, 54, 0.5)",
+                      background: ({ palette: { mode, grey } }) =>
+                        mode === "dark" ? grey[700] : "rgba(244, 67, 54, 0.1)",
+                    },
                   }}
                 >
                   <MKBox
                     sx={{
-                      width: 64,
-                      height: 64,
-                      borderRadius: "50%",
-                      backgroundColor: "rgba(244, 67, 54, 0.1)",
                       display: "flex",
+                      flexDirection: "column",
                       alignItems: "center",
-                      justifyContent: "center",
-                      mb: 2,
+                      textAlign: "center",
                     }}
                   >
-                    <FavoriteIcon sx={{ fontSize: 32, color: "error.main" }} />
-                  </MKBox>
-                  <MKTypography variant="h6" fontWeight="bold" mb={1}>
-                    Donate
-                  </MKTypography>
-                  <MKTypography variant="body2" color="text.secondary">
-                    Support campus initiatives
-                  </MKTypography>
-                  {donationBox && (
-                    <MKTypography variant="caption" color="text.secondary" mt={1}>
-                      Total: {formatCurrency(donationBox.total_amount || 0)}
+                    <MKBox
+                      sx={{
+                        width: 72,
+                        height: 72,
+                        borderRadius: "50%",
+                        background:
+                          "linear-gradient(135deg, rgba(244, 67, 54, 0.25) 0%, rgba(244, 67, 54, 0.15) 100%)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mb: 2.5,
+                        boxShadow: "0 4px 12px rgba(244, 67, 54, 0.2)",
+                      }}
+                    >
+                      <FavoriteIcon sx={{ fontSize: 36, color: "#F44336" }} />
+                    </MKBox>
+                    <MKTypography
+                      variant="h6"
+                      fontWeight="bold"
+                      mb={1}
+                      sx={{
+                        color: "#000000",
+                        fontSize: { xs: "1rem", sm: "1.125rem" },
+                      }}
+                    >
+                      Donate
                     </MKTypography>
-                  )}
-                </MKBox>
-              </Card>
-            </MKBox>
+                    <MKTypography
+                      variant="body2"
+                      sx={{
+                        color: "#000000",
+                        fontSize: "0.875rem",
+                        lineHeight: 1.5,
+                        opacity: 0.8,
+                      }}
+                    >
+                      Support campus initiatives
+                    </MKTypography>
+                    {donationBox && (
+                      <MKTypography
+                        variant="caption"
+                        mt={1.5}
+                        sx={{
+                          fontWeight: 600,
+                          color: "#F44336",
+                          fontSize: "0.8125rem",
+                        }}
+                      >
+                        Total: {formatCurrency(donationBox.total_amount || 0)}
+                      </MKTypography>
+                    )}
+                  </MKBox>
+                </Card>
+              </Grid>
+            </Grid>
           </MKBox>
         </DialogContent>
         <DialogActions sx={{ p: 2 }}>
-          <MKButton onClick={() => setOpenSendMoneyDialog(false)} color="secondary">
+          <MKButton
+            onClick={() => setOpenSendMoneyDialog(false)}
+            variant="outlined"
+            sx={{
+              color: "#ffffff",
+              borderColor: "rgba(255, 255, 255, 0.3)",
+              "&:hover": {
+                borderColor: "rgba(255, 255, 255, 0.5)",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+              },
+            }}
+          >
             Cancel
           </MKButton>
         </DialogActions>

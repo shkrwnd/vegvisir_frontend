@@ -59,6 +59,9 @@ import MapPage from "pages/Map";
 
 // Images
 import signinImage from "assets/images/illustrations/illustration-signin.jpg";
+// Use Rutgers images from public folder
+const rutgersSigninImage1 = "/2018_02_17_0372_Rutgers_SAS-1x2.jpg";
+const rutgersSigninImage2 = "/ff44df36-103b-4776-883a-030843546a4b.JPG";
 import signupImage from "assets/images/illustrations/illustration-signup.jpg";
 import resetImage from "assets/images/illustrations/illustration-reset.jpg";
 
@@ -86,7 +89,8 @@ export default function App() {
                     <IllustrationLayout
                       title="Sign In"
                       description="Enter your email and password to sign in"
-                      illustration={signinImage}
+                      illustration={rutgersSigninImage1}
+                      illustration2={rutgersSigninImage2}
                     >
                       <LoginPage />
                     </IllustrationLayout>
@@ -142,7 +146,8 @@ export default function App() {
                     <DashboardLayout>
                       <Routes>
                         <Route path="/home" element={<HomePage />} />
-                        <Route path="/dashboard" element={<DashboardPage />} />
+                        {/* Dashboard route - Hidden for now, can be restored later if needed */}
+                        {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
                         <Route path="/analytics" element={<AnalyticsPage />} />
                         <Route path="/users" element={<UsersPage />} />
                         <Route path="/settings" element={<SettingsPage />} />
