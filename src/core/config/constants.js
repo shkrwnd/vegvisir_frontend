@@ -7,7 +7,7 @@
 
 export const API_CONFIG = {
   // eslint-disable-next-line no-undef
-  BASE_URL: process.env.REACT_APP_API_URL || "http://localhost:8000",
+  BASE_URL: process.env.REACT_APP_API_URL || "http://campus-wallet-env.eba-mjveerep.us-east-2.elasticbeanstalk.com",
   TIMEOUT: 10000,
 };
 

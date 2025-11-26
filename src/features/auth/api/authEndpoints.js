@@ -48,12 +48,15 @@ export const authAPI = {
         // but log the error for debugging
         console.error("Failed to fetch user info after login:", error);
         console.error("User info error response:", error.response?.data);
+        console.error("Token that was used:", access_token?.substring(0, 20) + "...");
 
-        // Return a minimal user object with the email from credentials
+        // Don't throw error - return minimal user object so login can proceed
+        // The token is valid, so the user can still use the app
         return {
           data: {
             user: {
               email: credentials.email,
+              id: null, // Will be fetched later if needed
             },
             token: access_token,
           },

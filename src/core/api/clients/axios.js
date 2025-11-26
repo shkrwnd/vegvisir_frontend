@@ -105,12 +105,14 @@ apiClient.interceptors.response.use(
 
       // Don't redirect if already on an auth route (prevents redirect loops)
       if (!isAuthRoute) {
-        // Check if this is a login/register endpoint - don't redirect for those
+        // Check if this is a login/register/me endpoint - don't redirect for those
+        // /auth/me is part of the login flow, so don't clear token on 401 for it
         const isAuthEndpoint =
           error.config?.url?.includes("/auth/login") ||
           error.config?.url?.includes("/auth/register") ||
           error.config?.url?.includes("/auth/forgot-password") ||
-          error.config?.url?.includes("/auth/reset-password");
+          error.config?.url?.includes("/auth/reset-password") ||
+          error.config?.url?.includes("/auth/me");
 
         if (!isAuthEndpoint) {
           // In development, check if this might be a hot reload issue
