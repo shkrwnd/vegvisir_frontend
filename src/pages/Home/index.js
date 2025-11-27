@@ -4,9 +4,9 @@
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-kit-pro-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
+* Copyright 2025 Made by Vegvisir Team
 
-Coded by www.creative-tim.com
+Coded by Vegvisir Team
 
  =========================================================
 
@@ -112,28 +112,6 @@ function Home() {
   useEffect(() => {
     refetchTransactions({ skip: 0, limit: 10 });
   }, [refetchTransactions]);
-
-  // Refetch wallet balance when page comes into focus or when component mounts
-  // This ensures balance updates after payments made on other pages
-  useEffect(() => {
-    const handleFocus = () => {
-      refetch();
-    };
-
-    // Refetch on mount and when window gains focus
-    refetch();
-    window.addEventListener('focus', handleFocus);
-    // Also refetch when page becomes visible (tab switch)
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) {
-        refetch();
-      }
-    });
-
-    return () => {
-      window.removeEventListener('focus', handleFocus);
-    };
-  }, [refetch]);
 
   // Get top 10 transactions sorted by date (most recent first)
   const recentTransactions = transactions

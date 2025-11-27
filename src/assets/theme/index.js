@@ -4,9 +4,9 @@
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-material-ui
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
+* Copyright 2025 Made by Vegvisir Team
 
-Coded by www.creative-tim.com
+Coded by Vegvisir Team
 
  =========================================================
 

@@ -4,9 +4,9 @@
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-kit-pro-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
+* Copyright 2025 Made by Vegvisir Team
 
-Coded by www.creative-tim.com
+Coded by Vegvisir Team
 
  =========================================================
 
@@ -36,14 +36,14 @@ import MKTypography from "components/base/MKTypography";
 import { useTheme } from "core/context";
 
 function CenteredFooter({
-  company = { href: "https://www.creative-tim.com/", name: "Creative Tim" },
+  company = { href: "#", name: "Vegvisir Team" },
   links = [
-    { href: "https://www.creative-tim.com/", name: "Company" },
-    { href: "https://www.creative-tim.com/presentation", name: "About Us" },
-    { href: "https://www.creative-tim.com/presentation", name: "Team" },
-    { href: "https://www.creative-tim.com/templates/react", name: "Products" },
-    { href: "https://www.creative-tim.com/blog", name: "Blog" },
-    { href: "https://www.creative-tim.com/license", name: "License" },
+    { href: "#", name: "Company" },
+    { href: "#", name: "About Us" },
+    { href: "#", name: "Team" },
+    { href: "#", name: "Products" },
+    { href: "#", name: "Blog" },
+    { href: "#", name: "License" },
   ],
   socials = [
     { icon: <FacebookIcon fontSize="small" />, link: "https://www.facebook.com/CreativeTim/" },
